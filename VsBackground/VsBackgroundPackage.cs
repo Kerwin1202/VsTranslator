@@ -189,7 +189,7 @@ namespace VsBackground
             {
                 // ignored
             }
-            MessageBox.Show("RefreshImage" + SettingPage.Images.Count);
+            //MessageBox.Show("RefreshImage" + SettingPage.Images.Count);
             SettingPage.Images.MoveNext();
         }
 
