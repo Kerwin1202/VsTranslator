@@ -101,20 +101,17 @@ namespace VsBackground
             _mainWindow = (Window)sender;
             SettingPage.SettingsChangedEvent += SettingPage_SettingsChangedEvent;
             //RefreshImage();
-            Loading();
-        }
-
-        private void Loading()
-        {
             _timer.Change(0, SettingPage.LoopInterval * 1000);
         }
+
+
 
         private void SettingPage_SettingsChangedEvent(object sender, EventArgs e)
         {
             try
             {
-                //_dispatcher.Invoke(RefreshImage);
-                Loading();
+                _dispatcher.Invoke(RefreshImage);
+                //RefreshImage();
                 GC.Collect();
             }
             catch (Exception)
@@ -150,20 +147,42 @@ namespace VsBackground
                 {
                     var rImageSource = BitmapFrame.Create(new Uri(curImage, UriKind.RelativeOrAbsolute), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                     rImageSource.Freeze();
-                    var rImageControl = new Image()
-                    {
-                        Source = rImageSource,
-                        Stretch = Stretch.UniformToFill, //按比例填充
-                        HorizontalAlignment = HorizontalAlignment.Center, //水平方向中心对齐
-                        VerticalAlignment = VerticalAlignment.Center, //垂直方向中心对齐
-                        Opacity = SettingPage.Opacity
-                    };
-                    Grid.SetRowSpan(rImageControl, 4);
+
                     var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
-                    rRootGrid.Dispatcher.Invoke(new Action(() =>
+
+
+
+
+                    var hasImage = false;
+                    foreach (UIElement uiElement in rRootGrid.Children)
                     {
+                        //if (uiElement.GetType()==typeof(DocumentGroup))
+                        //{
+
+                        //}
+
+                        var image = uiElement as Image;
+                        if (image != null && image.Name == "KerwinVsBackground")
+                        {
+                            image.Source = rImageSource;
+                            hasImage = true;
+                            break;
+                        }
+                    }
+                    if (!hasImage)
+                    {
+                        var rImageControl = new Image()
+                        {
+                            Source = rImageSource,
+                            Stretch = Stretch.UniformToFill, //按比例填充
+                            HorizontalAlignment = HorizontalAlignment.Center, //水平方向中心对齐
+                            VerticalAlignment = VerticalAlignment.Center, //垂直方向中心对齐
+                            Opacity = SettingPage.Opacity,
+                            Name = "KerwinVsBackground"
+                        };
+                        Grid.SetRowSpan(rImageControl, 4);
                         rRootGrid.Children.Insert(0, rImageControl);
-                    }));
+                    }
                 }
             }
             catch (Exception)

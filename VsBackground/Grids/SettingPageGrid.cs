@@ -77,7 +77,7 @@ namespace VsBackground.Grids
             }
         }
 
-        private int _loopInterval = 30;
+        private int _loopInterval = 300;
 
         /// <summary>
         /// 循环时间
