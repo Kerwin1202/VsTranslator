@@ -21,6 +21,7 @@ using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
+using VsBackground.Enums;
 using VsBackground.Grids;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -73,7 +74,7 @@ namespace VsBackground
 
         private void RefreshImage(object state)
         {
-            SettingPage_SettingsChangedEvent(null, null);
+            SettingPage_OnSettingsChanged(null, null);
         }
 
         #region Package Members
@@ -99,14 +100,12 @@ namespace VsBackground
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _mainWindow = (Window)sender;
-            SettingPage.SettingsChangedEvent += SettingPage_SettingsChangedEvent;
+            SettingPage.OnSettingsChanged += SettingPage_OnSettingsChanged;
             //RefreshImage();
             _timer.Change(0, SettingPage.LoopInterval * 1000);
         }
 
-
-
-        private void SettingPage_SettingsChangedEvent(object sender, EventArgs e)
+        private void SettingPage_OnSettingsChanged(object sender, EventArgs e)
         {
             try
             {
@@ -128,6 +127,7 @@ namespace VsBackground
             get
             {
                 SettingPageGrid page = (SettingPageGrid)GetDialogPage(typeof(SettingPageGrid));
+                Settings.Settings.SettingPage = page;
                 return page;
             }
         }
@@ -148,19 +148,20 @@ namespace VsBackground
                     var rImageSource = BitmapFrame.Create(new Uri(curImage, UriKind.RelativeOrAbsolute), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
                     rImageSource.Freeze();
 
+                    //MainWindowTitleBar
+
+                    //var bar =(Microsoft.VisualStudio.PlatformUI.MainWindowTitleBar)_mainWindow.Template.FindName("MainWindowTitleBar", _mainWindow)
+
+                    if (!(SettingPage.BackgroundType == BackgroundType.EntireIde || SettingPage.BackgroundType == BackgroundType.Both))
+                    {
+                        return;
+                    }
+
                     var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
-
-
-
 
                     var hasImage = false;
                     foreach (UIElement uiElement in rRootGrid.Children)
                     {
-                        //if (uiElement.GetType()==typeof(DocumentGroup))
-                        //{
-
-                        //}
-
                         var image = uiElement as Image;
                         if (image != null && image.Name == "KerwinVsBackground")
                         {

@@ -2,8 +2,8 @@
 
 namespace VsBackground.Settings
 {
-    public class Settings
+    public static class Settings
     {
-        
+        public static SettingPageGrid SettingPage { get; set; }
     }
 }

@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing.Design;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using Microsoft.VisualStudio.Shell;
 using VsBackground.Editors;
+using VsBackground.Enums;
+using VsBackground.Interfaces;
 using VsBackground.Utilities;
 
 namespace VsBackground.Grids
 {
-    public class SettingPageGrid : DialogPage
+    public class SettingPageGrid : DialogPage, ISettings
     {
         private const string DefaultImage = "Images\\defaultImage.jpg";
 
@@ -97,21 +101,35 @@ namespace VsBackground.Grids
             }
         }
 
+        private BackgroundType _backgroundType = BackgroundType.CodeView;
 
+        [Category("Settings")]
+        [DisplayName("Background Type")]
+        [Description("the type of background images")]
+        //[PropertyPageTypeConverter(typeof(BackgroundTypeConvert))]
+        //[TypeConverter(typeof(BackgroundTypeConvert))]
+        public BackgroundType BackgroundType
+        {
+            get { return _backgroundType; }
+            set { _backgroundType = value; }
+        }
 
 
 
         protected override void OnApply(PageApplyEventArgs e)
         {
-            MessageBox.Show("Apply");
+            //MessageBox.Show("Apply");
+            Debug.WriteLine("Apply");
             base.OnApply(e);
-            SettingsChangedEvent?.Invoke(null, null);
+            OnSettingsChanged?.Invoke(null, null);
         }
 
 
-        public event EventHandler SettingsChangedEvent;
 
         public readonly ListHelper Images = new ListHelper { DefaultImage };
+
+
+        public event EventHandler OnSettingsChanged;
 
 
 
