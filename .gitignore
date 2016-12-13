@@ -4,3 +4,6 @@
 *.suo
 /VsTranslator/obj
 /VsTranslator/bin
+/VsTranslatorTest/obj/Debug
+/VsTranslatorTest/bin/Debug
+*.user

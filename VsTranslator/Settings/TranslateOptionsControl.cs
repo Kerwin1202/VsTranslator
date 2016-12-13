@@ -20,6 +20,8 @@ namespace VsTranslator.Settings
             InitializeComponent();
         }
 
+        internal TranslateOptions TranslateOptions;
+
         /// <summary>
         /// Swaps the source and target languages
         /// </summary>

@@ -18,7 +18,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using System.Windows;
 using EnvDTE;
-using MessageBox = System.Windows.Forms.MessageBox;
+using VsTranslator.Settings;
 using Thread = System.Threading.Thread;
 
 namespace VsTranslator
@@ -44,7 +44,9 @@ namespace VsTranslator
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(VsTranslatorPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-   
+
+    [ProvideOptionPage(typeof(TranslateOptions), "VsExtensions", "VsTranslator", 0, 0, true)]
+
     [ProvideAutoLoad(UIContextGuids.NoSolution)]//设置当VS打开的时候就运行本类
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]//同上
     public sealed class VsTranslatorPackage : Package
