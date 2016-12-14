@@ -18,6 +18,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using System.Windows;
 using EnvDTE;
+using VsTranslator.Core.Google;
 using VsTranslator.Settings;
 using Thread = System.Threading.Thread;
 
@@ -76,7 +77,11 @@ namespace VsTranslator
         protected override void Initialize()
         {
             base.Initialize();
+            string sourceText = "TDD completely turns traditional development around.";
+            var targetText = new GoogleTranslator().Translate(sourceText);
 
+
+     
         }
         #endregion
     }

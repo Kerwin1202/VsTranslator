@@ -7,3 +7,6 @@
 /VsTranslatorTest/obj/Debug
 /VsTranslatorTest/bin/Debug
 *.user
+/temp/ConsoleApplication2/ConsoleApplication2/obj
+/temp/ConsoleApplication2/ConsoleApplication3/obj
+/VsTranslator/*.user

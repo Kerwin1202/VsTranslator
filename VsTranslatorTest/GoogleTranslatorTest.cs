@@ -12,6 +12,8 @@ namespace VsTranslatorTest
             string sourceText = "TDD completely turns traditional development around.";
             var targetText = new GoogleTranslator().Translate(sourceText);
 
+
+            Assert.AreEqual(targetText, "TDD完全转变了传统发展。");
         }
     }
 }
