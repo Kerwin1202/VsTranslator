@@ -51,9 +51,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Core\HttpHelper.cs" />
-    <Compile Include="Core\Program.cs" />
+    <Compile Include="Core\Baidu\BaiduTranslator.cs" />
+    <Compile Include="Core\Baidu\Entities\BaiduTransResult.cs" />
+    <Compile Include="Core\ITranslator.cs" />
+    <Compile Include="Core\Bing\BingAdmAuth.cs" />
+    <Compile Include="Core\Bing\BingTranslator.cs" />
+    <Compile Include="Core\Bing\Entities\AdmAccessToken.cs" />
+    <Compile Include="Core\Ciba\CibaTranslator.cs" />
+    <Compile Include="Core\Ciba\Entities\CibaTransResult.cs" />
+    <Compile Include="Core\Google\GoogleTranslator.cs" />
+    <Compile Include="Core\Utils\HttpHelper.cs" />
     <Compile Include="Core\Translator.cs" />
+    <Compile Include="Core\Utils\Encrypts.cs" />
+    <Compile Include="Core\Utils\Times.cs" />
+    <Compile Include="Core\Utils\WebException.cs" />
+    <Compile Include="Core\Youdao\Entities\YoudaoTransResult.cs" />
+    <Compile Include="Core\Youdao\Enums\ErrorCodes.cs" />
+    <Compile Include="Core\Youdao\Enums\TranslateType.cs" />
+    <Compile Include="Core\Youdao\YoudaoTranslator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\TranslateOptions.cs">
       <SubType>Component</SubType>
@@ -68,7 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -205,6 +222,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />

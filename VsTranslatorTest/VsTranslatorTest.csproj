@@ -50,8 +50,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="BaiduTranslatorTest.cs" />
+    <Compile Include="BingTranslatorTest.cs" />
+    <Compile Include="GoogleTranslatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="YoudaoTranslatorTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VsTranslator\VsTranslator.csproj">
+      <Project>{295C9623-6A13-4DF1-9C84-31DCE1C1EB9F}</Project>
+      <Name>VsTranslator</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

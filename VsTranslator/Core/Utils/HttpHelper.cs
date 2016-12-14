@@ -13,7 +13,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace VsTranslator.Core
+namespace VsTranslator.Core.Utils
 {
     /// <summary>
     /// Http连接操作帮助类
@@ -60,7 +60,7 @@ namespace VsTranslator.Core
                     GetData(item, result);
                 }
             }
-            catch (WebException ex)
+            catch (System.Net.WebException ex)
             {
                 if (ex.Response != null)
                 {
