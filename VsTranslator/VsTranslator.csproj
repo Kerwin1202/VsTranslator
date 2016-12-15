@@ -100,7 +100,8 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CSharpRunJavascript">
+    <Reference Include="CSharpRunJavascript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libs\CSharpRunJavascript.dll</HintPath>
     </Reference>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Web;
 using VsTranslator.Core.Baidu.Entities;
 using VsTranslator.Core.Utils;
 using VsTranslator.Core.Youdao.Entities;
@@ -46,7 +47,7 @@ namespace VsTranslator.Core.Youdao
             }
             try
             {
-                string uri = $"{TranslateUrl}?keyfrom={_appid}&key={_clientSecret}&type=data&doctype=json&version=1.1&q={text}";
+                string uri = $"{TranslateUrl}?keyfrom={_appid}&key={_clientSecret}&type=data&doctype=json&version=1.1&q={HttpUtility.UrlEncode(text)}";
                 if (translateType != (TranslateType.Dict | TranslateType.Translate))
                 {
                     uri += "&only=" + translateType.ToString().ToLower();

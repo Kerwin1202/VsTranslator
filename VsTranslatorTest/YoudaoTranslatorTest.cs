@@ -23,7 +23,7 @@ namespace VsTranslatorTest
 
             Assert.AreEqual(youdaoTransResult.ErrorCode, ErrorCodes.Normal);
 
-            Assert.AreEqual(youdaoTransResult.Translation[0], "TDD完全变成传统的开发。");
+            Assert.AreEqual("TDD完全变成传统的开发。", youdaoTransResult.Translation[0]);
         }
     }
 }

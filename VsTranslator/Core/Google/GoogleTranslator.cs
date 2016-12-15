@@ -30,10 +30,9 @@ namespace VsTranslator.Core.Google
 
             var result = new HttpHelper().GetHtml(new HttpItem()
             {
-                Url =
-                    "http://translate.google.cn/translate_a/single?client=t&sl=zh-CN&tl=en&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk=" + tk + "&q=" + text
+                Url =$"http://translate.google.cn/translate_a/single?client=t&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}&q={HttpUtility.UrlEncode(text)}"
             }).Html;
-            //
+
             return new Regex("\\[\\[\\[\"(.+?)\",\"(.+?)\",,,.+?\\]\\],,\".+?\"\\]").Match(result).Groups[1].Value;
 
             //[[["You have a good day today","你今天过得好不好",,,3]],,"zh-CN"]
