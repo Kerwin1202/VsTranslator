@@ -21,7 +21,7 @@ namespace VsTranslator.Core.Youdao.Entities
         public YoudaoBaseResult BasicResult { get; set; }
 
         [DataMember(Name = "web")]
-        public Dictionary<string,List<string>> WebResult { get; set; }
+        public List<YoudaoWebResult> WebResult { get; set; }
     }
     [DataContract]
     public class YoudaoBaseResult
@@ -37,5 +37,13 @@ namespace VsTranslator.Core.Youdao.Entities
 
         [DataMember(Name = "explains")]
         public List<string> Explains { get; set; }
+    }
+    [DataContract]
+    public class YoudaoWebResult
+    {
+        [DataMember(Name = "key")]
+        public string Key { get; set; }
+        [DataMember(Name = "value")]
+        public List<string> Value { get; set; }
     }
 }

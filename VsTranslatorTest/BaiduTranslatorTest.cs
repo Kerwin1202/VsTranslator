@@ -2,38 +2,39 @@
 using System.Globalization;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VsTranslator.Core;
 using VsTranslator.Core.Baidu;
 using VsTranslator.Core.Baidu.Entities;
+using VsTranslator.Core.Entities;
 
 namespace VsTranslatorTest
 {
     [TestClass]
     public class BaiduTranslatorTest
     {
-        readonly BaiduTranslator _baiduTranslator = new BaiduTranslator("20161214000033991", "HMlukU9THx2Twx1I14Hz");
+        readonly ITranslator _baiduTranslator = new BaiduTranslator("20161214000033991", "HMlukU9THx2Twx1I14Hz");
         [TestMethod]
         public void Translate()
         {
             string sourceText = "TDD completely turns traditional development around.";
-            BaiduTransResult baiduTransResult = _baiduTranslator.Translate(sourceText);
-            Assert.IsNotNull(baiduTransResult);
-            Assert.AreEqual("TDD完全变传统发展。", baiduTransResult.TransResult[0].Dst);
-
+            TranslationResult transResult = _baiduTranslator.Translate(sourceText, "en", "zh");
+            Assert.IsNotNull(transResult);
+            Assert.AreEqual("TDD完全变传统发展。", transResult.TargetText);
 
             sourceText = "你今天过得好不好";
-            baiduTransResult = _baiduTranslator.Translate(sourceText, "zh", "en");
-            Assert.IsNotNull(baiduTransResult);
-            Assert.AreEqual("TDD完全变传统发展。", baiduTransResult.TransResult[0].Dst);
+            transResult = _baiduTranslator.Translate(sourceText, "zh", "en");
+            Assert.IsNotNull(transResult);
+            Assert.AreEqual("Do you have a good day", transResult.TargetText);
 
             sourceText = "hello\"";
-            baiduTransResult = _baiduTranslator.Translate(sourceText);
-            Assert.IsNotNull(baiduTransResult);
-            Assert.AreEqual("TDD完全变传统发展。", baiduTransResult.TransResult[0].Dst);
+             transResult = _baiduTranslator.Translate(sourceText, "en", "zh");
+            Assert.IsNotNull(transResult);
+            Assert.AreEqual("你好”", transResult.TargetText);
 
             sourceText = "hello";
-            baiduTransResult = _baiduTranslator.Translate(sourceText);
-            Assert.IsNotNull(baiduTransResult);
-            Assert.AreEqual("TDD完全变传统发展。", baiduTransResult.TransResult[0].Dst);
+            transResult = _baiduTranslator.Translate(sourceText, "en", "zh");
+            Assert.IsNotNull(transResult);
+            Assert.AreEqual("你好", transResult.TargetText);
 
         }
     }

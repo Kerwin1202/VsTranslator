@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using VsTranslator.Core.Bing.Entities;
+using VsTranslator.Core.Entities;
+using VsTranslator.Core.Enums;
 
 namespace VsTranslator.Core.Bing
 {
-    public class BingTranslator 
+    public class BingTranslator  : ITranslator
     {
         private static AdmAccessToken _admToken;
         private static BingAdmAuth _admAuth;
 
+        private readonly List<TranslationLanguage> _targetLanguages;
+        private readonly List<TranslationLanguage> _sourceLanguages;
+
         private BingTranslator()
         {
-            
+
         }
 
         public BingTranslator(string clientId, string clientSecret)
@@ -21,9 +28,72 @@ namespace VsTranslator.Core.Bing
             //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
             //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
             _admAuth = new BingAdmAuth(clientId, clientSecret);
+
+            _targetLanguages = new List<TranslationLanguage>()
+            {
+                new TranslationLanguage("af","Afrikaans / 南非荷兰语"),
+                new TranslationLanguage("ar", "Arabic / 阿拉伯语"),
+                new TranslationLanguage("bs-Latn", "Bosnian (Latin) / 波斯尼亚 (拉丁语)"),
+                new TranslationLanguage("bg", "Bulgarian / 保加利亚语"),
+                new TranslationLanguage("ca", "Catalan / 加泰罗尼亚语"),
+                new TranslationLanguage("zh-CHS", "Chinese Simplified / 简体中文"),
+                new TranslationLanguage("zh-CHT", "Chinese Traditional / 繁体中文"),
+                new TranslationLanguage("yue", "Cantonese (Traditional) / 粤语（繁体）"),
+                new TranslationLanguage("hr", "Croatian / 克罗地亚语"),
+                new TranslationLanguage("cs", "Czech / 捷克语"),
+                new TranslationLanguage("da", "Danish / 丹麦语"),
+                new TranslationLanguage("nl", "Dutch / 荷兰语"),
+                new TranslationLanguage("en", "English / 英语"),
+                new TranslationLanguage("et", "Estonian / 爱沙尼亚语"),
+                new TranslationLanguage("fj", "Fijian / 斐济语"),
+                new TranslationLanguage("fil", "Filipino / 菲律宾语"),
+                new TranslationLanguage("fi", "Finnish / 芬兰语"),
+                new TranslationLanguage("fr", "French / 法语"),
+                new TranslationLanguage("de", "German / 德语"),
+                new TranslationLanguage("el", "Greek / 希腊语"),
+                new TranslationLanguage("ht", "Haitian Creole / 海地克里奥尔语"),
+                new TranslationLanguage("he", "Hebrew / 希伯来语"),
+                new TranslationLanguage("hi", "Hindi / 印地语"),
+                new TranslationLanguage("mww", "Hmong Daw /苗语"),
+                new TranslationLanguage("hu", "Hungarian / 匈牙利语"),
+                new TranslationLanguage("id", "Indonesian / 印度尼西亚语"),
+                new TranslationLanguage("it", "Italian / 意大利语"),
+                new TranslationLanguage("ja", "Japanese / 日语"),
+                new TranslationLanguage("sw", "Kiswahili / 斯瓦希里语"),
+                new TranslationLanguage("tlh", "Klingon / 克林贡语"),
+                new TranslationLanguage("ko", "Korean / 韩语"),
+                new TranslationLanguage("lv", "Latvian / 拉脱维亚语"),
+                new TranslationLanguage("lt", "Lithuanian / 立陶宛语"),
+                new TranslationLanguage("mg", "Malagasy / 马尔加什语"),
+                new TranslationLanguage("ms", "Malay / 马来语"),
+                new TranslationLanguage("mt", "Maltese / 马耳他语"),
+                new TranslationLanguage("yua", "Yucatec Maya / 玛雅语"),
+                new TranslationLanguage("no", "Norwegian Bokmål / 挪威博克马尔语"),
+                new TranslationLanguage("fa", "Persian / 波斯语"),
+                new TranslationLanguage("pl", "Polish / 波兰语"),
+                new TranslationLanguage("pt", "Portuguese / 葡萄牙语"),
+                new TranslationLanguage("ro", "Romanian / 罗马尼亚语"),
+                new TranslationLanguage("ru", "Russian / 俄语"),
+                new TranslationLanguage("sm", "Samoan / 萨摩亚语"),
+                new TranslationLanguage("sr-Cyrl", "Serbian (Cyrillic) / 塞尔维亚语"),
+                new TranslationLanguage("sr-Latn", "Serbian (Latin) / 塞尔维亚语（拉丁语）"),
+                new TranslationLanguage("sk", "Slovak / 斯洛伐克语"),
+                new TranslationLanguage("sl", "Slovenian / 斯洛文尼亚语"),
+                new TranslationLanguage("es", "Spanish / 西班牙语"),
+                new TranslationLanguage("sv", "Swedish / 瑞典语"),
+                new TranslationLanguage("ty", "Tahitian / 大溪地语 (塔希提岛)"),
+                new TranslationLanguage("th", "Thai / 泰语"),
+                new TranslationLanguage("tr", "Turkish / 土耳其语"),
+                new TranslationLanguage("uk", "Ukrainian / 乌克兰语"),
+                new TranslationLanguage("ur", "Urdu / 乌尔都语"),
+                new TranslationLanguage("vi", "Vietnamese / 越南语"),
+                new TranslationLanguage("cy", "Welsh / 威尔士语")
+            };
+            _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("", "Auto-detect / 自动检测") };
+            _sourceLanguages.AddRange(_targetLanguages);
         }
 
-        public string Translate(string text, string from = "en", string to = "zh-CHS")
+        private string GetTranslate(string text, string from = "en", string to = "zh-CHS")
         {
             try
             {
@@ -83,5 +153,70 @@ namespace VsTranslator.Core.Bing
         }
 
 
+        //http://api.microsofttranslator.com/v2/ajax.svc/
+
+        //get Support languages : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguagesForTranslate
+        //get support languages's names : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguageNames?locale=en&languageCodes=["af","ar","bs-Latn","bg","ca","zh-CHS","zh-CHT","yue","hr","cs","da","nl","en","et","fj","fil","fi","fr","de","el","ht","he","hi","mww","hu","id","it","ja","sw","tlh","tlh-Qaak","ko","lv","lt","mg","ms","mt","yua","no","otq","fa","pl","pt","ro","ru","sm","sr-Cyrl","sr-Latn","sk","sl","es","sv","ty","th","to","tr","uk","ur","vi","cy"]
+
+        public string GetName()
+        {
+            return "Bing Translator / 必应翻译";
+        }
+
+        public string GetDescription()
+        {
+            return "you can on the website translation http://www.bing.com/translator/";
+        }
+
+        public string GetWebsite()
+        {
+            return "http://www.bing.com/translator/";
+        }
+
+        public List<TranslationLanguage> GetTargetLanguages()
+        {
+           return _targetLanguages;
+        }
+
+        public List<TranslationLanguage> GetSourceLanguages()
+        {
+            return _sourceLanguages;
+        }
+
+        public TranslationResult Translate(string text, string @from, string to)
+        {
+            TranslationResult result = new TranslationResult()
+            {
+                SourceLanguage = @from,
+                TargetLanguage = to,
+                SourceText = text,
+                TargetText = "",
+                FailedReason = ""
+            };
+            if (_sourceLanguages.Count(sl => sl.Code == @from) <= 0)
+            {
+                result.TranslationResultTypes = TranslationResultTypes.Failed;
+                result.FailedReason = "unrecognizable source language";
+            }
+            else if (_targetLanguages.Count(tl => tl.Code == to) <= 0)
+            {
+                result.TranslationResultTypes = TranslationResultTypes.Failed;
+                result.FailedReason = "unrecognizable target language";
+            }
+            else
+            {
+                try
+                {
+                    result.TranslationResultTypes = TranslationResultTypes.Successed;
+                    result.TargetText = GetTranslate(text, from, to);
+                }
+                catch (Exception exception)
+                {
+                    result.FailedReason = exception.Message;
+                    result.TranslationResultTypes = TranslationResultTypes.Failed;
+                }
+            }
+            return result;
+        }
     }
 }

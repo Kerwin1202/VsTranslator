@@ -78,7 +78,7 @@ namespace VsTranslator
         {
             base.Initialize();
             string sourceText = "TDD completely turns traditional development around.";
-            var targetText = new GoogleTranslator().Translate(sourceText);
+           // var targetText = new GoogleTranslator().GetTranslate(sourceText);
 
 
      

@@ -54,6 +54,9 @@
   <ItemGroup>
     <Compile Include="Core\Baidu\BaiduTranslator.cs" />
     <Compile Include="Core\Baidu\Entities\BaiduTransResult.cs" />
+    <Compile Include="Core\Entities\TranslationLanguage.cs" />
+    <Compile Include="Core\Entities\TranslationResult.cs" />
+    <Compile Include="Core\Enums\TranslationResultTypes.cs" />
     <Compile Include="Core\ITranslator.cs" />
     <Compile Include="Core\Bing\BingAdmAuth.cs" />
     <Compile Include="Core\Bing\BingTranslator.cs" />

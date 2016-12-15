@@ -1,11 +1,22 @@
-﻿namespace VsTranslator.Core
+﻿using System.Collections.Generic;
+using VsTranslator.Core.Entities;
+
+namespace VsTranslator.Core
 {
     public interface ITranslator
     {
-        string Name { get; }
+        string GetName();
 
-        string Description { get;}
+        string GetDescription();
 
-        string Translate(string text,string from,string to);
+        string GetWebsite();
+
+        //string Translate(string text, string from, string to);
+
+        List<TranslationLanguage> GetTargetLanguages();
+
+        List<TranslationLanguage> GetSourceLanguages();
+
+        TranslationResult Translate(string text, string from, string to);
     }
 }
