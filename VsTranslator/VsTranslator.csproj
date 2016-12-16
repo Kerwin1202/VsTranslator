@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="Core\Baidu\BaiduTranslator.cs" />
     <Compile Include="Core\Baidu\Entities\BaiduTransResult.cs" />
+    <Compile Include="Core\Bing\Entities\BingTransResult.cs" />
     <Compile Include="Core\Entities\TranslationLanguage.cs" />
     <Compile Include="Core\Entities\TranslationResult.cs" />
     <Compile Include="Core\Enums\TranslationResultTypes.cs" />
+    <Compile Include="Core\Google\Entities\GoogleTransResult.cs" />
     <Compile Include="Core\ITranslator.cs" />
     <Compile Include="Core\Bing\BingAdmAuth.cs" />
     <Compile Include="Core\Bing\BingTranslator.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Core\Utils\Encrypts.cs" />
     <Compile Include="Core\Utils\Times.cs" />
     <Compile Include="Core\Utils\WebException.cs" />
+    <Compile Include="Core\Youdao\Entities\YoudaoPostTransResult.cs" />
     <Compile Include="Core\Youdao\Entities\YoudaoTransResult.cs" />
     <Compile Include="Core\Youdao\Enums\ErrorCodes.cs" />
     <Compile Include="Core\Youdao\Enums\TranslateType.cs" />

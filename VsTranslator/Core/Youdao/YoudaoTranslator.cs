@@ -34,6 +34,7 @@ namespace VsTranslator.Core.Youdao
         private readonly string _clientSecret;
 
         private const string Chinese = "ZH_CN";
+        private const string English = "EN";
         private const string Auto = "Auto";
 
         public YoudaoTranslator(string appid, string clientSecret)
@@ -63,7 +64,7 @@ namespace VsTranslator.Core.Youdao
         /// </summary>
         /// <param name="text">text's length must between 0 and 200</param>
         /// <param name="translateType"></param>
-        private YoudaoTransResult GetTranslate(string text, TranslateType translateType = TranslateType.Dict | TranslateType.Translate)
+        private YoudaoTransResult TranslateByHttp(string text, TranslateType translateType = TranslateType.Dict | TranslateType.Translate)
         {
             if (!(text.Length > 0 && text.Length < 200))
             {
@@ -99,11 +100,77 @@ namespace VsTranslator.Core.Youdao
                 }
                 finally
                 {
-                    if (response != null)
+                    response?.Close();
+                }
+            }
+            catch (System.Net.WebException e)
+            {
+                VsTranslator.Core.Utils.WebException.ProcessWebException(e);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Dictionaries only support translation between Chinese and English in translation results supported Britain, Japan and South Korea, France, Russia and the West to Chinese translation and Chinese to English translation
+        /// about Q&A http://fanyi.youdao.com/openapi?path=faq
+        /// about document http://fanyi.youdao.com/openapi?path=data-mode
+        /// </summary>
+        /// <param name="text">text's length must between 0 and 1000</param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        private YoudaoPostTransResult TranslateByPost(string text, string @from = "EN", string to = "ZH_CN")
+        {
+            if (!(text.Length > 0 && text.Length < 1000))
+            {
+                return null;
+            }
+            try
+            {
+                //http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=https://www.baidu.com/link
+
+                string uri = "http://fanyi.youdao.com/translate";
+                string type = @from + "2" + to;
+                if (@from == Auto)
+                {
+                    type = @from;
+                }
+                string requestDetails = $"type={type}&i={HttpUtility.UrlEncode(Encoding.GetEncoding("ISO-8859-1").GetString(Encoding.UTF8.GetBytes(text)))}&doctype=json&xmlVersion=1.8&keyfrom=fanyi.web&ue=UTF-8&action=FY_BY_CLICKBUTTON&typoResult=true";
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+                httpWebRequest.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+                httpWebRequest.Method = "POST";
+                byte[] bytes = Encoding.ASCII.GetBytes(requestDetails);
+                httpWebRequest.ContentLength = bytes.Length;
+                using (Stream outputStream = httpWebRequest.GetRequestStream())
+                {
+                    outputStream.Write(bytes, 0, bytes.Length);
+                }
+                WebResponse response = null;
+                try
+                {
+                    response = httpWebRequest.GetResponse();
+                    using (Stream stream = response.GetResponseStream())
                     {
-                        response.Close();
-                        response = null;
+                        if (stream == null)
+                        {
+                            return null;
+                        }
+                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(YoudaoPostTransResult));
+                        //Get deserialized object from JSON stream
+                        YoudaoPostTransResult youdaoTransResult = (YoudaoPostTransResult)serializer.ReadObject(stream);
+                        return youdaoTransResult;
                     }
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    response?.Close();
                 }
             }
             catch (System.Net.WebException e)
@@ -168,7 +235,7 @@ namespace VsTranslator.Core.Youdao
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable target language";
             }
-            else if (@from != Chinese && to != Chinese)
+            else if (!((@from != Chinese && to == Chinese) || (@from == Chinese && to == English)))
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "Dictionaries only support translation between Chinese and English in translation results supported Britain, Japan and South Korea, France, Russia and the West to Chinese translation and Chinese to English translation";
@@ -177,7 +244,23 @@ namespace VsTranslator.Core.Youdao
             {
                 try
                 {
-                    YoudaoTransResult youdaoTransResult = GetTranslate(text);
+                    #region http api
+                    //YoudaoTransResult youdaoTransResult = TranslateByHttp(text);
+                    //if (youdaoTransResult == null || youdaoTransResult.ErrorCode != ErrorCodes.Normal)
+                    //{
+                    //    result.TranslationResultTypes = TranslationResultTypes.Failed;
+                    //    result.FailedReason = "translate failed";
+                    //}
+                    //else
+                    //{
+                    //    result.TranslationResultTypes = TranslationResultTypes.Successed;
+                    //    result.TargetText = youdaoTransResult.Translation[0];
+                    //}
+                    #endregion
+
+                    #region post website
+
+                    YoudaoPostTransResult youdaoTransResult = TranslateByPost(text, @from, to);
                     if (youdaoTransResult == null || youdaoTransResult.ErrorCode != ErrorCodes.Normal)
                     {
                         result.TranslationResultTypes = TranslationResultTypes.Failed;
@@ -186,8 +269,12 @@ namespace VsTranslator.Core.Youdao
                     else
                     {
                         result.TranslationResultTypes = TranslationResultTypes.Successed;
-                        result.TargetText = youdaoTransResult.Translation[0];
+                        result.TargetText = youdaoTransResult.TranslateResults?[0]?[0].Tgt;
+                        var langs = youdaoTransResult.Type.Split('2');
+                        result.SourceLanguage = langs[0];
+                        result.TargetLanguage = langs[1];
                     }
+                    #endregion
                 }
                 catch (Exception exception)
                 {

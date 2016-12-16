@@ -4,13 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using VsTranslator.Core.Bing.Entities;
 using VsTranslator.Core.Entities;
 using VsTranslator.Core.Enums;
 
 namespace VsTranslator.Core.Bing
 {
-    public class BingTranslator  : ITranslator
+    public class BingTranslator : ITranslator
     {
         private static AdmAccessToken _admToken;
         private static BingAdmAuth _admAuth;
@@ -22,6 +23,10 @@ namespace VsTranslator.Core.Bing
         {
 
         }
+
+        //soap : https://msdn.microsoft.com/en-us/library/ff512435.aspx
+        //ajax : https://msdn.microsoft.com/en-us/library/ff512404.aspx
+        //http : https://msdn.microsoft.com/en-us/library/ff512419.aspx
 
         public BingTranslator(string clientId, string clientSecret)
         {
@@ -93,11 +98,18 @@ namespace VsTranslator.Core.Bing
             _sourceLanguages.AddRange(_targetLanguages);
         }
 
-        private string GetTranslate(string text, string from = "en", string to = "zh-CHS")
+        /// <summary>
+        /// https://msdn.microsoft.com/en-us/library/ff512419.aspx
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private string TranslateByHttp(string text, string from = "en", string to = "zh-CHS")
         {
             try
             {
-                var sw = Stopwatch.StartNew();
+                //var sw = Stopwatch.StartNew();
                 var authToken = GetAuthToken();
                 string uri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=" + System.Web.HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to;
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
@@ -108,17 +120,73 @@ namespace VsTranslator.Core.Bing
                     response = httpWebRequest.GetResponse();
                     using (Stream stream = response.GetResponseStream())
                     {
-                        if (stream==null)
+                        if (stream == null)
                         {
                             return string.Empty;
                         }
-                        System.Runtime.Serialization.DataContractSerializer dcs = new System.Runtime.Serialization.DataContractSerializer(Type.GetType("System.String"));
+                        System.Runtime.Serialization.DataContractSerializer dcs = new System.Runtime.Serialization.DataContractSerializer(typeof(System.String));
                         string translation = (string)dcs.ReadObject(stream);
+
                         Console.WriteLine("Bing translation for source text '{0}' from {1} to {2} is", text, from, to);
                         Console.WriteLine(translation);
-                        sw.Stop();
-                        Console.WriteLine(sw.ElapsedMilliseconds);
+
                         return translation;
+                    }
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    response?.Close();
+                }
+            }
+            catch (WebException e)
+            {
+                VsTranslator.Core.Utils.WebException.ProcessWebException(e);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return String.Empty;
+        }
+        /// <summary>
+        /// https://msdn.microsoft.com/en-us/library/ff512404.aspx
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private BingTransResult TranslateByAjax(string text, string from = "en", string to = "zh-CHS")
+        {
+            try
+            {
+                var authToken = GetAuthToken();
+                string uri = "http://api.microsofttranslator.com/v2/ajax.svc/GetTranslations?text=" + System.Web.HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to + "&maxTranslations=20";
+
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+                httpWebRequest.Headers.Add("Authorization", authToken);
+                WebResponse response = null;
+                try
+                {
+                    response = httpWebRequest.GetResponse();
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        if (stream == null)
+                        {
+                            return null;
+                        }
+                        StreamReader streamReader = new StreamReader(stream, System.Text.Encoding.UTF8);
+                        string jsonString = streamReader.ReadToEnd();
+                        using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(jsonString)))
+                        {
+                            BingTransResult translation = (BingTransResult)new DataContractJsonSerializer(typeof(BingTransResult)).ReadObject(ms);
+                            Console.WriteLine("Bing translation for source text '{0}' from {1} to {2} is", text, from, to);
+                            Console.WriteLine(translation);
+                            return translation;
+                        }
                     }
                 }
                 catch
@@ -142,7 +210,7 @@ namespace VsTranslator.Core.Bing
             {
                 Console.WriteLine(ex.Message);
             }
-            return string.Empty;
+            return null;
         }
 
         private string GetAuthToken()
@@ -175,7 +243,7 @@ namespace VsTranslator.Core.Bing
 
         public List<TranslationLanguage> GetTargetLanguages()
         {
-           return _targetLanguages;
+            return _targetLanguages;
         }
 
         public List<TranslationLanguage> GetSourceLanguages()
@@ -208,7 +276,16 @@ namespace VsTranslator.Core.Bing
                 try
                 {
                     result.TranslationResultTypes = TranslationResultTypes.Successed;
-                    result.TargetText = GetTranslate(text, from, to);
+
+                    #region ajax
+                    BingTransResult bingTransResult = TranslateByAjax(text, from, to);
+                    result.SourceLanguage = bingTransResult?.From;
+                    result.TargetText = bingTransResult?.Translations?[0].TranslatedText; 
+                    #endregion
+
+                    #region http
+                    //result.TargetText = TranslateByHttp(text, from, to); 
+                    #endregion
                 }
                 catch (Exception exception)
                 {

@@ -77,7 +77,7 @@ namespace VsTranslator.Core.Baidu
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private BaiduTransResult GetTranslate(string text, string from = "en", string to = "zh")
+        private BaiduTransResult TranslateByHttp(string text, string from = "en", string to = "zh")
         {
             if (!(text.Length > 0 && text.Length < 2000))
             {
@@ -119,11 +119,7 @@ namespace VsTranslator.Core.Baidu
                 }
                 finally
                 {
-                    if (response != null)
-                    {
-                        response.Close();
-                        response = null;
-                    }
+                    response?.Close();
                 }
             }
             catch (WebException e)
@@ -192,7 +188,7 @@ namespace VsTranslator.Core.Baidu
             {
                 try
                 {
-                    BaiduTransResult baiduTransResult = GetTranslate(text, from, to);
+                    BaiduTransResult baiduTransResult = TranslateByHttp(text, from, to);
                     if (baiduTransResult == null)
                     {
                         result.FailedReason = "translate failed";
@@ -202,6 +198,8 @@ namespace VsTranslator.Core.Baidu
                     {
                         result.TargetText = baiduTransResult.TransResult[0].Dst;
                         result.TranslationResultTypes = TranslationResultTypes.Successed;
+                        result.SourceLanguage = baiduTransResult.From;
+                        result.TargetLanguage = baiduTransResult.To;
                     }
                 }
                 catch (Exception exception)

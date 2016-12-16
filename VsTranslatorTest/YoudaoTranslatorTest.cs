@@ -27,7 +27,8 @@ namespace VsTranslatorTest
 
             sourceText = "hello\"";
             transResult = _youdaoTranslator.Translate(sourceText, "EN", "ZH_CN");
-            Assert.AreEqual("去\"", transResult.TargetText);
+            //Assert.AreEqual("去\"", transResult.TargetText);//当使用有道api的时候是去
+            Assert.AreEqual("你好”", transResult.TargetText);//这是有道网站的接口
 
             sourceText = "hello";
             transResult = _youdaoTranslator.Translate(sourceText, "EN", "ZH_CN");

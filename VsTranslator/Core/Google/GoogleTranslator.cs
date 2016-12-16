@@ -8,6 +8,7 @@ using System.Web;
 using Microsoft.VisualStudio.Shell.Interop;
 using VsTranslator.Core.Entities;
 using VsTranslator.Core.Enums;
+using VsTranslator.Core.Google.Entities;
 using VsTranslator.Core.Utils;
 
 namespace VsTranslator.Core.Google
@@ -89,11 +90,11 @@ namespace VsTranslator.Core.Google
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private string GetTranslate(string text, string from = "en", string to = "zh-CN")
+        private GoogleTransResult TranslateByHttp(string text, string from = "en", string to = "zh-CN")
         {
             if (!(text.Length > 0 && text.Length < 5000))
             {
-                return string.Empty;
+                return null;
             }
             var tk = GetTk(text);
 
@@ -101,8 +102,12 @@ namespace VsTranslator.Core.Google
             {
                 Url = $"http://translate.google.cn/translate_a/single?client=t&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}&q={HttpUtility.UrlEncode(text)}"
             }).Html;
-
-            return new Regex("\\[\\[\\[\"(.+?)\",\"(.+?)\",,,.+?\\]\\],,\".+?\"\\]").Match(result).Groups[1].Value;
+            var mc = new Regex("\\[\\[\\[\"(.+?)\",\"(.+?)\",,,.+?\\]\\],,\"(.+?)\"\\]").Match(result);
+            return new GoogleTransResult()
+            {
+                From = mc.Groups[3].Value,
+                TargetText = mc.Groups[1].Value
+            };
 
             //[[["You have a good day today","你今天过得好不好",,,3]],,"zh-CN"]
             //[[["你好”","hello\"",,,1]],,"en"]
@@ -171,7 +176,9 @@ namespace VsTranslator.Core.Google
                 try
                 {
                     result.TranslationResultTypes = TranslationResultTypes.Successed;
-                    result.TargetText = GetTranslate(text, from, to);
+                    GoogleTransResult googleTransResult = TranslateByHttp(text, from, to);
+                    result.SourceLanguage = googleTransResult.From;
+                    result.TargetText = googleTransResult.TargetText;
                 }
                 catch (Exception exception)
                 {

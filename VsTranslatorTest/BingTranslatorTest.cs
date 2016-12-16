@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VsTranslator.Core;
 using VsTranslator.Core.Bing;
@@ -9,6 +10,7 @@ namespace VsTranslatorTest
     [TestClass]
     public class BingTranslatorTest
     {
+        
         //VsTranslator  
         //SVJTxigXb3ezDDm6ZG5hn/FC20YUbV37clW3zw8hLLE=
         readonly ITranslator _bingTranslator = new BingTranslator("VsTranslatorByKerwin", "LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E=");
