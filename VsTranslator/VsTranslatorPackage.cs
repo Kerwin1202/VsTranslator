@@ -77,10 +77,7 @@ namespace VsTranslator
         protected override void Initialize()
         {
             base.Initialize();
-            string sourceText = "TDD completely turns traditional development around.";
-           // var targetText = new GoogleTranslator().GetTranslate(sourceText);
-
-
+            
      
         }
         #endregion

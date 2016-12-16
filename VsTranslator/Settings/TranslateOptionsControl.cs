@@ -31,5 +31,11 @@ namespace VsTranslator.Settings
         {
 
         }
+
+        public void Initialize()
+        {
+            //
+        }
+
     }
 }
