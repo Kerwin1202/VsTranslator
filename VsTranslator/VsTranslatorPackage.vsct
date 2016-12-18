@@ -52,11 +52,12 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidVsTranslatorPackageCmdSet" id="FirstCommandId" priority="0x0100" type="Button">
+      <Button guid="guidVsTranslatorPackageCmdSet" id="TranslatorCmdId" priority="0x0100" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke FirstCommand</ButtonText>
+          <CommandName>Translate Selected</CommandName>
+          <ButtonText>Translate Selected</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -79,7 +80,7 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidVsTranslatorPackageCmdSet" value="{86da4c7a-599c-42e2-af95-ee1b4d587545}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="FirstCommandId" value="0x0100" />
+      <IDSymbol name="TranslatorCmdId" value="0x0100" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >

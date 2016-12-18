@@ -34,16 +34,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbSourceLanguage = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbService = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtClientSecretBaidu = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtAppKeyBaidu = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtAppKeyBing = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtClientSecretBing = new System.Windows.Forms.TextBox();
+            this.cbServices = new System.Windows.Forms.ComboBox();
+            this.lbBaidu = new System.Windows.Forms.LinkLabel();
+            this.lbBing = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -53,7 +60,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cbSourceLanguage);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cbService);
+            this.groupBox1.Controls.Add(this.cbServices);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(3, 0);
             this.groupBox1.Name = "groupBox1";
@@ -108,15 +115,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Source Language";
             // 
-            // cbService
-            // 
-            this.cbService.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbService.FormattingEnabled = true;
-            this.cbService.Location = new System.Drawing.Point(124, 20);
-            this.cbService.Name = "cbService";
-            this.cbService.Size = new System.Drawing.Size(229, 20);
-            this.cbService.TabIndex = 1;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -128,57 +126,126 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.lbBaidu);
+            this.groupBox2.Controls.Add(this.txtClientSecretBaidu);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtAppKeyBaidu);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Location = new System.Drawing.Point(3, 114);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(364, 94);
+            this.groupBox2.Size = new System.Drawing.Size(364, 83);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Baidu Translator Settings";
             // 
-            // label4
+            // txtClientSecretBaidu
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 29);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 12);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "App Key";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(124, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(229, 21);
-            this.textBox1.TabIndex = 1;
+            this.txtClientSecretBaidu.Location = new System.Drawing.Point(124, 50);
+            this.txtClientSecretBaidu.Name = "txtClientSecretBaidu";
+            this.txtClientSecretBaidu.Size = new System.Drawing.Size(229, 21);
+            this.txtClientSecretBaidu.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 63);
+            this.label5.Location = new System.Drawing.Point(17, 56);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(83, 12);
             this.label5.TabIndex = 2;
             this.label5.Text = "Client Secret";
             // 
-            // textBox2
+            // txtAppKeyBaidu
             // 
-            this.textBox2.Location = new System.Drawing.Point(124, 56);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(229, 21);
-            this.textBox2.TabIndex = 3;
+            this.txtAppKeyBaidu.Location = new System.Drawing.Point(124, 20);
+            this.txtAppKeyBaidu.Name = "txtAppKeyBaidu";
+            this.txtAppKeyBaidu.Size = new System.Drawing.Size(229, 21);
+            this.txtAppKeyBaidu.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 28);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "App Key";
             // 
             // groupBox3
             // 
-            this.groupBox3.Location = new System.Drawing.Point(3, 214);
+            this.groupBox3.Controls.Add(this.lbBing);
+            this.groupBox3.Controls.Add(this.txtClientSecretBing);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.txtAppKeyBing);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Location = new System.Drawing.Point(3, 203);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(364, 73);
+            this.groupBox3.Size = new System.Drawing.Size(364, 86);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bing Translator Settings";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(17, 27);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "App Key";
+            // 
+            // txtAppKeyBing
+            // 
+            this.txtAppKeyBing.Location = new System.Drawing.Point(124, 22);
+            this.txtAppKeyBing.Name = "txtAppKeyBing";
+            this.txtAppKeyBing.Size = new System.Drawing.Size(229, 21);
+            this.txtAppKeyBing.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(17, 56);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 12);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Client Secret";
+            // 
+            // txtClientSecretBing
+            // 
+            this.txtClientSecretBing.Location = new System.Drawing.Point(124, 52);
+            this.txtClientSecretBing.Name = "txtClientSecretBing";
+            this.txtClientSecretBing.Size = new System.Drawing.Size(229, 21);
+            this.txtClientSecretBing.TabIndex = 3;
+            // 
+            // cbServices
+            // 
+            this.cbServices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbServices.FormattingEnabled = true;
+            this.cbServices.Location = new System.Drawing.Point(124, 20);
+            this.cbServices.Name = "cbServices";
+            this.cbServices.Size = new System.Drawing.Size(229, 20);
+            this.cbServices.TabIndex = 1;
+            // 
+            // lbBaidu
+            // 
+            this.lbBaidu.AutoSize = true;
+            this.lbBaidu.Location = new System.Drawing.Point(204, 0);
+            this.lbBaidu.Name = "lbBaidu";
+            this.lbBaidu.Size = new System.Drawing.Size(143, 12);
+            this.lbBaidu.TabIndex = 4;
+            this.lbBaidu.TabStop = true;
+            this.lbBaidu.Text = "you can get it,click me";
+            this.lbBaidu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbBaidu_LinkClicked);
+            // 
+            // lbBing
+            // 
+            this.lbBing.AutoSize = true;
+            this.lbBing.Location = new System.Drawing.Point(204, 0);
+            this.lbBing.Name = "lbBing";
+            this.lbBing.Size = new System.Drawing.Size(143, 12);
+            this.lbBing.TabIndex = 4;
+            this.lbBing.TabStop = true;
+            this.lbBing.Text = "you can get it,click me";
+            this.lbBing.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbBing_LinkClicked);
             // 
             // TranslateOptionsControl
             // 
@@ -188,11 +255,13 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "TranslateOptionsControl";
-            this.Size = new System.Drawing.Size(374, 330);
+            this.Size = new System.Drawing.Size(374, 301);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -204,14 +273,20 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbSourceLanguage;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbService;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSwap;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtAppKeyBaidu;
+        private System.Windows.Forms.TextBox txtClientSecretBaidu;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtClientSecretBing;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtAppKeyBing;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbServices;
+        private System.Windows.Forms.LinkLabel lbBaidu;
+        private System.Windows.Forms.LinkLabel lbBing;
     }
 }

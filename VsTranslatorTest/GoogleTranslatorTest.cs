@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VsTranslator.Core;
-using VsTranslator.Core.Entities;
-using VsTranslator.Core.Google;
-using VsTranslator.Core.Utils;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Entities;
+using VsTranslator.Core.Translator.Google;
 
 namespace VsTranslatorTest
 {

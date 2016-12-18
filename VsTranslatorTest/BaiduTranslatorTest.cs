@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VsTranslator.Core;
-using VsTranslator.Core.Baidu;
-using VsTranslator.Core.Baidu.Entities;
-using VsTranslator.Core.Entities;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Baidu;
+using VsTranslator.Core.Translator.Entities;
 
 namespace VsTranslatorTest
 {

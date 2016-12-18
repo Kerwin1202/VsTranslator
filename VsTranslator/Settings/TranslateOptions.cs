@@ -2,6 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text.Editor;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Google;
 
 namespace VsTranslator.Settings
 {
@@ -17,5 +20,6 @@ namespace VsTranslator.Settings
                 return translateOptions;
             }
         }
+
     }
 }

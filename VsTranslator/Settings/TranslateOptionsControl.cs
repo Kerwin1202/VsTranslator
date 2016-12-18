@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Google;
 
 namespace VsTranslator.Settings
 {
@@ -15,12 +11,16 @@ namespace VsTranslator.Settings
     /// </summary>
     public partial class TranslateOptionsControl : UserControl
     {
+        internal TranslateOptions TranslateOptions;
+
+
+    
+
         public TranslateOptionsControl()
         {
             InitializeComponent();
         }
 
-        internal TranslateOptions TranslateOptions;
 
         /// <summary>
         /// Swaps the source and target languages
@@ -34,8 +34,17 @@ namespace VsTranslator.Settings
 
         public void Initialize()
         {
-            //
+            
         }
 
+        private void lbBaidu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://api.fanyi.baidu.com/api/trans/product/index");
+        }
+
+        private void lbBing_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://datamarket.azure.com/developer/applications/");
+        }
     }
 }

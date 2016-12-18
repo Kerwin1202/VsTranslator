@@ -2,8 +2,9 @@
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VsTranslator.Core;
-using VsTranslator.Core.Bing;
-using VsTranslator.Core.Entities;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Bing;
+using VsTranslator.Core.Translator.Entities;
 
 namespace VsTranslatorTest
 {
