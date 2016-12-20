@@ -78,11 +78,19 @@ namespace VsTranslator
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (null != mcs)
             {
-            
                 CommandID translateCommandId = new CommandID(GuidList.CommandSet, (int)PkgCmdIdList.GoogleTranslate);
-                MenuCommand menuItemTranslate = new MenuCommand(TranslateMenu_Clicked, translateCommandId);
-
+                OleMenuCommand menuItemTranslate = new OleMenuCommand(TranslateMenu_Clicked, translateCommandId);
+                menuItemTranslate.BeforeQueryStatus += MenuItemTranslate_BeforeQueryStatus;
                 mcs.AddCommand(menuItemTranslate);
+            }
+        }
+
+        private void MenuItemTranslate_BeforeQueryStatus(object sender, EventArgs e)
+        {
+            var myCommand = sender as OleMenuCommand;
+            if (null != myCommand)
+            {
+                myCommand.Text = "New Text";
             }
         }
 
@@ -151,9 +159,9 @@ namespace VsTranslator
                 //nothing is selected - taking the entire line
                 if (string.IsNullOrEmpty(selectedText))
                 {
-                    ITextSnapshotLine line = span.Start.GetContainingLine();
-                    selectedText = span.Start.GetContainingLine().GetText();
-                    view.Selection.Select(new SnapshotSpan(line.Start, line.End), false);
+                    //ITextSnapshotLine line = span.Start.GetContainingLine();
+                    //selectedText = span.Start.GetContainingLine().GetText();
+                    //view.Selection.Select(new SnapshotSpan(line.Start, line.End), false);
                 }
                 //still no selection
                 if (string.IsNullOrWhiteSpace(selectedText))
@@ -162,12 +170,10 @@ namespace VsTranslator
                 }
                 else
                 {
-                    MessageBox.Show(GoogleTranslator.Translate(selectedText, "en", "zh-CN").TargetText, "翻译结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    //Options opt = Global.Options;
-                    ////TranslationResult translation = opt.Translator.GetTranslation(selectedText, opt.SourceLanguage, opt.TargetLanguage);
-                    //TranslationRequest request = new TranslationRequest(selectedText, opt.Translator, opt.SourceLanguage, opt.TargetLanguage);
-                    //Connector.Execute(view, request);
+                    var Span = span.Snapshot.CreateTrackingSpan(span, SpanTrackingMode.EdgeExclusive);
+                    ITextBuffer buffer = view.Selection.TextView.TextBuffer;
+                    Span sp = Span.GetSpan(buffer.CurrentSnapshot);
+                    buffer.Replace(sp, selectedText + "->" + GoogleTranslator.Translate(selectedText, "en", "zh-CN").TargetText);
                 }
             }
         }

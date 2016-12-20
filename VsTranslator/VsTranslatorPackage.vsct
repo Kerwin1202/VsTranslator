@@ -35,6 +35,9 @@
          other menus or buttons (commands); from a visual point of view you can see the
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
+
+
+    <!--https://msdn.microsoft.com/zh-cn/library/bb166229.aspx-->
     <Menus>
       <Menu guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu" priority="0x0700" type="Menu">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
@@ -46,10 +49,13 @@
     </Menus>
 
     <Groups>
+     
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
+        <!--<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />-->
       </Group>
+
     </Groups>
 
     <!--Buttons section. -->
@@ -63,12 +69,14 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
+     
       <Button guid="guidVsTranslatorPackageCmdSet" id="GoogleTranslate" priority="0x0100" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
         <Icon guid="guidTranslateIcon" id="googleIcon" />
         <Strings>
           <CommandName>Google Translate</CommandName>
           <ButtonText>Google Translate</ButtonText>
+          <ToolTipText>Google Translate</ToolTipText>
         </Strings>
       </Button>
       <Button guid="guidVsTranslatorPackageCmdSet" id="BingTranslate" priority="0x0101" type="Button">

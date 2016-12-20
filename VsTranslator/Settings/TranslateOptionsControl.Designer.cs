@@ -34,20 +34,20 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbSourceLanguage = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cbServices = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbBaidu = new System.Windows.Forms.LinkLabel();
             this.txtClientSecretBaidu = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txtAppKeyBaidu = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtAppKeyBing = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtClientSecretBing = new System.Windows.Forms.TextBox();
-            this.cbServices = new System.Windows.Forms.ComboBox();
-            this.lbBaidu = new System.Windows.Forms.LinkLabel();
             this.lbBing = new System.Windows.Forms.LinkLabel();
+            this.txtClientSecretBing = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtAppKeyBing = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -115,6 +115,15 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Source Language";
             // 
+            // cbServices
+            // 
+            this.cbServices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbServices.FormattingEnabled = true;
+            this.cbServices.Location = new System.Drawing.Point(124, 20);
+            this.cbServices.Name = "cbServices";
+            this.cbServices.Size = new System.Drawing.Size(229, 20);
+            this.cbServices.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -137,6 +146,17 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Baidu Translator Settings";
+            // 
+            // lbBaidu
+            // 
+            this.lbBaidu.AutoSize = true;
+            this.lbBaidu.Location = new System.Drawing.Point(204, 0);
+            this.lbBaidu.Name = "lbBaidu";
+            this.lbBaidu.Size = new System.Drawing.Size(143, 12);
+            this.lbBaidu.TabIndex = 4;
+            this.lbBaidu.TabStop = true;
+            this.lbBaidu.Text = "you can get it,click me";
+            this.lbBaidu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbBaidu_LinkClicked);
             // 
             // txtClientSecretBaidu
             // 
@@ -184,58 +204,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bing Translator Settings";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(47, 12);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "App Key";
-            // 
-            // txtAppKeyBing
-            // 
-            this.txtAppKeyBing.Location = new System.Drawing.Point(124, 22);
-            this.txtAppKeyBing.Name = "txtAppKeyBing";
-            this.txtAppKeyBing.Size = new System.Drawing.Size(229, 21);
-            this.txtAppKeyBing.TabIndex = 1;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(17, 56);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 12);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Client Secret";
-            // 
-            // txtClientSecretBing
-            // 
-            this.txtClientSecretBing.Location = new System.Drawing.Point(124, 52);
-            this.txtClientSecretBing.Name = "txtClientSecretBing";
-            this.txtClientSecretBing.Size = new System.Drawing.Size(229, 21);
-            this.txtClientSecretBing.TabIndex = 3;
-            // 
-            // cbServices
-            // 
-            this.cbServices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbServices.FormattingEnabled = true;
-            this.cbServices.Location = new System.Drawing.Point(124, 20);
-            this.cbServices.Name = "cbServices";
-            this.cbServices.Size = new System.Drawing.Size(229, 20);
-            this.cbServices.TabIndex = 1;
-            // 
-            // lbBaidu
-            // 
-            this.lbBaidu.AutoSize = true;
-            this.lbBaidu.Location = new System.Drawing.Point(204, 0);
-            this.lbBaidu.Name = "lbBaidu";
-            this.lbBaidu.Size = new System.Drawing.Size(143, 12);
-            this.lbBaidu.TabIndex = 4;
-            this.lbBaidu.TabStop = true;
-            this.lbBaidu.Text = "you can get it,click me";
-            this.lbBaidu.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbBaidu_LinkClicked);
-            // 
             // lbBing
             // 
             this.lbBing.AutoSize = true;
@@ -246,6 +214,38 @@
             this.lbBing.TabStop = true;
             this.lbBing.Text = "you can get it,click me";
             this.lbBing.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbBing_LinkClicked);
+            // 
+            // txtClientSecretBing
+            // 
+            this.txtClientSecretBing.Location = new System.Drawing.Point(124, 52);
+            this.txtClientSecretBing.Name = "txtClientSecretBing";
+            this.txtClientSecretBing.Size = new System.Drawing.Size(229, 21);
+            this.txtClientSecretBing.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(17, 56);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 12);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Client Secret";
+            // 
+            // txtAppKeyBing
+            // 
+            this.txtAppKeyBing.Location = new System.Drawing.Point(124, 22);
+            this.txtAppKeyBing.Name = "txtAppKeyBing";
+            this.txtAppKeyBing.Size = new System.Drawing.Size(229, 21);
+            this.txtAppKeyBing.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(17, 27);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(47, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "App Key";
             // 
             // TranslateOptionsControl
             // 
