@@ -2,6 +2,9 @@
 {
     static class PkgCmdIdList
     {
-        public const uint Translate = 0x100;
+        public const uint GoogleTranslate = 0x1022;
+        public const uint BingTranslate = 0x1023;
+        public const uint BaiduTranslate = 0x1024;
+        public const uint YoudaoTranslate = 0x1025;
     };
 }

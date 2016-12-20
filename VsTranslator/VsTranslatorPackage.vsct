@@ -35,9 +35,20 @@
          other menus or buttons (commands); from a visual point of view you can see the
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
+    <Menus>
+      <Menu guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu" priority="0x0700" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
+        <Strings>
+          <CommandName>Translator</CommandName>
+          <ButtonText>Translator</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <Groups>
-      <Group guid="guidVsTranslatorPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+        <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
       </Group>
     </Groups>
 
@@ -52,12 +63,36 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidVsTranslatorPackageCmdSet" id="TranslatorCmdId" priority="0x0100" type="Button">
-        <Parent guid="guidVsTranslatorPackageCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
+      <Button guid="guidVsTranslatorPackageCmdSet" id="GoogleTranslate" priority="0x0100" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
+        <Icon guid="guidTranslateIcon" id="googleIcon" />
         <Strings>
-          <CommandName>Translate Selected</CommandName>
-          <ButtonText>Translate Selected</ButtonText>
+          <CommandName>Google Translate</CommandName>
+          <ButtonText>Google Translate</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidVsTranslatorPackageCmdSet" id="BingTranslate" priority="0x0101" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
+        <!--<Icon guid="guidTranslateIcon" id="googleIcon"  />-->
+        <Strings>
+          <CommandName>Bing Translate</CommandName>
+          <ButtonText>Bing Translate</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidVsTranslatorPackageCmdSet" id="BaiduTranslate" priority="0x0102" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
+        <!--<Icon guid="guidTranslateIcon" id="googleIcon" />-->
+        <Strings>
+          <CommandName>Baidu Translate</CommandName>
+          <ButtonText>Baidu Translate</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" priority="0x0103" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
+        <!--<Icon guid="guidTranslateIcon" id="googleIcon" />-->
+        <Strings>
+          <CommandName>Youdao Translate</CommandName>
+          <ButtonText>Youdao Translate</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -69,7 +104,10 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-
+      <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="googleIcon"/>
+      <!--<Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="bingIcon"/>
+      <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="baiduIcon"/>
+      <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="youdaoIcon"/>-->
     </Bitmaps>
   </Commands>
 
@@ -79,8 +117,12 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidVsTranslatorPackageCmdSet" value="{86da4c7a-599c-42e2-af95-ee1b4d587545}">
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="TranslatorCmdId" value="0x0100" />
+      <IDSymbol name="TranslatorMenu" value="0x1020" />
+      <IDSymbol name="TranslatorMenuGroup" value="0x1021" />
+      <IDSymbol name="GoogleTranslate" value="0x1022" />
+      <IDSymbol name="BingTranslate" value="0x1023" />
+      <IDSymbol name="BaiduTranslate" value="0x1024" />
+      <IDSymbol name="YoudaoTranslate" value="0x1025" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >
@@ -90,6 +132,13 @@
       <IDSymbol name="bmpPicX" value="4" />
       <IDSymbol name="bmpPicArrows" value="5" />
       <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+
+    <GuidSymbol name="guidTranslateIcon" value="{FD45CA6D-7687-493D-8781-F2617E095AB1}">
+      <IDSymbol name="googleIcon" value="1"/>
+      <IDSymbol name="bingIcon" value="2"/>
+      <IDSymbol name="baiduIcon" value="3"/>
+      <IDSymbol name="youdaoIcon" value="4"/>
     </GuidSymbol>
   </Symbols>
 </CommandTable>

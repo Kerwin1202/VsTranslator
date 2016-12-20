@@ -101,7 +101,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="Resources\baidu_64.ico" />
+    <Content Include="Resources\bing_16.ico" />
+    <Content Include="Resources\bing_16_1.ico" />
+    <Content Include="Resources\bing_64.ico" />
+    <Content Include="Resources\google_16.ico" />
     <Content Include="Resources\VsTranslatorPackage.ico" />
+    <Content Include="Resources\youdao_64.ico" />
     <Content Include="stylesheet.css" />
     <VSCTCompile Include="VsTranslatorPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>

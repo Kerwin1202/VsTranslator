@@ -78,14 +78,16 @@ namespace VsTranslator
             OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (null != mcs)
             {
-                CommandID translateCommandId = new CommandID(GuidList.CommandSet, (int)PkgCmdIdList.Translate);
+            
+                CommandID translateCommandId = new CommandID(GuidList.CommandSet, (int)PkgCmdIdList.GoogleTranslate);
                 MenuCommand menuItemTranslate = new MenuCommand(TranslateMenu_Clicked, translateCommandId);
+
                 mcs.AddCommand(menuItemTranslate);
             }
         }
+
+
         #endregion
-
-
 
 
         IWpfTextViewHost GetCurrentViewHost()
@@ -133,6 +135,8 @@ namespace VsTranslator
         /// </summary>
         private void TranslateMenu_Clicked(object sender, EventArgs e)
         {
+            MenuCommand MenuCommand = sender as MenuCommand;
+            //MenuCommand.Enabled = false;
             var viewHost = GetCurrentViewHost();
             if (viewHost == null)
             {
@@ -158,8 +162,8 @@ namespace VsTranslator
                 }
                 else
                 {
-                    MessageBox.Show(GoogleTranslator.Translate(selectedText, "en", "zh-CN").TargetText,"翻译结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+                    MessageBox.Show(GoogleTranslator.Translate(selectedText, "en", "zh-CN").TargetText, "翻译结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     //Options opt = Global.Options;
                     ////TranslationResult translation = opt.Translator.GetTranslation(selectedText, opt.SourceLanguage, opt.TargetLanguage);
                     //TranslationRequest request = new TranslationRequest(selectedText, opt.Translator, opt.SourceLanguage, opt.TargetLanguage);
