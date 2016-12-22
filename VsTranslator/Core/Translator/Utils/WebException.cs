@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 
 namespace VsTranslator.Core.Translator.Utils
 {
@@ -19,7 +20,7 @@ namespace VsTranslator.Core.Translator.Utils
                     {
                         return;
                     }
-                    using (StreamReader sr = new StreamReader(responseStream, System.Text.Encoding.ASCII))
+                    using (StreamReader sr = new StreamReader(responseStream, Encoding.ASCII))
                     {
                         strResponse = sr.ReadToEnd();
                     }

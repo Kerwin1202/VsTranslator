@@ -54,7 +54,7 @@ namespace VsBackground.Services
             this._layer = view.GetAdornmentLayer("CodeViewIDE");
 
             this._view = view;
-            this._view.LayoutChanged += this.OnLayoutChanged;
+            //this._view.LayoutChanged += this.OnLayoutChanged;
 
             // Create the pen and brush to color the box behind the a's
             this._brush = new SolidColorBrush(Color.FromArgb(0x20, 0x00, 0x00, 0xff));

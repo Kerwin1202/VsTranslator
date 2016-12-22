@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Google;
 
 namespace VsTranslator.Settings
 {
@@ -13,15 +11,11 @@ namespace VsTranslator.Settings
     {
         internal TranslateOptions TranslateOptions;
 
-
-    
-
         public TranslateOptionsControl()
         {
             InitializeComponent();
         }
-
-
+        
         /// <summary>
         /// Swaps the source and target languages
         /// </summary>

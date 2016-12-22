@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Web;
 using VsTranslator.Core.Translator.Bing.Entities;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
@@ -110,7 +113,7 @@ namespace VsTranslator.Core.Translator.Bing
             {
                 //var sw = Stopwatch.StartNew();
                 var authToken = GetAuthToken();
-                string uri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=" + System.Web.HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to;
+                string uri = "http://api.microsofttranslator.com/v2/Http.svc/Translate?text=" + HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to;
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
                 httpWebRequest.Headers.Add("Authorization", authToken);
                 WebResponse response = null;
@@ -123,7 +126,7 @@ namespace VsTranslator.Core.Translator.Bing
                         {
                             return string.Empty;
                         }
-                        System.Runtime.Serialization.DataContractSerializer dcs = new System.Runtime.Serialization.DataContractSerializer(typeof(System.String));
+                        DataContractSerializer dcs = new DataContractSerializer(typeof(String));
                         string translation = (string)dcs.ReadObject(stream);
 
                         Console.WriteLine("Bing translation for source text '{0}' from {1} to {2} is", text, from, to);
@@ -163,7 +166,7 @@ namespace VsTranslator.Core.Translator.Bing
             try
             {
                 var authToken = GetAuthToken();
-                string uri = "http://api.microsofttranslator.com/v2/ajax.svc/GetTranslations?text=" + System.Web.HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to + "&maxTranslations=20";
+                string uri = "http://api.microsofttranslator.com/v2/ajax.svc/GetTranslations?text=" + HttpUtility.UrlEncode(text) + "&from=" + from + "&to=" + to + "&maxTranslations=20";
 
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
                 httpWebRequest.Headers.Add("Authorization", authToken);
@@ -177,9 +180,9 @@ namespace VsTranslator.Core.Translator.Bing
                         {
                             return null;
                         }
-                        StreamReader streamReader = new StreamReader(stream, System.Text.Encoding.UTF8);
+                        StreamReader streamReader = new StreamReader(stream, Encoding.UTF8);
                         string jsonString = streamReader.ReadToEnd();
-                        using (MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(jsonString)))
+                        using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonString)))
                         {
                             BingTransResult translation = (BingTransResult)new DataContractJsonSerializer(typeof(BingTransResult)).ReadObject(ms);
                             Console.WriteLine("Bing translation for source text '{0}' from {1} to {2} is", text, from, to);

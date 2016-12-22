@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Web;
 using VsTranslator.Core.Translator.Baidu.Entities;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
@@ -85,7 +86,7 @@ namespace VsTranslator.Core.Translator.Baidu
             try
             {
                 var timestamp = Times.TimeStampWithMsec;
-                string uri = $"{TranslateUrl}?q={ System.Web.HttpUtility.UrlEncode(text)}&from={from}&to={to}&appid={_appid}&salt={timestamp}&sign={Encrypts.CreateMd5EncryptFromString($"{_appid}{text}{timestamp}{_clientSecret}", Encoding.UTF8)}";
+                string uri = $"{TranslateUrl}?q={ HttpUtility.UrlEncode(text)}&from={from}&to={to}&appid={_appid}&salt={timestamp}&sign={Encrypts.CreateMd5EncryptFromString($"{_appid}{text}{timestamp}{_clientSecret}", Encoding.UTF8)}";
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
                 WebResponse response = null;
                 try

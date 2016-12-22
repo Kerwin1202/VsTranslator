@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VsTranslator.Kerwin.bf91e58f-767e-4a3c-8abf-c95ef685aed5" Version="1.0" Language="en-US" Publisher="Kerwin" />
+    <Identity Id="VsTranslator.Kerwin.bf91e58f-767e-4a3c-8abf-c95ef685aed5" Version="1.0" Language="zh-Hans" Publisher="Kerwin" />
     <DisplayName>VsTranslator</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Description xml:space="preserve">Translate selected text via Google or Bing or Baidu or Youdao translation</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />

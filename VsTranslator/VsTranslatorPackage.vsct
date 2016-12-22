@@ -49,7 +49,7 @@
     </Menus>
 
     <Groups>
-     
+
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
@@ -69,7 +69,7 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-     
+
       <Button guid="guidVsTranslatorPackageCmdSet" id="GoogleTranslate" priority="0x0100" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
         <Icon guid="guidTranslateIcon" id="googleIcon" />
@@ -103,6 +103,15 @@
           <ButtonText>Youdao Translate</ButtonText>
         </Strings>
       </Button>
+    
+      <Button guid="guidVsTranslatorPackageCmdSet" id="OutputTranslateWindow" priority="0x2000" type="Button">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
+        <!--<Icon guid="guidTranslateIcon" id="googleIcon" />-->
+        <Strings>
+          <CommandName>Ouput Translate</CommandName>
+          <ButtonText>Ouput Translate</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -119,6 +128,14 @@
     </Bitmaps>
   </Commands>
 
+  <KeyBindings>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="GoogleTranslate" editor="guidVSStd97" key1="D" mod1="CONTROL Shift"  key2="D" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BingTranslate" editor="guidVSStd97" key1="D" mod1="CONTROL Shift"  key2="F" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BaiduTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="C" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="V" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="OutputTranslateWindow" editor="guidVSStd97"  key1="T" mod1="CONTROL Shift"/>
+  </KeyBindings>
+  
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidVsTranslatorPackage" value="{08a874bc-f0d4-40bc-8bbf-a1f2e30f92e5}" />
@@ -131,6 +148,7 @@
       <IDSymbol name="BingTranslate" value="0x1023" />
       <IDSymbol name="BaiduTranslate" value="0x1024" />
       <IDSymbol name="YoudaoTranslate" value="0x1025" />
+      <IDSymbol name="OutputTranslateWindow" value="0x2000" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >

@@ -10,7 +10,6 @@ using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
 using VsTranslator.Core.Translator.Youdao.Entities;
 using VsTranslator.Core.Translator.Youdao.Enums;
-using WebException = VsTranslator.Core.Translator.Utils.WebException;
 
 namespace VsTranslator.Core.Translator.Youdao
 {
@@ -101,9 +100,9 @@ namespace VsTranslator.Core.Translator.Youdao
                     response?.Close();
                 }
             }
-            catch (System.Net.WebException e)
+            catch (WebException e)
             {
-                WebException.ProcessWebException(e);
+                Utils.WebException.ProcessWebException(e);
             }
             catch (Exception ex)
             {
@@ -171,9 +170,9 @@ namespace VsTranslator.Core.Translator.Youdao
                     response?.Close();
                 }
             }
-            catch (System.Net.WebException e)
+            catch (WebException e)
             {
-                WebException.ProcessWebException(e);
+                Utils.WebException.ProcessWebException(e);
             }
             catch (Exception ex)
             {
