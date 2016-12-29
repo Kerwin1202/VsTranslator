@@ -52,6 +52,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Adornment\Connector.cs" />
+    <Compile Include="Adornment\TransAdornmentManager.cs" />
+    <Compile Include="Adornment\TranslatorControl.xaml.cs">
+      <DependentUpon>TranslatorControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\TestQuickInfoSource\TestQuickInfoController .cs" />
     <Compile Include="Core\TestQuickInfoSource\TestQuickInfoControllerProvider .cs" />
     <Compile Include="Core\TestQuickInfoSource\TestQuickInfoSource.cs" />
@@ -83,10 +88,6 @@
     <Compile Include="Core\Utils\MenuCmd.cs" />
     <Compile Include="Core\Utils\StatusBar.cs" />
     <Compile Include="GuidList.cs" />
-    <Compile Include="Ouput\OutputControl.xaml.cs">
-      <DependentUpon>OutputControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Ouput\OutputWindow.cs" />
     <Compile Include="Core\Utils\TextViewCreationListener .cs" />
     <Compile Include="PkgCmdIdList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,7 +117,9 @@
     <Content Include="Resources\bing_16.ico" />
     <Content Include="Resources\bing_16_1.ico" />
     <Content Include="Resources\bing_64.ico" />
+    <Content Include="Resources\close.png" />
     <Content Include="Resources\google_16.ico" />
+    <Content Include="Resources\setting.png" />
     <Content Include="Resources\VsTranslatorPackage.ico" />
     <Content Include="Resources\youdao_64.ico" />
     <Content Include="stylesheet.css" />
@@ -273,7 +276,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Ouput\OutputControl.xaml">
+    <Page Include="Adornment\TranslatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -52,10 +52,16 @@
 
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
+        <!-- 父节点为菜单栏 -->
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
-        <!--<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />-->
       </Group>
-
+      
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+        <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
+        <!-- 父节点为右键菜单栏 -->
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+        <!---->
+      </Group>
     </Groups>
 
     <!--Buttons section. -->
@@ -85,6 +91,7 @@
         <Strings>
           <CommandName>Bing Translate</CommandName>
           <ButtonText>Bing Translate</ButtonText>
+          <ToolTipText>Bing Translate</ToolTipText>
         </Strings>
       </Button>
       <Button guid="guidVsTranslatorPackageCmdSet" id="BaiduTranslate" priority="0x0102" type="Button">
@@ -93,6 +100,7 @@
         <Strings>
           <CommandName>Baidu Translate</CommandName>
           <ButtonText>Baidu Translate</ButtonText>
+          <ToolTipText>Baidu Translate</ToolTipText>
         </Strings>
       </Button>
       <Button guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" priority="0x0103" type="Button">
@@ -101,17 +109,10 @@
         <Strings>
           <CommandName>Youdao Translate</CommandName>
           <ButtonText>Youdao Translate</ButtonText>
+          <ToolTipText>Youdao  Translate</ToolTipText>
         </Strings>
       </Button>
     
-      <Button guid="guidVsTranslatorPackageCmdSet" id="OutputTranslateWindow" priority="0x2000" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <!--<Icon guid="guidTranslateIcon" id="googleIcon" />-->
-        <Strings>
-          <CommandName>Ouput Translate</CommandName>
-          <ButtonText>Ouput Translate</ButtonText>
-        </Strings>
-      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -133,7 +134,6 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BingTranslate" editor="guidVSStd97" key1="D" mod1="CONTROL Shift"  key2="F" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BaiduTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="C" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="V" mod2="CONTROL Shift"/>
-    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="OutputTranslateWindow" editor="guidVSStd97"  key1="T" mod1="CONTROL Shift"/>
   </KeyBindings>
   
   <Symbols>
@@ -148,7 +148,6 @@
       <IDSymbol name="BingTranslate" value="0x1023" />
       <IDSymbol name="BaiduTranslate" value="0x1024" />
       <IDSymbol name="YoudaoTranslate" value="0x1025" />
-      <IDSymbol name="OutputTranslateWindow" value="0x2000" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >

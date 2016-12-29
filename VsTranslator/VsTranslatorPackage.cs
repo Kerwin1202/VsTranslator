@@ -12,7 +12,6 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using VsTranslator.Core.Utils;
-using VsTranslator.Ouput;
 using VsTranslator.Settings;
 
 namespace VsTranslator
@@ -44,7 +43,7 @@ namespace VsTranslator
     [ProvideAutoLoad(UIContextGuids.NoSolution)]//设置当VS打开的时候就运行本类
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]//同上
 
-    [ProvideToolWindow(typeof(OutputWindow))]//, Style = VsDockStyle.Float, Orientation = ToolWindowOrientation.Left, Window = EnvDTE.Constants.vsWindowKindMainWindow,DockedWidth = 100
+    
     public sealed class VsTranslatorPackage : Package
     {
         /// <summary>
@@ -74,32 +73,8 @@ namespace VsTranslator
             base.Initialize();
             MenuCmd.Initialize(this);
             StatusBarCmd.Initialize(this);
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
-            {
-                CommandID translateCommandId = new CommandID(GuidList.CommandSet, (int)PkgCmdIdList.OutputTranslateWindow);
-                OleMenuCommand menuItemTranslate = new OleMenuCommand(ShowOutputFrm, translateCommandId)
-                {
-                    //Enabled = false
-                };
-                mcs.AddCommand(menuItemTranslate);
-            }
         }
 
-
-        private void ShowOutputFrm(object sender, EventArgs e)
-        {
-            ToolWindowPane window = FindToolWindow(typeof(OutputWindow), 0, true);
-            if ((null == window) || (null == window.Frame))
-            {
-                throw new NotSupportedException("Cannot create tool window");
-            }
-
-            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            ErrorHandler.ThrowOnFailure(windowFrame.Show());
-            Guid nullGuid = Guid.Empty;
-            windowFrame.SetFramePos(VSSETFRAMEPOS.SFP_fSize, ref nullGuid, 5, 5, 305, 305);
-        }
 
     }
 }

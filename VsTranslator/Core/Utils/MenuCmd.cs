@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using VsTranslator.Adornment;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
@@ -161,6 +162,7 @@ namespace VsTranslator.Core.Utils
                 if (result.TranslationResultTypes == TranslationResultTypes.Successed)
                 {
                     targetText = result.TargetText;
+                    Connector.Execute(GetCurrentViewHost(), targetText);
                     StatusBarCmd.SetStatusTextWithoutFreeze(fromWay + " translate successed, from " + selectedText + " to " + targetText);
                 }
                 else
