@@ -3,27 +3,107 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VsTranslator.Adornment"
-             mc:Ignorable="d" Height="217.074" Width="193.902">
-    <Border BorderThickness="1" MaxWidth="600" BorderBrush="Brown" Background="White" Cursor="Arrow">
+             mc:Ignorable="d">
+    <Border BorderThickness="1" MaxWidth="600" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
         <Border.Effect>
             <DropShadowEffect ShadowDepth="0" Color="DarkGray" Opacity="0.5"/>
         </Border.Effect>
-        <Grid Margin="0">
+        <Grid Margin="0" Name="grid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Image x:Name="image" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Source="../Resources/google_16.ico" Margin="0,3,0,0"/>
+            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Grid.Row="0" >
+                <Image x:Name="image" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Source="pack://application:,,,/VsTranslator;component/Resources/google_16.ico" Margin="0,3,0,0" Opacity="1" />
 
-            <TextBlock Grid.Row="0" Name="lblDirection" Text="Translating..." Margin="16,2,0,2" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Left" Width="127" />
+                <TextBlock  Name="lblDirection" Text="Translating..." Margin="16,2,0,2" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Left" />
 
-            <Button Grid.Row="0" Name="btnSettings" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="148,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
-                <Image Stretch="Fill" Width="16" Height="16" Source="../Resources/setting.png"/>
-            </Button>
-            <Button Grid.Row="0" Name="btnClose" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
-                <Image Stretch="Fill" Width="16" Height="16" Source="../Resources/close.png"/>
-            </Button>
+                <Button  Name="btnSettings" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
+                    <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
+                </Button>
+                <Button  Name="btnClose" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
+                    <Image Name="aaa" Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
+                </Button>
+            </StackPanel>
+            <Grid.Background>
+                <LinearGradientBrush>
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Offset="0.1" Color="Azure"></GradientStop>
+                        <GradientStop Offset="0.3" Color="CadetBlue"></GradientStop>
+                        <GradientStop Offset="0.6" Color="DarkGray"></GradientStop>
+                        <GradientStop Offset="1.0" Color="Khaki"></GradientStop>
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Grid.Background>
         </Grid>
     </Border>
+    <UserControl.Resources>
+
+        <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="Transparent" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="Black"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="Width" Value="5" />
+            <Setter Property="MinWidth" Value="5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Border Opacity="0.5" Background="Gray" Width="7">
+                            <Grid SnapsToDevicePixels="true">
+                                <Track Name="PART_Track" IsEnabled="{TemplateBinding IsMouseOver}" IsDirectionReversed="true">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageUpCommand"  Style="{StaticResource ScrollBarPageButton}"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Command="ScrollBar.PageDownCommand"  Style="{StaticResource ScrollBarPageButton}"/>
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource ScrollBarThumb}" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--scroll viewer is "redefined" too, to make custom scroll bar work in Windows 8-->
+        <Style TargetType="{x:Type ScrollViewer}">
+        </Style>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="Foreground" Value="{x:Null}" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+        </Style>
+
+    </UserControl.Resources>
 </UserControl>

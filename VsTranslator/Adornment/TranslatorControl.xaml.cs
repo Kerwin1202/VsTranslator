@@ -25,11 +25,19 @@ namespace VsTranslator.Adornment
         {
             InitializeComponent();
             _targetText = targetText;
+            var label = new TextBlock()
+            {
+                Text = _targetText
+            };
+            label.SetValue(Grid.RowProperty, 1);
+            grid.Children.Add(label);
+
         }
 
         public TranslatorControl()
         {
             InitializeComponent();
+
         }
 
         private string _targetText;

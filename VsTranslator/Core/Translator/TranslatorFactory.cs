@@ -8,32 +8,49 @@ namespace VsTranslator.Core.Translator
 {
     public class TranslatorFactory
     {
-        private static readonly ITranslator GoogleTranslator = new GoogleTranslator();
+        private static ITranslator _googleTranslator;
 
-        private static readonly ITranslator BingTranslator = new BingTranslator("VsTranslatorByKerwin", "LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E=");
+        private static ITranslator _bingTranslator;
 
-        private static readonly ITranslator BaiduTranslator = new BaiduTranslator("20161214000033991", "HMlukU9THx2Twx1I14Hz");
+        private static ITranslator _baiduTranslator;
 
-        private static readonly ITranslator YoudaoTranslator = new YoudaoTranslator("zhiyue", "702916626");
+        private static ITranslator _youdaoTranslator;
 
+        //这里不直接把实例化代码放在上面直接实例化是因为,防止首次翻译的时候因为其中某个翻译实例化异常导致整个翻译不了
         public static TranslationResult TranslateByGoogle(string text, string @from = "en", string to = "zh-CN")
         {
-            return GoogleTranslator.Translate(text, @from, to);
+            if (_googleTranslator == null)
+            {
+                _googleTranslator = new GoogleTranslator();
+            }
+            return _googleTranslator.Translate(text, @from, to);
         }
 
         public static TranslationResult TranslateByBing(string text, string @from = "en", string to = "zh-CHS")
         {
-           return BingTranslator.Translate(text, @from, to);
+            if (_bingTranslator == null)
+            {
+                _bingTranslator = new BingTranslator("VsTranslatorByKerwin", "LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E=");
+            }
+            return _bingTranslator.Translate(text, @from, to);
         }
 
         public static TranslationResult TranslateByBaidu(string text, string @from = "en", string to = "zh")
         {
-            return BaiduTranslator.Translate(text, @from, to);
+            if (_baiduTranslator == null)
+            {
+                _baiduTranslator = new BaiduTranslator("20161214000033991", "HMlukU9THx2Twx1I14Hz");
+            }
+            return _baiduTranslator.Translate(text, @from, to);
         }
 
         public static TranslationResult TranslateByYoudao(string text, string @from = "EN", string to = "ZH_CN")
         {
-            return YoudaoTranslator.Translate(text, @from, to);
+            if (_youdaoTranslator==null)
+            {
+                _youdaoTranslator = new YoudaoTranslator("zhiyue", "702916626");
+            }
+            return _youdaoTranslator.Translate(text, @from, to);
         }
 
     }

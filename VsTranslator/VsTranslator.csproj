@@ -117,9 +117,15 @@
     <Content Include="Resources\bing_16.ico" />
     <Content Include="Resources\bing_16_1.ico" />
     <Content Include="Resources\bing_64.ico" />
-    <Content Include="Resources\close.png" />
-    <Content Include="Resources\google_16.ico" />
-    <Content Include="Resources\setting.png" />
+    <Resource Include="Resources\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\google_16.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\setting.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\VsTranslatorPackage.ico" />
     <Content Include="Resources\youdao_64.ico" />
     <Content Include="stylesheet.css" />

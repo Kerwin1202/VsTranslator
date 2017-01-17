@@ -15,7 +15,7 @@ namespace VsTranslator.Adornment
     {
 
         [Export(typeof(AdornmentLayerDefinition))]
-        [Name("TranslatorAdornmentLayer")]
+        [Name("ConnectorAdornmentLayer")]
         [Order(After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Text)]
         [Order(After = PredefinedAdornmentLayers.Caret)]
         [Order(After = PredefinedAdornmentLayers.Outlining)]
@@ -23,6 +23,7 @@ namespace VsTranslator.Adornment
         [Order(After = PredefinedAdornmentLayers.Squiggle)]
         [Order(After = PredefinedAdornmentLayers.TextMarker)]
         public AdornmentLayerDefinition TranslatorAdornmentLayer;
+
 
 
         public void TextViewCreated(IWpfTextView textView)

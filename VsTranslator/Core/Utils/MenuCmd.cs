@@ -9,6 +9,7 @@ using VsTranslator.Adornment;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
+using VsTranslator.Core.Translator.Google;
 
 namespace VsTranslator.Core.Utils
 {

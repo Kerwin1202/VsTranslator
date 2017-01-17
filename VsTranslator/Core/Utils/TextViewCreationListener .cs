@@ -13,8 +13,19 @@ namespace VsTranslator.Core.Utils
     [ContentType("text")]
     [Export(typeof(IWpfTextViewCreationListener))]
     [TextViewRole(PredefinedTextViewRoles.Document)]
-    internal sealed class TextViewCreationListener : IWpfTextViewCreationListener
+    public sealed class TextViewCreationListener : IWpfTextViewCreationListener
     {
+        [Export(typeof(AdornmentLayerDefinition))]
+        [Name("TranslatorAdornmentLayer")]
+        [Order(After = PredefinedAdornmentLayers.Selection, Before = PredefinedAdornmentLayers.Text)]
+        [Order(After = PredefinedAdornmentLayers.Caret)]
+        [Order(After = PredefinedAdornmentLayers.Outlining)]
+        [Order(After = PredefinedAdornmentLayers.Selection)]
+        [Order(After = PredefinedAdornmentLayers.Squiggle)]
+        [Order(After = PredefinedAdornmentLayers.Text)]
+        [Order(After = PredefinedAdornmentLayers.TextMarker)]
+        public AdornmentLayerDefinition TranslatorLayerDefinition;
+
         private IWpfTextView _view;
 
         public void TextViewCreated(IWpfTextView textView)
