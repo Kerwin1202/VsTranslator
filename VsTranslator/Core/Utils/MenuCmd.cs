@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
@@ -7,6 +8,9 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using VsTranslator.Adornment;
 using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Baidu;
+using VsTranslator.Core.Translator.Baidu.Entities;
+using VsTranslator.Core.Translator.Bing;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
 using VsTranslator.Core.Translator.Google;
@@ -122,8 +126,8 @@ namespace VsTranslator.Core.Utils
                     Span sp = span.GetSpan(buffer.CurrentSnapshot);
                     try
                     {
-                        var targetText = Translate(menuCommand.CommandID.ID, selectedText);
-                        buffer.Replace(sp, selectedText + "->" + targetText);
+                        Translate(menuCommand.CommandID.ID, selectedText);
+                        //buffer.Replace(sp, selectedText);
                     }
                     catch (Exception)
                     {
@@ -133,50 +137,27 @@ namespace VsTranslator.Core.Utils
             }
         }
 
-        private static string Translate(int commandId, string selectedText)
+        private static ITranslator _googleTranslator;
+
+        private static ITranslator _bingTranslator;
+
+        private static ITranslator _baiduTranslator;
+
+        private static ITranslator _youdaoTranslator;
+
+      
+
+        private static void Translate(int commandId, string selectedText)
         {
-            StatusBarCmd.SetStatusTextWithFreeze("Translating...");
-            string fromWay = string.Empty;
-            string targetText = string.Empty;
-            TranslationResult result = new TranslationResult() { FailedReason = "Can't translate by this way", TranslationResultTypes = TranslationResultTypes.Failed, TargetText = string.Empty };
-            try
+            ITranslator translator = TranslatorFactory.GetTranslator(commandId);
+
+            TranslationRequest transRequest = new TranslationRequest(selectedText,new List<Trans>() { new Trans()
             {
-                switch (commandId)
-                {
-                    case (int)PkgCmdIdList.GoogleTranslate:
-                        fromWay = "Google";
-                        result = TranslatorFactory.TranslateByGoogle(selectedText);
-                        break;
-                    case (int)PkgCmdIdList.BingTranslate:
-                        fromWay = "Bing";
-                        result = TranslatorFactory.TranslateByBing(selectedText);
-                        break;
-                    case (int)PkgCmdIdList.BaiduTranslate:
-                        fromWay = "Baidu";
-                        result = TranslatorFactory.TranslateByBaidu(selectedText);
-                        break;
-                    case (int)PkgCmdIdList.YoudaoTranslate:
-                        fromWay = "Youdao";
-                        result = TranslatorFactory.TranslateByYoudao(selectedText);
-                        break;
-                }
-                if (result.TranslationResultTypes == TranslationResultTypes.Successed)
-                {
-                    targetText = result.TargetText;
-                    Connector.Execute(GetCurrentViewHost(), targetText);
-                    StatusBarCmd.SetStatusTextWithoutFreeze(fromWay + " translate successed, from " + selectedText + " to " + targetText);
-                }
-                else
-                {
-                    throw new Exception(result.FailedReason);
-                }
-            }
-            catch (Exception exception)
-            {
-                StatusBarCmd.SetStatusTextWithoutFreeze(fromWay + " translate failed, " + exception.Message);
-                throw;
-            }
-            return targetText;
+                Translator = translator,
+                SourceLanguage = "en",
+                TargetLanguage = "zh-CN"
+            } });
+            Connector.Execute(GetCurrentViewHost(), transRequest);
         }
 
 

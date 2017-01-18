@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Adornment\Connector.cs" />
     <Compile Include="Adornment\TransAdornmentManager.cs" />
+    <Compile Include="Adornment\TranslationRequest.cs" />
     <Compile Include="Adornment\TranslatorControl.xaml.cs">
       <DependentUpon>TranslatorControl.xaml</DependentUpon>
     </Compile>
@@ -87,6 +88,7 @@
     <Compile Include="Core\Translator\Youdao\YoudaoTranslator.cs" />
     <Compile Include="Core\Utils\MenuCmd.cs" />
     <Compile Include="Core\Utils\StatusBar.cs" />
+    <Compile Include="Global.cs" />
     <Compile Include="GuidList.cs" />
     <Compile Include="Core\Utils\TextViewCreationListener .cs" />
     <Compile Include="PkgCmdIdList.cs" />

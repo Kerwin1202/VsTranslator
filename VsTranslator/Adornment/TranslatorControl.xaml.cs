@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MessageBox = System.Windows.Forms.MessageBox;
+using Microsoft.VisualStudio.Text;
+using VsTranslator.Core.Translator;
+using VsTranslator.Core.Translator.Enums;
 
 namespace VsTranslator.Adornment
 {
@@ -21,36 +13,58 @@ namespace VsTranslator.Adornment
     /// </summary>
     public partial class TranslatorControl : UserControl
     {
-        public TranslatorControl(string targetText)
+
+        private TranslatorControl()
         {
             InitializeComponent();
-            _targetText = targetText;
+
+        }
+
+        public TranslatorControl(SnapshotSpan selectedSpans, TranslationRequest transRequest)
+        {
+            InitializeComponent();
+
+            transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
+        }
+
+        private void TransRequest_OnTranslationComplete(TranslateResult translationResult)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                AppendTargetText(translationResult.TranslationResultTypes == TranslationResultTypes.Successed
+                    ? translationResult.TargetText
+                    : translationResult.FailedReason);
+            }));
+        }
+
+        private void AppendTargetText(string targetText)
+        {
             var label = new TextBlock()
             {
-                Text = _targetText
+                Text = targetText
             };
-            label.SetValue(Grid.RowProperty, 1);
-            grid.Children.Add(label);
-
+            transResult.Children.Add(label);
         }
 
-        public TranslatorControl()
+
+        public static void ReplaceSelectedText(SnapshotSpan selectedSpans, string targetText)
         {
-            InitializeComponent();
-
+            var span = selectedSpans.Snapshot.CreateTrackingSpan(selectedSpans, SpanTrackingMode.EdgeExclusive);
+            ITextBuffer buffer = span.TextBuffer;
+            var sp = span.GetSpan(buffer.CurrentSnapshot);
+            buffer.Replace(sp, targetText);
         }
-
-        private string _targetText;
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-
+            Global.Dte.ExecuteCommand("Tools.Options", GuidList.TranslateOptions);
         }
+
+        public Action RemoveEvent;
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-
+            RemoveEvent?.Invoke();
         }
-
     }
 }

@@ -16,7 +16,7 @@
             <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Grid.Row="0" >
                 <Image x:Name="image" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Source="pack://application:,,,/VsTranslator;component/Resources/google_16.ico" Margin="0,3,0,0" Opacity="1" />
 
-                <TextBlock  Name="lblDirection" Text="Translating..." Margin="16,2,0,2" Padding="2" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <TextBlock  Name="lblDirection" Text="Translating..." Margin="2,2,0,2"  VerticalAlignment="Center" HorizontalAlignment="Left" />
 
                 <Button  Name="btnSettings" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
                     <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
@@ -25,6 +25,11 @@
                     <Image Name="aaa" Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
                 </Button>
             </StackPanel>
+          
+            <StackPanel Grid.Row="1" Name="transResult" Margin="16,0,0,0">
+                
+            </StackPanel>
+            
             <Grid.Background>
                 <LinearGradientBrush>
                     <LinearGradientBrush.GradientStops>

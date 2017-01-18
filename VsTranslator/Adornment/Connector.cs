@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.Composition;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Microsoft.VisualStudio.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using VsTranslator.Core.Translator;
 
 namespace VsTranslator.Adornment
 {
@@ -31,13 +29,13 @@ namespace VsTranslator.Adornment
             TransAdornmentManager.Create(textView);
         }
 
-        static public void Execute(IWpfTextViewHost host, string targetText)
+        static public void Execute(IWpfTextViewHost host,  TranslationRequest transRequest)
         {
             IWpfTextView view = host.TextView;
             //Add a comment on the selected text.   
             if (!view.Selection.IsEmpty)
             {
-                TransAdornmentManager.Add(view, targetText);
+                TransAdornmentManager.Add(view, transRequest);
             }
         }
     }
