@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Text;
-using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Enums;
 
 namespace VsTranslator.Adornment
@@ -20,10 +22,12 @@ namespace VsTranslator.Adornment
 
         }
 
+        private static SnapshotSpan _selectedSpans;
+
         public TranslatorControl(SnapshotSpan selectedSpans, TranslationRequest transRequest)
         {
             InitializeComponent();
-
+            _selectedSpans = selectedSpans;
             transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
         }
 
@@ -31,25 +35,66 @@ namespace VsTranslator.Adornment
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                AppendTargetText(translationResult.TranslationResultTypes == TranslationResultTypes.Successed
-                    ? translationResult.TargetText
-                    : translationResult.FailedReason);
+                if (translationResult.TranslationResultTypes == TranslationResultTypes.Successed)
+                {
+                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
+                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
+                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
+                }
+                else
+                {
+                    lblDirection.Foreground = new SolidColorBrush(Colors.Red);
+                    lblDirection.Text = translationResult.FailedReason;
+                }
             }));
         }
 
-        private void AppendTargetText(string targetText)
+        private void AppendTargetText(string sourceLanguage, string targetLanguage, string targetText)
         {
+            var wrapPanel = new WrapPanel();
+
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/VsTranslator;component/Resources/google_16.ico")),
+                Width = 14,
+                Height = 14
+            };
+            wrapPanel.Children.Add(image);
+
+
             var label = new TextBlock()
             {
-                Text = targetText
+                Text = targetText,
+                TextWrapping = TextWrapping.Wrap,
+                ToolTip = $"({sourceLanguage} - {targetLanguage}) click to replace selcted text with this translation",
+                FontWeight = FontWeights.Bold,
+                Padding = new Thickness(3),
+                MinWidth = 150
             };
-            transResult.Children.Add(label);
+          
+            label.MouseDown += Label_MouseDown;
+
+            wrapPanel.SetResourceReference(StyleProperty, "MouseOver");
+            wrapPanel.Children.Add(label);
+      
+            transResult.Children.Add(wrapPanel);
         }
 
-
-        public static void ReplaceSelectedText(SnapshotSpan selectedSpans, string targetText)
+        private void Label_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var span = selectedSpans.Snapshot.CreateTrackingSpan(selectedSpans, SpanTrackingMode.EdgeExclusive);
+            TextBlock label = sender as TextBlock;
+            if (label == null)
+            {
+                return;
+            }
+            ReplaceSelectedText(label.Text);
+            e.Handled = true;
+            RemoveEvent?.Invoke();
+        }
+
+        public static void ReplaceSelectedText(string targetText)
+        {
+            var span = _selectedSpans.Snapshot.CreateTrackingSpan(_selectedSpans, SpanTrackingMode.EdgeExclusive);
             ITextBuffer buffer = span.TextBuffer;
             var sp = span.GetSpan(buffer.CurrentSnapshot);
             buffer.Replace(sp, targetText);

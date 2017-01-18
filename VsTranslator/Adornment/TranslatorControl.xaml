@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <Border BorderThickness="1" MaxWidth="600" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
+    <Border BorderThickness="1" MaxWidth="600" MinWidth="150" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
         <Border.Effect>
             <DropShadowEffect ShadowDepth="0" Color="DarkGray" Opacity="0.5"/>
         </Border.Effect>
@@ -13,21 +13,20 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Grid.Row="0" >
-                <Image x:Name="image" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="16" Source="pack://application:,,,/VsTranslator;component/Resources/google_16.ico" Margin="0,3,0,0" Opacity="1" />
-
+            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" >
                 <TextBlock  Name="lblDirection" Text="Translating..." Margin="2,2,0,2"  VerticalAlignment="Center" HorizontalAlignment="Left" />
-
-                <Button  Name="btnSettings" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
+            </StackPanel>
+            <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" >
+                <Button Name="btnSettings" Margin="2,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
                     <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
                 </Button>
-                <Button  Name="btnClose" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
-                    <Image Name="aaa" Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
+                <Button Name="btnClose"  ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
+                    <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
                 </Button>
             </StackPanel>
-          
-            <StackPanel Grid.Row="1" Name="transResult" Margin="16,0,0,0">
-                
+
+            <StackPanel Grid.Row="1" Name="transResult">
+            
             </StackPanel>
             
             <Grid.Background>
@@ -43,6 +42,20 @@
         </Grid>
     </Border>
     <UserControl.Resources>
+
+        <Style x:Key="MouseOver" TargetType="{x:Type WrapPanel}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="#90c4d2" Opacity="0.3"/>
+                            <!--//57AFAB-->
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>

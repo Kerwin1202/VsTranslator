@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Newtonsoft.Json;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
@@ -32,7 +33,9 @@ namespace VsTranslator.Adornment
             if (trans != null)
             {
                 TranslationResult result = trans.Translator.Translate(_selectedText, trans.SourceLanguage, trans.TargetLanguage);
-                TranslateResult translateResult =(TranslateResult) result;
+
+                TranslateResult translateResult = JsonConvert.DeserializeObject<TranslateResult>(JsonConvert.SerializeObject(result));
+
                 translateResult.Translator = trans.Translator;
                 OnTranslationComplete?.Invoke(translateResult);
             }
