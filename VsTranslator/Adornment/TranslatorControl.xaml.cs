@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Text;
 using VsTranslator.Core.Translator.Enums;
+using VsTranslator.Settings;
 
 namespace VsTranslator.Adornment
 {
@@ -110,7 +111,8 @@ namespace VsTranslator.Adornment
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            Global.Dte.ExecuteCommand("Tools.Options", GuidList.TranslateOptions);
+            //Global.Dte.ExecuteCommand("Tools.Options", GuidList.TranslateOptions);
+            OptionsSettings.ShowOptions();
         }
 
         public Action RemoveEvent;

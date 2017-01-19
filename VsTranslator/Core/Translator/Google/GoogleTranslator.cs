@@ -14,12 +14,13 @@ namespace VsTranslator.Core.Translator.Google
     {
         private readonly CSharpRunJavascript _javascript = new CSharpRunJavascript();
 
-        private readonly List<TranslationLanguage> _targetLanguages;
-        private readonly List<TranslationLanguage> _sourceLanguages;
+        private static readonly List<TranslationLanguage> TargetLanguages;
+        private static readonly List<TranslationLanguage> SourceLanguages;
 
-        public GoogleTranslator()
+
+        static  GoogleTranslator()
         {
-            _targetLanguages = new List<TranslationLanguage>()
+            TargetLanguages = new List<TranslationLanguage>()
             {
                 new TranslationLanguage ("af", "Afrikaans / 南非荷兰语"),
                 new TranslationLanguage ("sq", "Albanian / 阿尔巴尼亚语"),
@@ -76,9 +77,10 @@ namespace VsTranslator.Core.Translator.Google
                 new TranslationLanguage ("la", "Latin / 拉丁语")
             };
 
-            _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("auto", "Auto-detect / 自动检测") };
-            _sourceLanguages.AddRange(_targetLanguages);
+            SourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("auto", "Auto-detect / 自动检测") };
+            SourceLanguages.AddRange(TargetLanguages);
         }
+
 
         /// <summary>
         /// 
@@ -131,28 +133,28 @@ namespace VsTranslator.Core.Translator.Google
             return _javascript.Eval("((function() {var TKK = ((function() {var a = 561666268;var b = 1526272306;return 406398 + '.' + (a + b);  })()); function b(a, b) {for (var d = 0; d < b.length - 2; d += 3) {        var c = b.charAt(d + 2),            c = 'a' <= c ? c.charCodeAt(0) - 87 : Number(c),            c = '+' == b.charAt(d + 1) ? a >>> c : a << c;        a = '+' == b.charAt(d) ? a + c & 4294967295 : a ^ c    }    return a  }    function tk(a) {      for (var e = TKK.split('.'), h = Number(e[0]) || 0, g = [], d = 0, f = 0; f < a.length; f++) {          var c = a.charCodeAt(f);          128 > c ? g[d++] = c : (2048 > c ? g[d++] = c >> 6 | 192 : (55296 == (c & 64512) && f + 1 < a.length && 56320 == (a.charCodeAt(f + 1) & 64512) ? (c = 65536 + ((c & 1023) << 10) + (a.charCodeAt(++f) & 1023), g[d++] = c >> 18 | 240, g[d++] = c >> 12 & 63 | 128) : g[d++] = c >> 12 | 224, g[d++] = c >> 6 & 63 | 128), g[d++] = c & 63 | 128)      }      a = h;      for (d = 0; d < g.length; d++) a += g[d], a = b(a, '+-a^+6');      a = b(a, '+-3^+b+-f');      a ^= Number(e[1]) || 0;      0 > a && (a = (a & 2147483647) + 2147483648);      a %= 1E6;      return a.toString() + '.' + (a ^ h)  }  return tk('" + text + "'); })())").ToString();
         }
 
-        public string GetName()
+        public static string GetName()
         {
             return "Google Translator / 谷歌翻译";
         }
 
-        public string GetDescription()
+        public static string GetDescription()
         {
             return "place the single request control within 5000 bytes in length (One Chinese Is a byte), you can on the website translation https://translate.google.cn/";
         }
-        public string GetWebsite()
+        public static string GetWebsite()
         {
             return "https://translate.google.cn/";
         }
 
-        public List<TranslationLanguage> GetTargetLanguages()
+        public static List<TranslationLanguage> GetTargetLanguages()
         {
-            return _targetLanguages;
+            return TargetLanguages;
         }
 
-        public List<TranslationLanguage> GetSourceLanguages()
+        public static  List<TranslationLanguage> GetSourceLanguages()
         {
-            return _sourceLanguages;
+            return SourceLanguages;
         }
 
         /// <summary>
@@ -172,12 +174,12 @@ namespace VsTranslator.Core.Translator.Google
                 TargetText = "",
                 FailedReason = ""
             };
-            if (_sourceLanguages.Count(sl => sl.Code == @from) <= 0)
+            if (SourceLanguages.Count(sl => sl.Code == @from) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable source language";
             }
-            else if (_targetLanguages.Count(tl => tl.Code == to) <= 0)
+            else if (TargetLanguages.Count(tl => tl.Code == to) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable target language";

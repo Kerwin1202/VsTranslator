@@ -21,22 +21,10 @@ namespace VsTranslator.Core.Translator.Baidu
 
         }
 
-        private readonly string TranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate";
-        //Get appid and client secret from http://api.fanyi.baidu.com/api/trans/product/index
-        private readonly string _appid;
-        private readonly string _clientSecret;
-
-        private readonly List<TranslationLanguage> _targetLanguages;
-        private readonly List<TranslationLanguage> _sourceLanguages;
-
-
-        public BaiduTranslator(string appid, string clientSecret)
+        static BaiduTranslator()
         {
-            _appid = appid;
-            _clientSecret = clientSecret;
 
-
-            _targetLanguages = new List<TranslationLanguage>()
+            TargetLanguages = new List<TranslationLanguage>()
             {
                 new TranslationLanguage("zh","Chinese (Simplified) / 简体中文"),
                 new TranslationLanguage("cht","Chinese (Traditional) / 繁体中文"),
@@ -68,7 +56,24 @@ namespace VsTranslator.Core.Translator.Baidu
                 new TranslationLanguage("vie","Vietnamese / 越南语")
             };
             _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("auto", "Auto-detect / 自动检测") };
-            _sourceLanguages.AddRange(_targetLanguages);
+            _sourceLanguages.AddRange(TargetLanguages);
+        }
+
+        private readonly string TranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate";
+        //Get appid and client secret from http://api.fanyi.baidu.com/api/trans/product/index
+        private readonly string _appid;
+        private readonly string _clientSecret;
+
+        private static readonly List<TranslationLanguage> TargetLanguages;
+        private static readonly List<TranslationLanguage> _sourceLanguages;
+
+
+        public BaiduTranslator(string appid, string clientSecret)
+        {
+            _appid = appid;
+            _clientSecret = clientSecret;
+
+
         }
         /// <summary>
         /// 
@@ -133,27 +138,27 @@ namespace VsTranslator.Core.Translator.Baidu
             return null;
         }
 
-        public string GetName()
+        public static string GetName()
         {
             return "Baidu Translator / 百度翻译";
         }
 
-        public string GetDescription()
+        public static string GetDescription()
         {
             return "1. If the translation of the month number of characters is less than 2 million, that month free if more than 2 million characters, in accordance with 49 Yuan/million characters to pay monthly fee for total number of translated characters, you can on the website translation http://fanyi.baidu.com/ \r\n2.In order to guarantee the quality of translation, place the single request control within 6000 bytes in length. (About 2000 Chinese characters)";
             //1. 若当月翻译字符数≤2百万，当月免费；若超过2百万字符，按照49元/百万字符支付当月全部翻译字符数费用， 你也可以在网站上翻译 http://fanyi.baidu.com/ \r\n2. 为保证翻译质量，请将单次请求长度控制在 6000 bytes以内。（汉字约为2000个）
         }
 
-        public string GetWebsite()
+        public static string GetWebsite()
         {
             return "http://fanyi.baidu.com/";
         }
 
-        public List<TranslationLanguage> GetTargetLanguages()
+        public static List<TranslationLanguage> GetTargetLanguages()
         {
-            return _targetLanguages;
+            return TargetLanguages;
         }
-        public List<TranslationLanguage> GetSourceLanguages()
+        public static List<TranslationLanguage> GetSourceLanguages()
         {
             return _sourceLanguages;
         }
@@ -179,7 +184,7 @@ namespace VsTranslator.Core.Translator.Baidu
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable source language";
             }
-            else if (_targetLanguages.Count(tl => tl.Code == to) <= 0)
+            else if (TargetLanguages.Count(tl => tl.Code == to) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable target language";

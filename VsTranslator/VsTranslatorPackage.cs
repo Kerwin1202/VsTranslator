@@ -6,6 +6,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Windows;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using VsTranslator.Core.Utils;
@@ -70,6 +71,13 @@ namespace VsTranslator
             base.Initialize();
             MenuCmd.Initialize(this);
             StatusBarCmd.Initialize(this);
+            Application.Current.MainWindow.Loaded += MainWindow_Loaded;
+        }
+
+        // Load事件的方法
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+           OptionsSettings.ShowOptions();
         }
     }
 }

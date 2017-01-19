@@ -42,7 +42,6 @@
         </Grid>
     </Border>
     <UserControl.Resources>
-
         <Style x:Key="MouseOver" TargetType="{x:Type WrapPanel}">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">

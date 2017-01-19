@@ -20,8 +20,25 @@ namespace VsTranslator.Core.Translator.Youdao
 
         }
 
-        private readonly List<TranslationLanguage> _targetLanguages;
-        private readonly List<TranslationLanguage> _sourceLanguages;
+        static YoudaoTranslator()
+        {
+            TargetLanguages = new List<TranslationLanguage>()
+            {
+                new TranslationLanguage(Chinese, "Chinese (Simplified) / 简体中文"),
+                new TranslationLanguage("EN", "English / 英语"),
+                new TranslationLanguage("JA", "Japanese / 日语"),
+                new TranslationLanguage("KR", "Korean / 韩语"),
+                new TranslationLanguage("FR", "French / 法语"),
+                new TranslationLanguage("RU", "Russian / 俄语"),
+                new TranslationLanguage("SP", "Spanish / 西班牙语"),
+                new TranslationLanguage("PT", "Portuguese / 葡萄牙语")
+            };
+            SourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage(Auto, "Auto-detect / 自动检测") };
+            SourceLanguages.AddRange(TargetLanguages);
+        }
+
+        private static readonly List<TranslationLanguage> TargetLanguages;
+        private static readonly List<TranslationLanguage> SourceLanguages;
 
         private const string TranslateUrl = "http://fanyi.youdao.com/openapi.do";
 
@@ -39,19 +56,7 @@ namespace VsTranslator.Core.Translator.Youdao
             _appid = appid;
             _clientSecret = clientSecret;
 
-            _targetLanguages = new List<TranslationLanguage>()
-            {
-                new TranslationLanguage(Chinese, "Chinese (Simplified) / 简体中文"),
-                new TranslationLanguage("EN", "English / 英语"),
-                new TranslationLanguage("JA", "Japanese / 日语"),
-                new TranslationLanguage("KR", "Korean / 韩语"),
-                new TranslationLanguage("FR", "French / 法语"),
-                new TranslationLanguage("RU", "Russian / 俄语"),
-                new TranslationLanguage("SP", "Spanish / 西班牙语"),
-                new TranslationLanguage("PT", "Portuguese / 葡萄牙语")
-            };
-            _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage(Auto, "Auto-detect / 自动检测") };
-            _sourceLanguages.AddRange(_targetLanguages);
+            
         }
 
         /// <summary>
@@ -181,29 +186,29 @@ namespace VsTranslator.Core.Translator.Youdao
             return null;
         }
 
-        public string GetName()
+        public static string GetName()
         {
             return "Youdao Translator / 有道翻译";
         }
 
-        public string GetDescription()
+        public static string GetDescription()
         {
             return "1. text's length must between 0 and 200 \r\n2. 1000 free access per hour, over visits will be conducted in ban suspended, will resume after 1 hour.\r\n3. Free daily flow of 100,000 characters, more than RMB 50 parts per million characters; for example, a cumulative translation 600,000 characters, you will need to charge RMB 25, you can on the website translation http://fanyi.youdao.com/";
             //1. 每小时1000次免费访问，超过访问次数后会进行封禁暂停服务，1小时后会自然恢复。\r\n2. 每日免费10万字符流量，超过部分每百万字符50元人民币；例如，一天累积翻译60万字符，则需要收费25元人民币
         }
-        public string GetWebsite()
+        public static string GetWebsite()
         {
             return "http://fanyi.youdao.com/";
         }
 
-        public List<TranslationLanguage> GetTargetLanguages()
+        public static List<TranslationLanguage> GetTargetLanguages()
         {
-            return _targetLanguages;
+            return TargetLanguages;
         }
 
-        public List<TranslationLanguage> GetSourceLanguages()
+        public static List<TranslationLanguage> GetSourceLanguages()
         {
-            return _sourceLanguages;
+            return SourceLanguages;
         }
         /// <summary>
         /// 
@@ -222,12 +227,12 @@ namespace VsTranslator.Core.Translator.Youdao
                 TargetText = "",
                 FailedReason = ""
             };
-            if (_sourceLanguages.Count(sl => sl.Code == @from) <= 0)
+            if (SourceLanguages.Count(sl => sl.Code == @from) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable source language";
             }
-            else if (_targetLanguages.Count(tl => tl.Code == to) <= 0)
+            else if (TargetLanguages.Count(tl => tl.Code == to) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable target language";

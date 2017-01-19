@@ -18,33 +18,25 @@ namespace VsTranslator.Core.Translator.Bing
         private static AdmAccessToken _admToken;
         private static BingAdmAuth _admAuth;
 
-        private readonly List<TranslationLanguage> _targetLanguages;
-        private readonly List<TranslationLanguage> _sourceLanguages;
+        private static readonly List<TranslationLanguage> TargetLanguages;
+        private static readonly List<TranslationLanguage> SourceLanguages;
 
         private BingTranslator()
         {
 
         }
 
-        //soap : https://msdn.microsoft.com/en-us/library/ff512435.aspx
-        //ajax : https://msdn.microsoft.com/en-us/library/ff512404.aspx
-        //http : https://msdn.microsoft.com/en-us/library/ff512419.aspx
-
-        public BingTranslator(string clientId, string clientSecret)
+        static BingTranslator()
         {
-            //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
-            //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
-            _admAuth = new BingAdmAuth(clientId, clientSecret);
-
-            _targetLanguages = new List<TranslationLanguage>()
+            TargetLanguages = new List<TranslationLanguage>()
             {
                 new TranslationLanguage("af","Afrikaans / 南非荷兰语"),
                 new TranslationLanguage("ar", "Arabic / 阿拉伯语"),
                 new TranslationLanguage("bs-Latn", "Bosnian (Latin) / 波斯尼亚 (拉丁语)"),
                 new TranslationLanguage("bg", "Bulgarian / 保加利亚语"),
                 new TranslationLanguage("ca", "Catalan / 加泰罗尼亚语"),
-                new TranslationLanguage("zh-CHS", "Chinese Simplified / 简体中文"),
-                new TranslationLanguage("zh-CHT", "Chinese Traditional / 繁体中文"),
+                new TranslationLanguage("zh-CHS", "Chinese (Simplified) / 简体中文"),
+                new TranslationLanguage("zh-CHT", "Chinese (Traditional) / 繁体中文"),
                 new TranslationLanguage("yue", "Cantonese (Traditional) / 粤语（繁体）"),
                 new TranslationLanguage("hr", "Croatian / 克罗地亚语"),
                 new TranslationLanguage("cs", "Czech / 捷克语"),
@@ -96,8 +88,21 @@ namespace VsTranslator.Core.Translator.Bing
                 new TranslationLanguage("vi", "Vietnamese / 越南语"),
                 new TranslationLanguage("cy", "Welsh / 威尔士语")
             };
-            _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("", "Auto-detect / 自动检测") };
-            _sourceLanguages.AddRange(_targetLanguages);
+            SourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("", "Auto-detect / 自动检测") };
+            SourceLanguages.AddRange(TargetLanguages);
+        }
+
+        //soap : https://msdn.microsoft.com/en-us/library/ff512435.aspx
+        //ajax : https://msdn.microsoft.com/en-us/library/ff512404.aspx
+        //http : https://msdn.microsoft.com/en-us/library/ff512419.aspx
+
+        public BingTranslator(string clientId, string clientSecret)
+        {
+            //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
+            //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
+            _admAuth = new BingAdmAuth(clientId, clientSecret);
+
+           
         }
 
         /// <summary>
@@ -228,29 +233,29 @@ namespace VsTranslator.Core.Translator.Bing
         //get Support languages : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguagesForTranslate
         //get support languages's names : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguageNames?locale=en&languageCodes=["af","ar","bs-Latn","bg","ca","zh-CHS","zh-CHT","yue","hr","cs","da","nl","en","et","fj","fil","fi","fr","de","el","ht","he","hi","mww","hu","id","it","ja","sw","tlh","tlh-Qaak","ko","lv","lt","mg","ms","mt","yua","no","otq","fa","pl","pt","ro","ru","sm","sr-Cyrl","sr-Latn","sk","sl","es","sv","ty","th","to","tr","uk","ur","vi","cy"]
 
-        public string GetName()
+        public static string GetName()
         {
             return "Bing Translator / 必应翻译";
         }
 
-        public string GetDescription()
+        public static string GetDescription()
         {
             return "you can on the website translation http://www.bing.com/translator/";
         }
 
-        public string GetWebsite()
+        public static string GetWebsite()
         {
             return "http://www.bing.com/translator/";
         }
 
-        public List<TranslationLanguage> GetTargetLanguages()
+        public static List<TranslationLanguage> GetTargetLanguages()
         {
-            return _targetLanguages;
+            return TargetLanguages;
         }
 
-        public List<TranslationLanguage> GetSourceLanguages()
+        public static List<TranslationLanguage> GetSourceLanguages()
         {
-            return _sourceLanguages;
+            return SourceLanguages;
         }
 
         public TranslationResult Translate(string text, string @from, string to)
@@ -263,12 +268,12 @@ namespace VsTranslator.Core.Translator.Bing
                 TargetText = "",
                 FailedReason = ""
             };
-            if (_sourceLanguages.Count(sl => sl.Code == @from) <= 0)
+            if (SourceLanguages.Count(sl => sl.Code == @from) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable source language";
             }
-            else if (_targetLanguages.Count(tl => tl.Code == to) <= 0)
+            else if (TargetLanguages.Count(tl => tl.Code == to) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable target language";
