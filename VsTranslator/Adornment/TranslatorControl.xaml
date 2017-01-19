@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <Border BorderThickness="1" MaxWidth="600" MinWidth="150" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
+    <Border BorderThickness="1" MaxWidth="800" MinWidth="150" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
         <Border.Effect>
             <DropShadowEffect ShadowDepth="0" Color="DarkGray" Opacity="0.5"/>
         </Border.Effect>
@@ -13,22 +13,22 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" >
-                <TextBlock  Name="lblDirection" Text="Translating..." Margin="2,2,0,2"  VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" Margin="0,0,43,0" >
+                <TextBlock  Name="lbltitle" Text="Translating..." Margin="1,1,0,1"  VerticalAlignment="Center" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" >
-                <Button Name="btnSettings" Margin="2,2,0,2" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
-                    <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
+                <Button Name="btnSettings" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
+                    <Image Stretch="Fill" Width="14" Height="14" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
                 </Button>
                 <Button Name="btnClose"  ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
-                    <Image Stretch="Fill" Width="16" Height="16" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
+                    <Image Stretch="Fill" Width="14" Height="14" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
                 </Button>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Name="transResult">
-            
+
             </StackPanel>
-            
+
             <Grid.Background>
                 <LinearGradientBrush>
                     <LinearGradientBrush.GradientStops>
@@ -119,7 +119,7 @@
             <Setter Property="Foreground" Value="{x:Null}" />
             <Setter Property="Focusable" Value="False" />
             <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Margin" Value="2" />
+            <Setter Property="Margin" Value="1" />
             <Setter Property="BorderBrush" Value="{x:Null}" />
         </Style>
 

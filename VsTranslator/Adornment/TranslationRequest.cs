@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Newtonsoft.Json;
@@ -12,9 +13,13 @@ namespace VsTranslator.Adornment
     {
         public event Action<TranslateResult> OnTranslationComplete;
 
+        public event Action OnAllTranslationComplete;
+
         private readonly string _selectedText;
 
         private readonly List<Trans> _translators;
+
+        private readonly Queue _completeQueue= new Queue();
 
         public TranslationRequest(string selectedText, List<Trans> translators)
         {
@@ -27,6 +32,7 @@ namespace VsTranslator.Adornment
             }
         }
 
+
         private void TranslationThread(object obj)
         {
             Trans trans = obj as Trans;
@@ -38,6 +44,14 @@ namespace VsTranslator.Adornment
 
                 translateResult.Translator = trans.Translator;
                 OnTranslationComplete?.Invoke(translateResult);
+            }
+            lock (_completeQueue)
+            {
+                _completeQueue.Enqueue(1);
+                if (_completeQueue.Count== _translators.Count)
+                {
+                    OnAllTranslationComplete?.Invoke();
+                }
             }
         }
     }

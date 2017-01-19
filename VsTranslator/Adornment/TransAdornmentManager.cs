@@ -23,7 +23,7 @@ namespace VsTranslator.Adornment
 
         private static void _view_LayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
         {
-            // _layer.RemoveAllAdornments();
+            //_layer.RemoveAllAdornments();
         }
 
         public static TransAdornmentManager Create(IWpfTextView view)
@@ -52,7 +52,10 @@ namespace VsTranslator.Adornment
                 var tc = new TranslatorControl(view.Selection.SelectedSpans[0], transRequest) { RemoveEvent = RemoveAllAdornments };
                 Canvas.SetLeft(tc, g.Bounds.BottomLeft.X);
                 Canvas.SetTop(tc, g.Bounds.BottomLeft.Y);
-                _layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
+
+                //
+                //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
+                _layer.AddAdornment(sp, null, tc);
             }
         }
 

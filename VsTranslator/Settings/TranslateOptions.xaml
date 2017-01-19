@@ -1,0 +1,89 @@
+﻿<Window x:Class="VsTranslator.Settings.TranslateOptions"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VsTranslator.Settings"
+             mc:Ignorable="d" SizeToContent="WidthAndHeight" Title="Translation Settings" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0">
+            <GroupBox x:Name="groupBox" Header="Translate Service" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3">
+                <DockPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">Translate Service</TextBlock>
+                        <ComboBox Name="cbService" Width="130" Margin="20,0,0,0"></ComboBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">Translate from</TextBlock>
+                        <ComboBox Name="cbSourceLanguage" Width="130" Margin="20,0,0,0"></ComboBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">Translate to</TextBlock>
+                        <ComboBox Name="cbTargetLanguage" Width="130" Margin="20,0,0,0"></ComboBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
+                            if translate from <TextBlock>Chinese</TextBlock> then translate to
+                        </TextBlock>
+                    </WrapPanel>
+
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100"></TextBlock>
+                        <ComboBox Name="cbLastLanguage" Width="130" Margin="20,0,0,0"></ComboBox>
+                    </WrapPanel>
+                </DockPanel>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <GroupBox x:Name="gbBaiduSettings" Header="Baidu Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,15" VerticalAlignment="Top" Padding="15,3,15,3">
+                <DockPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">App Key</TextBlock>
+                        <TextBox Width="130" Margin="20,0,0,0"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
+                        <TextBox Width="130" Margin="20,0,0,0" Height="40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E=</TextBox>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" Padding="3">
+                            <Hyperlink Name="lblBaidu" Click="lblBaidu_OnClick">
+                                <Run Text="you can click me to get it"></Run>
+                            </Hyperlink>
+                        </TextBlock>
+                    </WrapPanel>
+                </DockPanel>
+            </GroupBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <GroupBox x:Name="gbBingSettings" Header="Bing Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,15" VerticalAlignment="Top" Padding="15,3,15,3">
+                <DockPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">App Key</TextBlock>
+                        <TextBox Width="130" Margin="20,0,0,0"></TextBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
+                        <TextBox Width="130" Margin="20,0,0,0" Height="40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto">LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E=</TextBox>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" Padding="3">
+                            <Hyperlink Name="lblBing" Click="lblBing_OnClick">
+                                <Run Text="you can click me to get it"></Run>
+                            </Hyperlink>
+                        </TextBlock>
+                    </WrapPanel>
+                </DockPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>

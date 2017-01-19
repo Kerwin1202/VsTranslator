@@ -29,6 +29,16 @@ namespace VsTranslator.Adornment
             InitializeComponent();
             _selectedSpans = selectedSpans;
             transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
+
+            transRequest.OnAllTranslationComplete += TransRequest_OnAllTranslationComplete;
+        }
+
+        private void TransRequest_OnAllTranslationComplete()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                lbltitle.Text = "Translation successed..";
+            }));
         }
 
         private void TransRequest_OnTranslationComplete(TranslateResult translationResult)
@@ -38,13 +48,11 @@ namespace VsTranslator.Adornment
                 if (translationResult.TranslationResultTypes == TranslationResultTypes.Successed)
                 {
                     AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
-                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
-                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
                 }
                 else
                 {
-                    lblDirection.Foreground = new SolidColorBrush(Colors.Red);
-                    lblDirection.Text = translationResult.FailedReason;
+                    lbltitle.Foreground = new SolidColorBrush(Colors.Red);
+                    lbltitle.Text = translationResult.FailedReason;
                 }
             }));
         }
@@ -53,30 +61,30 @@ namespace VsTranslator.Adornment
         {
             var wrapPanel = new WrapPanel();
 
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/VsTranslator;component/Resources/google_16.ico")),
-                Width = 14,
-                Height = 14
-            };
-            wrapPanel.Children.Add(image);
+            //System.Windows.Controls.Image image = new System.Windows.Controls.Image
+            //{
+            //    Source = new BitmapImage(new Uri("pack://application:,,,/VsTranslator;component/Resources/google_16.ico")),
+            //    Width = 14,
+            //    Height = 14
+            //};
+            //wrapPanel.Children.Add(image);
 
 
             var label = new TextBlock()
             {
                 Text = targetText,
                 TextWrapping = TextWrapping.Wrap,
-                ToolTip = $"({sourceLanguage} - {targetLanguage}) click to replace selcted text with this translation",
+                ToolTip = $"[google]({sourceLanguage} - {targetLanguage}) click to replace selcted text with this translation",
                 FontWeight = FontWeights.Bold,
-                Padding = new Thickness(3),
-                MinWidth = 150
+                Padding = new Thickness(3,1,3,1),
+                MinWidth = 180
             };
-          
+
             label.MouseDown += Label_MouseDown;
 
             wrapPanel.SetResourceReference(StyleProperty, "MouseOver");
             wrapPanel.Children.Add(label);
-      
+
             transResult.Children.Add(wrapPanel);
         }
 

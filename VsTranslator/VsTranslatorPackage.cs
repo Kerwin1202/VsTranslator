@@ -35,7 +35,7 @@ namespace VsTranslator
     [Guid(GuidList.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
 
-    [ProvideOptionPage(typeof(TranslateOptions), "VsExtensions", "VsTranslator", 0, 0, true)]
+
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideAutoLoad(UIContextGuids.NoSolution)]//设置当VS打开的时候就运行本类
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]//同上
@@ -71,7 +71,5 @@ namespace VsTranslator
             MenuCmd.Initialize(this);
             StatusBarCmd.Initialize(this);
         }
-
-
     }
 }

@@ -93,14 +93,8 @@
     <Compile Include="Core\Utils\TextViewCreationListener .cs" />
     <Compile Include="PkgCmdIdList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\TranslateOptions.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Settings\TranslateOptionsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Settings\TranslateOptionsControl.Designer.cs">
-      <DependentUpon>TranslateOptionsControl.cs</DependentUpon>
+    <Compile Include="Settings\TranslateOptions.xaml.cs">
+      <DependentUpon>TranslateOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="VsTranslatorPackage.cs" />
   </ItemGroup>
@@ -282,9 +276,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Settings\TranslateOptionsControl.resx">
-      <DependentUpon>TranslateOptionsControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
@@ -292,6 +283,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Adornment\TranslatorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings\TranslateOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
