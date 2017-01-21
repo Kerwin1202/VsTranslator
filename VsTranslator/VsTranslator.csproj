@@ -111,7 +111,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
+    <Content Include="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\baidu_64.ico" />
     <Resource Include="Resources\bing_16.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -127,6 +130,13 @@
     <Resource Include="Resources\setting.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\favicon_64_64.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\previewimage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\VsTranslatorPackage.ico" />
     <Content Include="Resources\youdao_64.ico" />
     <Content Include="stylesheet.css" />

@@ -55,8 +55,13 @@ namespace VsTranslator.Settings
         private void btnSave_OnClick(object sender, RoutedEventArgs e)
         {
             OnSave?.Invoke(Settings);
+            this.Close();
         }
 
+        private void btnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
         private void cbService_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbSourceLanguage.Items.Clear();
@@ -122,8 +127,8 @@ namespace VsTranslator.Settings
 
         private void cbTargetLanguage_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TranslationLanguage lang = cbTargetLanguage.SelectedValue as TranslationLanguage;
-            lblLastLanguage.Text = lang?.Name;
+            //TranslationLanguage lang = cbTargetLanguage.SelectedValue as TranslationLanguage;
+            //lblLastLanguage.Text = lang?.Name;
             SetTargetLanguageIndex(GetTransSettings());
         }
         private void SetTargetLanguageIndex(TransSettings transSettings)

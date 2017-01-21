@@ -15,11 +15,6 @@ namespace VsTranslator.Core.Translator.Youdao
 {
     public class YoudaoTranslator : ITranslator
     {
-        private YoudaoTranslator()
-        {
-
-        }
-
         static YoudaoTranslator()
         {
             TargetLanguages = new List<TranslationLanguage>()
@@ -51,12 +46,23 @@ namespace VsTranslator.Core.Translator.Youdao
         private const string English = "EN";
         private const string Auto = "Auto";
 
+        /// <summary>
+        /// use TranslateByHttp appid and client secret is necessary
+        /// </summary>
+        /// <param name="appid"></param>
+        /// <param name="clientSecret"></param>
         public YoudaoTranslator(string appid, string clientSecret)
         {
             _appid = appid;
             _clientSecret = clientSecret;
+        }
 
-            
+        /// <summary>
+        /// use TranslateByPost
+        /// </summary>
+        public YoudaoTranslator()
+        {
+           
         }
 
         /// <summary>
@@ -186,10 +192,19 @@ namespace VsTranslator.Core.Translator.Youdao
             return null;
         }
 
+        public string GetIdentity()
+        {
+            return "Youdao";
+        }
         public static string GetName()
         {
             return "Youdao Translator / 有道翻译";
         }
+        public static string GetChineseLanguage()
+        {
+            return Chinese;
+        }
+
 
         public static string GetDescription()
         {
@@ -271,7 +286,15 @@ namespace VsTranslator.Core.Translator.Youdao
                     else
                     {
                         result.TranslationResultTypes = TranslationResultTypes.Successed;
-                        result.TargetText = youdaoTransResult.TranslateResults?[0]?[0].Tgt;
+                        result.TargetText = string.Empty;
+                        if (youdaoTransResult.TranslateResults != null)
+                        {
+                            foreach (var youdaoTranslation in youdaoTransResult.TranslateResults[0])
+                            {
+                                result.TargetText += youdaoTranslation.Tgt;
+                            }
+                        }
+                        
                         var langs = youdaoTransResult.Type.Split('2');
                         result.SourceLanguage = langs[0];
                         result.TargetLanguage = langs[1];

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
@@ -14,6 +15,7 @@ using VsTranslator.Core.Translator.Bing;
 using VsTranslator.Core.Translator.Entities;
 using VsTranslator.Core.Translator.Enums;
 using VsTranslator.Core.Translator.Google;
+using VsTranslator.Settings;
 
 namespace VsTranslator.Core.Utils
 {
@@ -38,6 +40,13 @@ namespace VsTranslator.Core.Utils
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.BaiduTranslate, TranslateMenu_Clicked);
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.YoudaoTranslate, TranslateMenu_Clicked);
 
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateOptions, TranslateOptions_Clicked, true);
+
+        }
+
+        private static void TranslateOptions_Clicked(object sender, EventArgs e)
+        {
+            OptionsSettings.ShowOptions();
         }
 
         private MenuCmd(Package package)
@@ -129,7 +138,7 @@ namespace VsTranslator.Core.Utils
                         Translate(menuCommand.CommandID.ID, selectedText);
                         //buffer.Replace(sp, selectedText);
                     }
-                    catch (Exception)
+                    catch (Exception exception)
                     {
                         //
                     }
@@ -137,28 +146,39 @@ namespace VsTranslator.Core.Utils
             }
         }
 
-        private static ITranslator _googleTranslator;
-
-        private static ITranslator _bingTranslator;
-
-        private static ITranslator _baiduTranslator;
-
-        private static ITranslator _youdaoTranslator;
-
-      
-
         private static void Translate(int commandId, string selectedText)
         {
-            ITranslator translator = TranslatorFactory.GetTranslator(commandId);
+            ITranslator translator = null;
+            try
+            {
+                translator = TranslatorFactory.GetTranslator(commandId);
+            }
+            catch (Exception exception)
+            {
+                if (exception.Message == "app id and client secret is necessary")
+                {
+                    DialogResult result = MessageBox.Show($"{exception.Message}, go to set?", "Tip", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        OptionsSettings.ShowOptions();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(exception.Message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                return;
+            }
 
-            TranslationRequest transRequest = new TranslationRequest(selectedText,new List<Trans>() { new Trans()
+            TranslationRequest transRequest = new TranslationRequest(selectedText, new List<Trans>() { new Trans()
             {
                 Translator = translator,
-                SourceLanguage = "en",
-                TargetLanguage = "zh-CN"
+                SourceLanguage = TranslatorFactory.GetSourceLanguage(commandId,selectedText),
+                TargetLanguage = TranslatorFactory.GetTargetLanguage(commandId,selectedText),
             } });
             Connector.Execute(GetCurrentViewHost(), transRequest);
         }
+
 
 
         private void ChangeTranslatorCommand(int cmdId, bool enableCmd)
@@ -181,7 +201,7 @@ namespace VsTranslator.Core.Utils
             ChangeTranslatorCommand((int)PkgCmdIdList.YoudaoTranslate, enableCmd);
         }
 
-        public static void AddCommand2OleMenu(Guid commandSet, int commandId, EventHandler eventHandler)
+        public static void AddCommand2OleMenu(Guid commandSet, int commandId, EventHandler eventHandler, bool isEnabled = false)
         {
             OleMenuCommandService mcs = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (null != mcs)
@@ -189,7 +209,7 @@ namespace VsTranslator.Core.Utils
                 CommandID translateCommandId = new CommandID(commandSet, commandId);
                 OleMenuCommand menuItemTranslate = new OleMenuCommand(eventHandler, translateCommandId)
                 {
-                    Enabled = false
+                    Enabled = isEnabled
                 };
                 mcs.AddCommand(menuItemTranslate);
             }

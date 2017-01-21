@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using VsTranslator.Adornment;
 
 namespace VsTranslator.Core.Utils
 {
@@ -35,36 +36,36 @@ namespace VsTranslator.Core.Utils
             _view.Closed += _view_Closed;
 
 
-            IEditorFormatMap formatMap = FormatMapService.GetEditorFormatMap(textView);
+            //IEditorFormatMap formatMap = FormatMapService.GetEditorFormatMap(textView);
 
-            ResourceDictionary regularCaretProperties = formatMap.GetProperties("Caret");
-            ResourceDictionary overwriteCaretProperties = formatMap.GetProperties("Overwrite Caret");
-            ResourceDictionary indicatorMargin = formatMap.GetProperties("Indicator Margin");
-            ResourceDictionary visibleWhitespace = formatMap.GetProperties("Visible Whitespace");
-            ResourceDictionary selectedText = formatMap.GetProperties("Selected Text");
-            ResourceDictionary inactiveSelectedText = formatMap.GetProperties("Inactive Selected Text");
+            //ResourceDictionary regularCaretProperties = formatMap.GetProperties("Caret");
+            //ResourceDictionary overwriteCaretProperties = formatMap.GetProperties("Overwrite Caret");
+            //ResourceDictionary indicatorMargin = formatMap.GetProperties("Indicator Margin");
+            //ResourceDictionary visibleWhitespace = formatMap.GetProperties("Visible Whitespace");
+            //ResourceDictionary selectedText = formatMap.GetProperties("Selected Text");
+            //ResourceDictionary inactiveSelectedText = formatMap.GetProperties("Inactive Selected Text");
 
-            formatMap.BeginBatchUpdate();
+            //formatMap.BeginBatchUpdate();
 
-            regularCaretProperties[EditorFormatDefinition.ForegroundBrushId] = Brushes.Magenta;
-            formatMap.SetProperties("Caret", regularCaretProperties);
+            //regularCaretProperties[EditorFormatDefinition.ForegroundBrushId] = Brushes.Magenta;
+            //formatMap.SetProperties("Caret", regularCaretProperties);
 
-            overwriteCaretProperties[EditorFormatDefinition.ForegroundBrushId] = Brushes.Turquoise;
-            formatMap.SetProperties("Overwrite Caret", overwriteCaretProperties);
+            //overwriteCaretProperties[EditorFormatDefinition.ForegroundBrushId] = Brushes.Turquoise;
+            //formatMap.SetProperties("Overwrite Caret", overwriteCaretProperties);
 
-            indicatorMargin[EditorFormatDefinition.BackgroundColorId] = Colors.LightGreen;
-            formatMap.SetProperties("Indicator Margin", indicatorMargin);
+            //indicatorMargin[EditorFormatDefinition.BackgroundColorId] = Colors.LightGreen;
+            //formatMap.SetProperties("Indicator Margin", indicatorMargin);
 
-            visibleWhitespace[EditorFormatDefinition.ForegroundColorId] = Colors.Red;
-            formatMap.SetProperties("Visible Whitespace", visibleWhitespace);
+            //visibleWhitespace[EditorFormatDefinition.ForegroundColorId] = Colors.Red;
+            //formatMap.SetProperties("Visible Whitespace", visibleWhitespace);
 
-            selectedText[EditorFormatDefinition.BackgroundBrushId] = Brushes.LightPink;
-            formatMap.SetProperties("Selected Text", selectedText);
+            //selectedText[EditorFormatDefinition.BackgroundBrushId] = Brushes.LightPink;
+            //formatMap.SetProperties("Selected Text", selectedText);
 
-            inactiveSelectedText[EditorFormatDefinition.BackgroundBrushId] = Brushes.DeepPink;
-            formatMap.SetProperties("Inactive Selected Text", inactiveSelectedText);
+            //inactiveSelectedText[EditorFormatDefinition.BackgroundBrushId] = Brushes.DeepPink;
+            //formatMap.SetProperties("Inactive Selected Text", inactiveSelectedText);
 
-            formatMap.EndBatchUpdate();
+            //formatMap.EndBatchUpdate();
         }
 
         private void _view_Closed(object sender, EventArgs e)
@@ -74,6 +75,7 @@ namespace VsTranslator.Core.Utils
 
         private void Selection_SelectionChanged(object sender, EventArgs e)
         {
+            TransAdornmentManager.RemoveAllAdornments();
             ITextSelection selection = sender as ITextSelection;
             if (selection != null)
             {

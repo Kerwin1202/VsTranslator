@@ -9,7 +9,7 @@ namespace VsTranslator.Settings
     {
         private static Settings _settings;
 
-        private static Settings Settings
+        public static Settings Settings
         {
             get
             {
@@ -18,20 +18,18 @@ namespace VsTranslator.Settings
                     ServiceIndex = 1,
                     BaiduSettings = new TransSettings()
                     {
-                        AppClient =
-                            new AppClient() { AppKey = "20161214000033991", ClientSecret = "HMlukU9THx2Twx1I14Hz" },
+                        AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
                         LastLanguageIndex = 2,
                         SourceLanguageIndex = 0,
                         TargetLanguageIndex = 0
                     },
                     BingSettings = new TransSettings()
                     {
-                        AppClient =
-                            new AppClient()
-                            {
-                                AppKey = "VsTranslatorByKerwin",
-                                ClientSecret = "LOAgOYu99LyNzVoa+LL53zIk93RFhAaZQxwtSW+an5E="
-                            },
+                        AppClient = new AppClient()
+                        {
+                            AppKey = "",
+                            ClientSecret = ""
+                        },
                         LastLanguageIndex = 12,
                         SourceLanguageIndex = 0,
                         TargetLanguageIndex = 5
@@ -39,7 +37,7 @@ namespace VsTranslator.Settings
                     ,
                     YoudaoSettings = new TransSettings()
                     {
-                        AppClient = new AppClient() { AppKey = "zhiyue", ClientSecret = "702916626" },
+                        AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
                         LastLanguageIndex = 1,
                         SourceLanguageIndex = 0,
                         TargetLanguageIndex = 0
@@ -56,7 +54,7 @@ namespace VsTranslator.Settings
             set
             {
                 _settings = value;
-                File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(_settings),Encoding.UTF8);
+                File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(_settings), Encoding.UTF8);
             }
         }
 
@@ -65,6 +63,11 @@ namespace VsTranslator.Settings
         private static readonly string ConfigPath = Path.Combine(LocalPath, "settings.config");
 
         static OptionsSettings()
+        {
+            Init();
+        }
+
+        private static void Init()
         {
             if (!Directory.Exists(LocalPath))
             {
@@ -94,6 +97,7 @@ namespace VsTranslator.Settings
             {
                 OnSave = SaveSettings
             }.ShowDialog();
+            Init();
         }
 
         public static void SaveSettings(Settings settings)

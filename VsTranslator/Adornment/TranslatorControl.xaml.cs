@@ -36,19 +36,20 @@ namespace VsTranslator.Adornment
 
         private void TransRequest_OnAllTranslationComplete()
         {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                lbltitle.Text = "Translation successed..";
-            }));
+            //Dispatcher.BeginInvoke(new Action(() =>
+            //{
+            //    lbltitle.Text = "Translation successed..";
+            //}));
         }
 
         private void TransRequest_OnTranslationComplete(TranslateResult translationResult)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
+                lbltitle.Text = $"[{translationResult.Identity}]({translationResult.SourceLanguage} - {translationResult.TargetLanguage})";
                 if (translationResult.TranslationResultTypes == TranslationResultTypes.Successed)
                 {
-                    AppendTargetText(translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
+                    AppendTargetText(translationResult.Identity, translationResult.SourceLanguage, translationResult.TargetLanguage, translationResult.TargetText);
                 }
                 else
                 {
@@ -58,7 +59,7 @@ namespace VsTranslator.Adornment
             }));
         }
 
-        private void AppendTargetText(string sourceLanguage, string targetLanguage, string targetText)
+        private void AppendTargetText(string identity, string sourceLanguage, string targetLanguage, string targetText)
         {
             var wrapPanel = new WrapPanel();
 
@@ -75,9 +76,9 @@ namespace VsTranslator.Adornment
             {
                 Text = targetText,
                 TextWrapping = TextWrapping.Wrap,
-                ToolTip = $"[google]({sourceLanguage} - {targetLanguage}) click to replace selcted text with this translation",
+                ToolTip = "click to replace selcted text with this translation",
                 FontWeight = FontWeights.Bold,
-                Padding = new Thickness(3,1,3,1),
+                Padding = new Thickness(3, 1, 3, 1),
                 MinWidth = 180
             };
 

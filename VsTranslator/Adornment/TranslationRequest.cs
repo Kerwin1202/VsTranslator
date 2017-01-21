@@ -43,6 +43,8 @@ namespace VsTranslator.Adornment
                 TranslateResult translateResult = JsonConvert.DeserializeObject<TranslateResult>(JsonConvert.SerializeObject(result));
 
                 translateResult.Translator = trans.Translator;
+
+                translateResult.Identity = trans.Translator.GetIdentity();
                 OnTranslationComplete?.Invoke(translateResult);
             }
             lock (_completeQueue)
@@ -68,5 +70,7 @@ namespace VsTranslator.Adornment
     public class TranslateResult : TranslationResult
     {
         public ITranslator Translator { get; set; }
+
+        public string Identity { get; set; }
     }
 }

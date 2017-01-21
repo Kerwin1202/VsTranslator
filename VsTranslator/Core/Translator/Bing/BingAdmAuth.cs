@@ -81,6 +81,7 @@ namespace VsTranslator.Core.Translator.Bing
             webRequest.Method = "POST";
             byte[] bytes = Encoding.ASCII.GetBytes(requestDetails);
             webRequest.ContentLength = bytes.Length;
+            webRequest.Timeout = 15*1000;
             using (Stream outputStream = webRequest.GetRequestStream())
             {
                 outputStream.Write(bytes, 0, bytes.Length);

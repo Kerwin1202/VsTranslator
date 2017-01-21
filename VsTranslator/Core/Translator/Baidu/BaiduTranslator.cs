@@ -70,10 +70,12 @@ namespace VsTranslator.Core.Translator.Baidu
 
         public BaiduTranslator(string appid, string clientSecret)
         {
+            if (string.IsNullOrWhiteSpace(appid) || string.IsNullOrWhiteSpace(clientSecret))
+            {
+                throw new Exception("app id and client secret is necessary");
+            }
             _appid = appid;
             _clientSecret = clientSecret;
-
-
         }
         /// <summary>
         /// 
@@ -138,6 +140,11 @@ namespace VsTranslator.Core.Translator.Baidu
             return null;
         }
 
+        public  string GetIdentity()
+        {
+            return "Baidu";
+        }
+
         public static string GetName()
         {
             return "Baidu Translator / 百度翻译";
@@ -152,6 +159,11 @@ namespace VsTranslator.Core.Translator.Baidu
         public static string GetWebsite()
         {
             return "http://fanyi.baidu.com/";
+        }
+
+        public static string GetChineseLanguage()
+        {
+            return "zh";
         }
 
         public static List<TranslationLanguage> GetTargetLanguages()

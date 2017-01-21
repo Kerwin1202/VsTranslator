@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsTranslator.Settings"
-             mc:Ignorable="d" SizeToContent="WidthAndHeight" Title="Translation Settings" ResizeMode="CanMinimize" >
+             mc:Ignorable="d" SizeToContent="WidthAndHeight" Title="Translation Settings" ResizeMode="CanMinimize"  WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/VsTranslator;component/Resources/favicon_64_64.png" >
     <Grid Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -32,7 +32,7 @@
                     <WrapPanel Width="200" Margin="5" DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Right">
                         <TextBlock  HorizontalAlignment="Left">if translate from</TextBlock>
                         <TextBlock Name="lblLastLanguage">
-                            Chinese / 简体中文Chinese / 简体中文
+                            Chinese (Simplified) / 简体中文
                         </TextBlock>
                         <TextBlock> then translate to</TextBlock>
                     </WrapPanel>
@@ -43,6 +43,11 @@
                     </WrapPanel>
                 </DockPanel>
             </GroupBox>
+            <GroupBox x:Name="gbSettings" Header="Translate settings" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3">
+                <DockPanel>
+                    <TextBlock>Spliter</TextBlock>
+                </DockPanel>
+           </GroupBox>
         </StackPanel>
         <DockPanel Grid.Row="0" Grid.Column="1">
             <GroupBox x:Name="gbBingSettings" Header="Bing Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3"  DockPanel.Dock="Top">
@@ -83,7 +88,7 @@
                     </WrapPanel>
                 </DockPanel>
             </GroupBox>
-            <GroupBox x:Name="gbYoudaoSe2ttings" Header="Youdao Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top">
+            <GroupBox x:Name="gbYoudaoSe2ttings" Header="Youdao Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top" IsEnabled="False">
                 <DockPanel>
                     <WrapPanel Margin="5" DockPanel.Dock="Top">
                         <TextBlock VerticalAlignment="Center" MinWidth="100">App Key</TextBlock>
@@ -106,7 +111,8 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DockPanel Dock="Right" HorizontalAlignment="Right">
                 <WrapPanel Margin="5" DockPanel.Dock="Top" >
-                    <Button Name="btnSave" Background="Transparent" BorderBrush="Transparent" Padding="10,3" Margin="0,0,20,0" Cursor="Arrow" Click="btnSave_OnClick">保存</Button>
+                    <Button Name="btnSave" Background="Transparent" Padding="10,3" Margin="0,0,20,0" Cursor="Arrow" Click="btnSave_OnClick">Save</Button>
+                    <Button Name="btnCancel" Background="Transparent" Padding="10,3" Margin="15,0,20,0" Cursor="Arrow" Click="btnCancel_OnClick">Cancel</Button>
                 </WrapPanel>
             </DockPanel>
         </StackPanel>

@@ -100,9 +100,14 @@ namespace VsTranslator.Core.Translator.Bing
         {
             //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
             //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
+
+            if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
+            {
+                throw new Exception("app id and client secret is necessary");
+            }
             _admAuth = new BingAdmAuth(clientId, clientSecret);
 
-           
+
         }
 
         /// <summary>
@@ -233,10 +238,19 @@ namespace VsTranslator.Core.Translator.Bing
         //get Support languages : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguagesForTranslate
         //get support languages's names : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguageNames?locale=en&languageCodes=["af","ar","bs-Latn","bg","ca","zh-CHS","zh-CHT","yue","hr","cs","da","nl","en","et","fj","fil","fi","fr","de","el","ht","he","hi","mww","hu","id","it","ja","sw","tlh","tlh-Qaak","ko","lv","lt","mg","ms","mt","yua","no","otq","fa","pl","pt","ro","ru","sm","sr-Cyrl","sr-Latn","sk","sl","es","sv","ty","th","to","tr","uk","ur","vi","cy"]
 
+        public  string GetIdentity()
+        {
+            return "Bing";
+        }
         public static string GetName()
         {
             return "Bing Translator / 必应翻译";
         }
+        public static string GetChineseLanguage()
+        {
+            return "zh-CHS";
+        }
+
 
         public static string GetDescription()
         {
@@ -287,7 +301,7 @@ namespace VsTranslator.Core.Translator.Bing
                     #region ajax
                     BingTransResult bingTransResult = TranslateByAjax(text, from, to);
                     result.SourceLanguage = bingTransResult?.From;
-                    result.TargetText = bingTransResult?.Translations?[0].TranslatedText; 
+                    result.TargetText = bingTransResult?.Translations?[0].TranslatedText;
                     #endregion
 
                     #region http
