@@ -62,7 +62,7 @@ namespace VsTranslator.Core.Translator.Youdao
         /// </summary>
         public YoudaoTranslator()
         {
-           
+
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace VsTranslator.Core.Translator.Youdao
         /// <param name="to"></param>
         private YoudaoPostTransResult TranslateByPost(string text, string @from = "EN", string to = "ZH_CN")
         {
-            if (!(text.Length > 0 && text.Length < 1000))
+            if (!(text.Length > 0 && text.Length < 2000))
             {
-                return null;
+                throw new Exception("text'length must between 0 and 2000");
             }
             try
             {
@@ -287,14 +287,19 @@ namespace VsTranslator.Core.Translator.Youdao
                     {
                         result.TranslationResultTypes = TranslationResultTypes.Successed;
                         result.TargetText = string.Empty;
-                        if (youdaoTransResult.TranslateResults != null)
+                        foreach (var translateResult in youdaoTransResult.TranslateResults ?? new List<List<YoudaoTranslation>>())
                         {
-                            foreach (var youdaoTranslation in youdaoTransResult.TranslateResults[0])
+                            foreach (var youdaoTranslation in translateResult)
                             {
                                 result.TargetText += youdaoTranslation.Tgt;
                             }
+                            result.TargetText += "\r\n";
                         }
-                        
+                        if (result.TargetText.Length > 0)
+                        {
+                            result.TargetText = result.TargetText.Substring(0, result.TargetText.Length - 2);
+                        }
+
                         var langs = youdaoTransResult.Type.Split('2');
                         result.SourceLanguage = langs[0];
                         result.TargetLanguage = langs[1];

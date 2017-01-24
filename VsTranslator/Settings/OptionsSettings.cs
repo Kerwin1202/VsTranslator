@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
 namespace VsTranslator.Settings
@@ -11,45 +14,7 @@ namespace VsTranslator.Settings
 
         public static Settings Settings
         {
-            get
-            {
-                return _settings ?? (_settings = new Settings()
-                {
-                    ServiceIndex = 1,
-                    BaiduSettings = new TransSettings()
-                    {
-                        AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
-                        LastLanguageIndex = 2,
-                        SourceLanguageIndex = 0,
-                        TargetLanguageIndex = 0
-                    },
-                    BingSettings = new TransSettings()
-                    {
-                        AppClient = new AppClient()
-                        {
-                            AppKey = "",
-                            ClientSecret = ""
-                        },
-                        LastLanguageIndex = 12,
-                        SourceLanguageIndex = 0,
-                        TargetLanguageIndex = 5
-                    }
-                    ,
-                    YoudaoSettings = new TransSettings()
-                    {
-                        AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
-                        LastLanguageIndex = 1,
-                        SourceLanguageIndex = 0,
-                        TargetLanguageIndex = 0
-                    },
-                    GoogleSettings = new TransSettings()
-                    {
-                        LastLanguageIndex = 12,
-                        SourceLanguageIndex = 0,
-                        TargetLanguageIndex = 6
-                    }
-                });
-            }
+            get { return _settings ?? (_settings = Settings.Instance()); }
 
             set
             {
@@ -82,10 +47,16 @@ namespace VsTranslator.Settings
                     try
                     {
                         _settings = JsonConvert.DeserializeObject<Settings>(settings);
+                        if (_settings.BaiduSettings == null) _settings.BaiduSettings = new TransSettings();
+                        if (_settings.GoogleSettings == null) _settings.GoogleSettings = new TransSettings();
+                        if (_settings.BingSettings == null) _settings.BingSettings = new TransSettings();
+                        if (_settings.YoudaoSettings == null) _settings.YoudaoSettings = new TransSettings();
+                        if (_settings.LetterSpliters == null) _settings.LetterSpliters = new List<Spliter>();
+                        if (string.IsNullOrWhiteSpace(_settings.TranslateCachePath) || !System.IO.Directory.Exists(_settings.TranslateCachePath)) _settings.TranslateCachePath = Settings.TranslateCacheDefaultPath;
                     }
                     catch (Exception)
                     {
-                        _settings = null;
+                        _settings = Settings.Instance();
                     }
                 }
             }
@@ -100,9 +71,21 @@ namespace VsTranslator.Settings
             Init();
         }
 
-        public static void SaveSettings(Settings settings)
+        private static void SaveSettings(Settings settings)
         {
             Settings = settings;
+        }
+
+        public static void SaveSpliters(IList<Spliter> spliters)
+        {
+            Settings.LetterSpliters = spliters.ToList();
+
+            SaveSettings(Settings);
+        }
+
+        public static string SpliteLetterByRules(string selectedText)
+        {
+            return Settings.LetterSpliters.Aggregate(selectedText, (current, letterSpliter) => new Regex(letterSpliter.MatchRegex).Replace(current, letterSpliter.ReplaceRegex));
         }
     }
 }

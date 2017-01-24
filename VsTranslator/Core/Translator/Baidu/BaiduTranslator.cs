@@ -140,7 +140,7 @@ namespace VsTranslator.Core.Translator.Baidu
             return null;
         }
 
-        public  string GetIdentity()
+        public string GetIdentity()
         {
             return "Baidu";
         }
@@ -213,7 +213,14 @@ namespace VsTranslator.Core.Translator.Baidu
                     }
                     else
                     {
-                        result.TargetText = baiduTransResult.TransResult[0].Dst;
+                        foreach (var transResult in baiduTransResult.TransResult)
+                        {
+                            result.TargetText += transResult.Dst + "\r\n";
+                        }
+                        if (result.TargetText.Length > 0)
+                        {
+                            result.TargetText = result.TargetText.Substring(0, result.TargetText.Length - 2);
+                        }
                         result.TranslationResultTypes = TranslationResultTypes.Successed;
                         result.SourceLanguage = baiduTransResult.From;
                         result.TargetLanguage = baiduTransResult.To;

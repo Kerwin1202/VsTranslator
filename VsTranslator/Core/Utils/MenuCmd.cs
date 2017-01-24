@@ -148,6 +148,7 @@ namespace VsTranslator.Core.Utils
 
         private static void Translate(int commandId, string selectedText)
         {
+            selectedText = OptionsSettings.SpliteLetterByRules(selectedText);
             ITranslator translator = null;
             try
             {

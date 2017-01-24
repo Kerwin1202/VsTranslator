@@ -44,10 +44,20 @@
                 </DockPanel>
             </GroupBox>
             <GroupBox x:Name="gbSettings" Header="Translate settings" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3">
-                <DockPanel>
-                    <TextBlock>Spliter</TextBlock>
+                <DockPanel Margin="5">
+                    <TextBlock MinWidth="100" VerticalAlignment="Center">Spliter</TextBlock>
+                    <!--<TextBox Name="" Width="200" Margin="20,0,0,0" TextWrapping="Wrap" AcceptsReturn="True" Height="50" VerticalScrollBarVisibility="Auto"></TextBox>-->
+                    <Button Margin="20,0,0,0" Width="200" Padding="10,3"  Background="Transparent"  Click="btnSpliter_OnClick">Manager Letter Spliter</Button>
                 </DockPanel>
            </GroupBox>
+
+            <GroupBox Header="Translate Cache" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3" IsEnabled="False">
+                <DockPanel Margin="5">
+                    <TextBlock Padding="10,3" Margin="3,0" VerticalAlignment="Center">Cache Path</TextBlock>
+                    <TextBox Name="txtTranslateCachePath" VerticalAlignment="Center" IsReadOnly="True" Width="150" Margin="3,0" Padding="2" Text="{Binding Path=TranslateCachePath,Mode=TwoWay}"></TextBox>
+                    <Button Padding="10,3" Margin="8,0,0,0"  Background="Transparent" Click="btnChange_OnClick" >Change</Button>
+                </DockPanel>
+            </GroupBox>
         </StackPanel>
         <DockPanel Grid.Row="0" Grid.Column="1">
             <GroupBox x:Name="gbBingSettings" Header="Bing Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3"  DockPanel.Dock="Top">

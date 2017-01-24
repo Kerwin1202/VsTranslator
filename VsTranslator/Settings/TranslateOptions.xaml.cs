@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using VsTranslator.Core.Translator.Baidu;
 using VsTranslator.Core.Translator.Bing;
 using VsTranslator.Core.Translator.Entities;
@@ -62,6 +63,35 @@ namespace VsTranslator.Settings
         {
             this.Close();
         }
+
+
+        private void btnSpliter_OnClick(object sender, RoutedEventArgs e)
+        {
+            new LetterSpliter(OptionsSettings.Settings.LetterSpliters).ShowDialog();
+        }
+
+        private void btnChange_OnClick(object sender, RoutedEventArgs e)
+        {
+            var fbd = new FolderBrowserDialog
+            {
+                Description = "Translate cache path",
+                SelectedPath = OptionsSettings.Settings.TranslateCachePath,
+                ShowNewFolderButton = true
+            };
+            var showDialogResult = fbd.ShowDialog();
+            if (showDialogResult != System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+            var selectedPath = fbd.SelectedPath;
+            if (!System.IO.Directory.Exists(selectedPath))
+            {
+                return;
+            }
+            //不知道为什么只设置其中一个另一个不会改变
+            Settings.TranslateCachePath = txtTranslateCachePath.Text = selectedPath;
+        }
+
         private void cbService_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbSourceLanguage.Items.Clear();

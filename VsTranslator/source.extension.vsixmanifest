@@ -6,7 +6,7 @@
     <Description xml:space="preserve">Translate selected text via Google or Bing or Baidu or Youdao translation</Description>
     <Icon>Resources\favicon_64_64.png</Icon>
     <PreviewImage>Resources\previewimage.png</PreviewImage>
-    <Tags>Translator</Tags>
+    <Tags>Translate, Microsoft Translator, Bing Translator, Baidu Translator, Youdao Translator</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[12.0,15.0)" Id="Microsoft.VisualStudio.Community" />
