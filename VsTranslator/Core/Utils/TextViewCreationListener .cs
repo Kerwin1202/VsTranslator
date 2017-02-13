@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using VsTranslator.Adornment;
+using VsTranslator.Adornment.TransResult;
 
 namespace VsTranslator.Core.Utils
 {

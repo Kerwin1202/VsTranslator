@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
-using VsTranslator.Core.Translator;
 
-namespace VsTranslator.Adornment
+namespace VsTranslator.Adornment.TransResult
 {
     [Export(typeof(IWpfTextViewCreationListener))]
     [ContentType("text")]

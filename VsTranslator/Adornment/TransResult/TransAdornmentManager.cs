@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using VsTranslator.Core.Translator;
 
-namespace VsTranslator.Adornment
+namespace VsTranslator.Adornment.TransResult
 {
     public class TransAdornmentManager
     {
@@ -33,12 +31,12 @@ namespace VsTranslator.Adornment
 
         public static void Add(IWpfTextView view, TranslationRequest transRequest)
         {
-            if (_layer == null)
-            {
-                _view = view;
-                _layer = view.GetAdornmentLayer("TranslatorAdornmentLayer");
-                _view.LayoutChanged += _view_LayoutChanged;
-            }
+            #region 解决有时候 new的时候layer还是为空 以及有时候_layer.add之后却不显示的问题
+            _view = view;
+            _layer = view.GetAdornmentLayer("TranslatorAdornmentLayer");
+            _view.LayoutChanged -= _view_LayoutChanged;
+            _view.LayoutChanged += _view_LayoutChanged; 
+            #endregion
 
             RemoveAllAdornments();
 

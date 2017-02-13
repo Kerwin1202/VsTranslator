@@ -5,9 +5,8 @@ using System.Threading;
 using Newtonsoft.Json;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Entities;
-using VsTranslator.Core.Translator.Enums;
 
-namespace VsTranslator.Adornment
+namespace VsTranslator.Adornment.TransResult
 {
     public class TranslationRequest
     {

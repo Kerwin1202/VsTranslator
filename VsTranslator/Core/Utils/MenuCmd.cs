@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using VsTranslator.Adornment;
+using VsTranslator.Adornment.TransResult;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Baidu;
 using VsTranslator.Core.Translator.Baidu.Entities;

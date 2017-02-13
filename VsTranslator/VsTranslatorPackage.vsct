@@ -53,13 +53,15 @@
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
         <!-- 父节点为菜单栏 -->
-        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
+        <!--<Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>-->
+        <!--移动至 CommandPlacements -->
       </Group>
-      
+
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
         <!-- 父节点为右键菜单栏 -->
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+        <!--<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />-->
+        <!--移动至 CommandPlacements -->
         <!---->
       </Group>
     </Groups>
@@ -121,7 +123,7 @@
           <ToolTipText>Translate Options</ToolTipText>
         </Strings>
       </Button>
-    
+
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -138,6 +140,62 @@
     </Bitmaps>
   </Commands>
 
+  <CommandPlacements>
+    <!-- 父节点为菜单栏 -->
+    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+      <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
+    </CommandPlacement>
+    <!-- 父节点为右键菜单栏 -->
+      <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindowLibra" id="IDMX_HTML_SOURCE"/>
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="CssEditorWindows2" id="IDMX_CSS_SOURCE"/>
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="JsonEditorWindows" id="IDMX_JSON_SOURCE"/>
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_BASIC" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_HTML" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_SCRIPT" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASAX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASPX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASAX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASMX_CODE" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="HtmlEditorWindows" id="IDMX_HTM_SOURCE_ASMX_CODE_VB" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="CssEditorWindows" id="IDMX_HTM_SOURCE_CSS" />
+        </CommandPlacement>
+        <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
+            <Parent guid="XamlEditorWindows" id="IDMX_XAML_SOURCE_BASIC" />
+        </CommandPlacement>
+  </CommandPlacements>
+
   <KeyBindings>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="GoogleTranslate" editor="guidVSStd97" key1="D" mod1="CONTROL Shift"  key2="D" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BingTranslate" editor="guidVSStd97" key1="D" mod1="CONTROL Shift"  key2="F" mod2="CONTROL Shift"/>
@@ -145,7 +203,7 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="V" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateOptions" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="S" mod2="CONTROL Shift"/>
   </KeyBindings>
-  
+
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidVsTranslatorPackage" value="{08a874bc-f0d4-40bc-8bbf-a1f2e30f92e5}" />
@@ -176,5 +234,44 @@
       <IDSymbol name="baiduIcon" value="3"/>
       <IDSymbol name="youdaoIcon" value="4"/>
     </GuidSymbol>
+
+
+
+    <!-- Visual Studio Defines https://gordon-breuer.de/unknown/2010/08/19/visual-studio-2010-extension-unicode-converter-1-0-with-tutorial.html -->
+    <!-- List for various editor types  -->
+    <GuidSymbol name="HtmlEditorWindows" value="{d7e8c5e1-bdb8-11d0-9c88-0000f8040a53}">
+      <IDSymbol name="IDMX_HTM_SOURCE_BASIC" value="0x32" />
+      <IDSymbol name="IDMX_HTM_SOURCE_HTML" value="0x33" />
+      <IDSymbol name="IDMX_HTM_SOURCE_SCRIPT" value="0x34" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASPX" value="0x35" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASAX" value="0x3B" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASPX_CODE" value="0x36" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASAX_CODE" value="0x3C" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASPX_CODE_VB" value="0x37" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASAX_CODE_VB" value="0x3D" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASMX_CODE" value="0x38" />
+      <IDSymbol name="IDMX_HTM_SOURCE_ASMX_CODE_VB" value="0x39" />
+    </GuidSymbol>
+
+    <GuidSymbol name="CMDSETID_CssEdGrp" value="{A764E896-518D-11d2-9A89-00C04F79EFC3}">
+      <IDSymbol name="IDM_CTX_SOURCE" value="0x102" />
+    </GuidSymbol>
+    <GuidSymbol name="HtmlEditorWindowLibra" value="{78F03954-2FB8-4087-8CE7-59D71710B3BB}">
+      <IDSymbol name="IDMX_HTML_SOURCE" value="1"/>
+    </GuidSymbol>
+    <GuidSymbol name="CssEditorWindows2" value="{64DA400E-B4AD-4D67-AA92-4B7ACB01ECD5}">
+      <IDSymbol name="IDMX_CSS_SOURCE" value="0x0002"/>
+    </GuidSymbol>
+    <GuidSymbol name="JsonEditorWindows" value="{F718CA06-CF4F-4A0C-9106-E79E9EE5E7CD}">
+      <IDSymbol name="IDMX_JSON_SOURCE" value="0x0003"/>
+    </GuidSymbol>
+    <GuidSymbol name="CssEditorWindows" value="{0F070E29-DCCD-4F83-8329-C3D4B29474AE}">
+      <IDSymbol name="IDMX_HTM_SOURCE_CSS" value="0x0102"/>
+    </GuidSymbol>
+    <GuidSymbol name="XamlEditorWindows" value="{4C87B692-1202-46AA-B64C-EF01FAEC53DA}">
+      <IDSymbol name="IDMX_XAML_SOURCE_BASIC" value="0x0103"/>
+    </GuidSymbol>
+
+
   </Symbols>
 </CommandTable>
