@@ -15,3 +15,5 @@
 /ColumnGuides
 /VsTranslatorTest/obj/Release
 /*.DotSettings
+/VsTranslatorTest/obj
+/VsTranslatorTest/bin

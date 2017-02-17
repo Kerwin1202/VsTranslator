@@ -57,7 +57,7 @@ namespace VsTranslator.Adornment.Translate
 
         private void win_Loaded(object sender, RoutedEventArgs e)
         {
-            Topmost = true;
+            //Topmost = true;
 
             cbTop.DataContext = this;
 
