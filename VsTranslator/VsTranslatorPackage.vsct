@@ -116,11 +116,19 @@
       </Button>
       <Button guid="guidVsTranslatorPackageCmdSet" id="TranslateOptions" priority="0x0104" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
-        <!--<Icon guid="guidTranslateIcon" id="googleIcon" />-->
         <Strings>
           <CommandName>Translate Options</CommandName>
           <ButtonText>Translate Options</ButtonText>
           <ToolTipText>Translate Options</ToolTipText>
+        </Strings>
+      </Button>
+      
+      <Button guid="guidVsTranslatorPackageCmdSet" id="TranslateClient" priority="0x0105" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" />
+        <Strings>
+          <CommandName>Translate Client</CommandName>
+          <ButtonText>Translate Client</ButtonText>
+          <ToolTipText>Translate Client</ToolTipText>
         </Strings>
       </Button>
 
@@ -133,8 +141,8 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="googleIcon"/>
-      <!--<Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="bingIcon"/>
+      <!--<Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="googleIcon"/>
+      <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="bingIcon"/>
       <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="baiduIcon"/>
       <Bitmap guid="guidTranslateIcon" href="Resources\google_16.ico" usedList="youdaoIcon"/>-->
     </Bitmaps>
@@ -202,6 +210,7 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="BaiduTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="C" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="V" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateOptions" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="S" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateClient" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="X" mod2="CONTROL Shift"/>
   </KeyBindings>
 
   <Symbols>
@@ -217,6 +226,7 @@
       <IDSymbol name="BaiduTranslate" value="0x1024" />
       <IDSymbol name="YoudaoTranslate" value="0x1025" />
       <IDSymbol name="TranslateOptions" value="0x1026" />
+      <IDSymbol name="TranslateClient" value="0x1027" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >

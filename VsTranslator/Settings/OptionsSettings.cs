@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using VsTranslator.Adornment.Translate;
 
 namespace VsTranslator.Settings
 {
@@ -69,6 +70,11 @@ namespace VsTranslator.Settings
                 OnSave = SaveSettings
             }.ShowDialog();
             Init();
+        }
+
+        public static void ShowClient()
+        {
+            new TranslateClient(Settings).Show();
         }
 
         private static void SaveSettings(Settings settings)

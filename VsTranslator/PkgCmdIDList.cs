@@ -7,6 +7,7 @@
         public const uint BaiduTranslate = 0x1024;
         public const uint YoudaoTranslate = 0x1025;
         public const uint TranslateOptions = 0x1026;
+        public const uint TranslateClient = 0x1027;
 
         public const uint OutputTranslateWindow = 0x2000;
     };

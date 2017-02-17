@@ -28,6 +28,8 @@ namespace VsTranslator.Core.Translator.Bing
 
         static BingTranslator()
         {
+            //language list from https://msdn.microsoft.com/en-us/library/hh456380.aspx
+
             TargetLanguages = new List<TranslationLanguage>()
             {
                 new TranslationLanguage("af","Afrikaans / 南非荷兰语"),

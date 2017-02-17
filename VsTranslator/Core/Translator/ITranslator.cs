@@ -10,5 +10,8 @@ namespace VsTranslator.Core.Translator
 
 
         TranslationResult Translate(string text, string from, string to);
+
+
+
     }
 }

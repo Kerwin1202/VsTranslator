@@ -43,6 +43,13 @@ namespace VsTranslator.Core.Utils
 
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateOptions, TranslateOptions_Clicked, true);
 
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateClient, TranslateClient_Clicked, true);
+
+        }
+
+        private static void TranslateClient_Clicked(object sender, EventArgs e)
+        {
+            OptionsSettings.ShowClient();
         }
 
         private static void TranslateOptions_Clicked(object sender, EventArgs e)

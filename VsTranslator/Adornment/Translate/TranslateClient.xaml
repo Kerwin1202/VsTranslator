@@ -1,0 +1,136 @@
+﻿<Window x:Class="VsTranslator.Adornment.Translate.TranslateClient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Translate Client" WindowStartupLocation="CenterScreen" Width="600" Height="400" Icon="/VsTranslator;component/Resources/translate.png" Loaded="win_Loaded" Closed="win_Closed">
+    <DockPanel Background="#FFF3F3F3">
+        <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Center">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <CheckBox Name="cbTop" IsChecked="{Binding Topmost,Mode=TwoWay}">On top</CheckBox>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2" VerticalAlignment="Center">
+                <WrapPanel VerticalAlignment="Center">
+                    <TextBlock>Translate</TextBlock>
+                    <RadioButton  Margin="10,0,0,0" Tag="Google" Checked="rbTranslateType_Checked" IsChecked="True">Google</RadioButton>
+                    <RadioButton Margin="10,0,0,0" Tag="Bing" Checked="rbTranslateType_Checked">Bing</RadioButton>
+                    <RadioButton Margin="10,0,0,0" Tag="Baidu" Checked="rbTranslateType_Checked">Baidu</RadioButton>
+                    <RadioButton Margin="10,0,0,0" Tag="Youdao" Checked="rbTranslateType_Checked">Youdao</RadioButton>
+                </WrapPanel>
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem  Grid.Column="4" Padding="5,0,10,0">
+                <TextBlock Name="lblStatus">Translating...</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox Name="txtSource" AcceptsReturn="True" Grid.Row="0" TextWrapping="Wrap" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="3" VerticalScrollBarVisibility="Auto" >
+
+            </TextBox>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <WrapPanel Grid.Column="0">
+                    <Button Name="btnNew"  Margin="5,2,5,2" Height="40" Width="40" Click="btnNew_OnClick">
+                        <Button.Content>
+                            <Image Source="/VsTranslator;component/Resources/new.png" Height="36" ToolTip="New (ctrl + N)"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="btnCopy" Margin="5,2,5,2" Height="40" Width="40" Click="btnCopy_OnClick" IsEnabled="False"  Opacity="0.5">
+                        <Button.Content>
+                            <Image Source="/VsTranslator;component/Resources/copy.png" Height="29" ToolTip="Copy (ctrl + c)"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Button Name="btnPaste" Margin="5,2,5,2" Height="40" Width="40" Click="btnPaste_OnClick" IsEnabled="False"  Opacity="0.5">
+                        <Button.Content>
+                            <Image Source="/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (ctrl + v)"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
+                    <WrapPanel Visibility="Hidden">
+                        <Button Name="btnPrev"  Margin="5,2,5,2" Height="40" Width="40" Click="btnPrev_OnClick">
+                            <Button.Content>
+                                <Image Source="/VsTranslator;component/Resources/prev2.png" Height="32" ToolTip="Back (alt + left)"></Image>
+                            </Button.Content>
+                        </Button>
+                        <Button Name="btnNext" Margin="5,2,5,2" Height="40" Width="40" Click="btnNext_OnClick">
+                            <Button.Content>
+                                <Image Source="/VsTranslator;component/Resources/next2.png" Height="32" ToolTip="Forward (alt + right)"></Image>
+                            </Button.Content>
+                        </Button>
+                    </WrapPanel>
+                </WrapPanel>
+                <WrapPanel Grid.Column="1">
+                    <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
+                    <Button Name="btnSettings" Height="40" Margin="5,2" Click="btnSettings_OnClick">
+                        <Button.Content>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Orientation="Horizontal" Margin="5,0">
+                                <Image Stretch="Fill" Source="/VsTranslator;component/Resources/translate.png" Height="32" Margin="5,0"  />
+                                <TextBlock Name="lblSettingText" VerticalAlignment="Center">Auto -> ZH-CN -> EN</TextBlock>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
+                </WrapPanel>
+                <Button Name="btnTranslate" Grid.Column="2" ToolTip="Translate (ctrl + enter)" VerticalAlignment="Center"  Height="40" Margin="0,0,20,0" Click="btnTranslate_OnClick">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Margin="5,0">
+                            <Image Stretch="Fill" Source="/VsTranslator;component/Resources/translate3.png" Height="32"  />
+                            <TextBlock VerticalAlignment="Center" Text="Translate" Margin="5,0,0,0" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+
+            <TextBox Name="txtTarget" AcceptsReturn="True" Grid.Row="2" TextWrapping="Wrap" Margin="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsReadOnly="True" Padding="3" VerticalScrollBarVisibility="Auto" ></TextBox>
+        </Grid>
+    </DockPanel>
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush">
+                        <Setter.Value>
+                            <SolidColorBrush Color="#333333" Opacity="0.5"/>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="#fcfcfc"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+</Window>

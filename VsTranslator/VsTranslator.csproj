@@ -52,9 +52,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Adornment\Translate\TranslatorClient.xaml.cs">
-      <DependentUpon>TranslatorClient.xaml</DependentUpon>
+    <Compile Include="Adornment\Translate\TranslateClient.xaml.cs">
+      <DependentUpon>TranslateClient.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Adornment\Translate\TranslateType.cs" />
+    <Compile Include="Adornment\Translate\Win32.cs" />
     <Compile Include="Adornment\TransResult\Connector.cs" />
     <Compile Include="Adornment\TransResult\TransAdornmentManager.cs" />
     <Compile Include="Adornment\TransResult\TranslationRequest.cs" />
@@ -132,11 +134,43 @@
     <Resource Include="Resources\setting.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\copy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\copy2.png" />
     <Content Include="Resources\favicon_64_64.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Resources\new.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\next.png" />
+    <Resource Include="Resources\next2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\paste.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\prev.png" />
+    <Resource Include="Resources\prev2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\previewimage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\translate.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Resource Include="Resources\translate2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\translate3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Resources\translate_128.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -265,7 +299,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Adornment\Translate\TranslatorClient.xaml">
+    <Page Include="Adornment\Translate\TranslateClient.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
