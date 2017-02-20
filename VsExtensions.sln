@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8FBC34BD-D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsTranslatorTest", "VsTranslatorTest\VsTranslatorTest.csproj", "{2A6F05CE-B83C-4D7C-854B-82E51A336E0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VsTools", "VsTools", "{B3222928-2F54-4A77-B8B5-8B3771171EFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

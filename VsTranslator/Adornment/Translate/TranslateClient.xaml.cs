@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using VsTranslator.Adornment.TransResult;
 using VsTranslator.Core.Translator;
 using VsTranslator.Core.Translator.Baidu;
 using VsTranslator.Core.Translator.Bing;
 using VsTranslator.Core.Translator.Entities;
-using VsTranslator.Core.Translator.Enums;
 using VsTranslator.Core.Translator.Google;
 using VsTranslator.Core.Translator.Youdao;
 using VsTranslator.Settings;
@@ -37,6 +28,12 @@ namespace VsTranslator.Adornment.Translate
 
         }
 
+        /// <summary>
+        /// Sets the text content on the settings button
+        /// </summary>
+        /// <param name="sourLanguages"></param>
+        /// <param name="targetLanguages"></param>
+        /// <param name="settings"></param>
         private void SetSettingText(List<TranslationLanguage> sourLanguages, List<TranslationLanguage> targetLanguages, TransSettings settings)
         {
             if (lblSettingText==null)
@@ -55,6 +52,11 @@ namespace VsTranslator.Adornment.Translate
                                  targetLanguages[settings.LastLanguageIndex].Code.ToUpper();
         }
 
+        /// <summary>
+        /// The event of window loaded, go to listen Clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void win_Loaded(object sender, RoutedEventArgs e)
         {
             //Topmost = true;
@@ -64,8 +66,15 @@ namespace VsTranslator.Adornment.Translate
             SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
 
             StartListenerClipboard();
+
+            txtSource.Text = Clipboard.GetText();
         }
 
+        /// <summary>
+        /// Close listen Clipboard when window closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void win_Closed(object sender, EventArgs eventArgs)
         {
             CloseClipboardListener();
@@ -97,6 +106,9 @@ namespace VsTranslator.Adornment.Translate
         private HwndSource _hWndSource;
 
 
+        /// <summary>
+        /// Start listen Clipboard, when Clipboard text was changed
+        /// </summary>
         private void StartListenerClipboard()
         {
             WindowInteropHelper wih = new WindowInteropHelper(this);
@@ -108,12 +120,16 @@ namespace VsTranslator.Adornment.Translate
             }
         }
 
+        /// <summary>
+        /// Close listen Clipboard
+        /// </summary>
         private void CloseClipboardListener()
         {
             Win32.ChangeClipboardChain(_hWndSource.Handle, _hWndNextViewer);
             _hWndNextViewer = IntPtr.Zero;
             _hWndSource.RemoveHook(this.WinProc);
         }
+
 
         private IntPtr WinProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -167,6 +183,7 @@ namespace VsTranslator.Adornment.Translate
             AbortWrokThread();
             txtSource.Text = "";
             ClearTargetText();
+            SetStatusText("New successed...");
         }
 
         private void btnCopy_OnClick(object sender, RoutedEventArgs e)
@@ -174,7 +191,16 @@ namespace VsTranslator.Adornment.Translate
             string targetText = txtTarget.Text;
             if (!string.IsNullOrWhiteSpace(targetText))
             {
-                Clipboard.SetText(txtTarget.Text);
+                try
+                {
+                    Clipboard.SetText(txtTarget.Text);
+                    SetStatusText("Copy successed...");
+                }
+                catch (Exception exception)
+                {
+                    SetStatusText("Copy failed...");
+                    SetTargetText(exception.Message);
+                }
             }
         }
 
@@ -209,7 +235,10 @@ namespace VsTranslator.Adornment.Translate
             PreparationAndTranslation(sourceText);
         }
 
-
+        /// <summary>
+        /// To abort work thread of the last translate, set status's text to be Treanslating and clear target textbox's text
+        /// </summary>
+        /// <param name="sourceText"></param>
         private void PreparationAndTranslation(string sourceText)
         {
             AbortWrokThread();
@@ -230,8 +259,14 @@ namespace VsTranslator.Adornment.Translate
             _workThread.Start();
         }
 
+        /// <summary>
+        /// To translate
+        /// </summary>
+        /// <param name="sourceText"></param>
         private void Translate(string sourceText)
         {
+            //splite text before translate 
+            sourceText = OptionsSettings.SpliteLetterByRules(sourceText);
             int cmdId = (int)_translateType;
             var translator = TranslatorFactory.GetTranslator(cmdId);
             TranslationRequest transRequest = new TranslationRequest(sourceText, new List<Trans>()
@@ -255,7 +290,11 @@ namespace VsTranslator.Adornment.Translate
             _workThread?.Abort();
         }
 
-
+        /// <summary>
+        /// To set setting button's text when translate type was changed 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void rbTranslateType_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
@@ -333,6 +372,21 @@ namespace VsTranslator.Adornment.Translate
                     btnCopy.Opacity = 1;
                 }
             }));
+        }
+
+        private void UIElement_OnKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                txtSource.Focus();
+            }
+            if ((Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) && e.Key == Key.A)
+            {
+                txtSource.SelectAll();
+            }
+            Console.WriteLine(Keyboard.IsKeyDown(Key.LeftCtrl));
+            Console.WriteLine(e.Key);
+            e.Handled = true;
         }
     }
 

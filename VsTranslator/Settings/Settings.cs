@@ -8,6 +8,9 @@ namespace VsTranslator.Settings
 {
     public class Settings
     {
+        /// <summary>
+        /// The index of translate service (Google, Bing, Baidu, Youdao)
+        /// </summary>
         public int ServiceIndex { get; set; }
 
         public TransSettings GoogleSettings { get; set; }
@@ -22,8 +25,15 @@ namespace VsTranslator.Settings
 
         public string TranslateCachePath { get; set; }
 
+        /// <summary>
+        /// Translate cache's default directory
+        /// </summary>
         public readonly static string TranslateCacheDefaultPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VsTranslator"), "TranslateCache");
 
+        /// <summary>
+        /// Get a Settings's instance with some default setting
+        /// </summary>
+        /// <returns></returns>
         public static Settings Instance()
         {
             return new Settings()
@@ -95,16 +105,23 @@ namespace VsTranslator.Settings
         public int TargetLanguageIndex { get; set; }
 
         public int LastLanguageIndex { get; set; }
-
+        
         public AppClient AppClient { get; set; }
     }
 
     public class Spliter
     {
+        /// <summary>
+        /// When splite text, this will used to Regular match 
+        /// </summary>
         public string MatchRegex { get; set; }
-
+        /// <summary>
+        /// When splite text this will used to replace the match
+        /// </summary>
         public string ReplaceRegex { get; set; }
-
+        /// <summary>
+        /// Test example
+        /// </summary>
         public string Example { get; set; }
     }
 }

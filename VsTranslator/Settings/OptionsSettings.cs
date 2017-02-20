@@ -33,6 +33,9 @@ namespace VsTranslator.Settings
             Init();
         }
 
+        /// <summary>
+        /// Init config, if after install this extension first init, set default config, 
+        /// </summary>
         private static void Init()
         {
             if (!Directory.Exists(LocalPath))
@@ -89,6 +92,12 @@ namespace VsTranslator.Settings
             SaveSettings(Settings);
         }
 
+        /// <summary>
+        /// Splite the text by some rules
+        /// <example>MicrosoftTranslate will splite to Microsoft Translate</example>
+        /// </summary>
+        /// <param name="selectedText"></param>
+        /// <returns></returns>
         public static string SpliteLetterByRules(string selectedText)
         {
             return Settings.LetterSpliters.Aggregate(selectedText, (current, letterSpliter) => new Regex(letterSpliter.MatchRegex).Replace(current, letterSpliter.ReplaceRegex));

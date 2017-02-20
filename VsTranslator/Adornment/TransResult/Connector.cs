@@ -27,6 +27,11 @@ namespace VsTranslator.Adornment.TransResult
             TransAdornmentManager.Create(textView);
         }
 
+        /// <summary>
+        /// Append a TranslatorControl to vs code editor, at the same time to translate selected text
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="transRequest"></param>
         static public void Execute(IWpfTextViewHost host,  TranslationRequest transRequest)
         {
             IWpfTextView view = host.TextView;

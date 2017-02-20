@@ -29,6 +29,7 @@ namespace VsTranslator.Settings
 
             InitializeComponent();
 
+            //Bind settings to views
             grid.DataContext = Settings;
 
 
@@ -64,12 +65,21 @@ namespace VsTranslator.Settings
             this.Close();
         }
 
-
+        /// <summary>
+        /// Open Letter spliter's dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSpliter_OnClick(object sender, RoutedEventArgs e)
         {
             new LetterSpliter(OptionsSettings.Settings.LetterSpliters).ShowDialog();
         }
 
+        /// <summary>
+        /// Open a folder browser dialog to select directory for translate cache
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnChange_OnClick(object sender, RoutedEventArgs e)
         {
             var fbd = new FolderBrowserDialog
@@ -88,10 +98,16 @@ namespace VsTranslator.Settings
             {
                 return;
             }
-            //不知道为什么只设置其中一个另一个不会改变
+            //Do not know why only set one of the other will not change
             Settings.TranslateCachePath = txtTranslateCachePath.Text = selectedPath;
         }
 
+        #region translate service changed
+        /// <summary>
+        /// When the translate service was changed, to set source language, target language and last language 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbService_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cbSourceLanguage.Items.Clear();
@@ -117,6 +133,7 @@ namespace VsTranslator.Settings
                     break;
             }
         }
+
 
         private void SetLanguageSelectedIndex(TransSettings transSettings)
         {
@@ -154,20 +171,24 @@ namespace VsTranslator.Settings
                 cbLastLanguage.Items.Add(translationLanguage);
             }
         }
+        #endregion
 
+        #region target language changed
         private void cbTargetLanguage_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //TranslationLanguage lang = cbTargetLanguage.SelectedValue as TranslationLanguage;
             //lblLastLanguage.Text = lang?.Name;
             SetTargetLanguageIndex(GetTransSettings());
         }
+
         private void SetTargetLanguageIndex(TransSettings transSettings)
         {
             if (transSettings != null && cbTargetLanguage.SelectedIndex != transSettings.TargetLanguageIndex && cbTargetLanguage.SelectedIndex != -1)
             {
                 transSettings.TargetLanguageIndex = cbTargetLanguage.SelectedIndex;
             }
-        }
+        } 
+        #endregion
 
         private TransSettings GetTransSettings()
         {

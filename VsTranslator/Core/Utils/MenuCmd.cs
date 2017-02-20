@@ -36,14 +36,20 @@ namespace VsTranslator.Core.Utils
             Instance = new MenuCmd(package);
 
 
+            #region four translate menu 
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.GoogleTranslate, TranslateMenu_Clicked);
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.BingTranslate, TranslateMenu_Clicked);
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.BaiduTranslate, TranslateMenu_Clicked);
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.YoudaoTranslate, TranslateMenu_Clicked);
+            #endregion
 
+            #region translate option menu
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateOptions, TranslateOptions_Clicked, true);
+            #endregion
 
-            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateClient, TranslateClient_Clicked, true);
+            #region translate client menu
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateClient, TranslateClient_Clicked, true); 
+            #endregion
 
         }
 
@@ -164,6 +170,7 @@ namespace VsTranslator.Core.Utils
             }
             catch (Exception exception)
             {
+                //When app id and client secret is empty, this exception will triggered
                 if (exception.Message == "app id and client secret is necessary")
                 {
                     DialogResult result = MessageBox.Show($"{exception.Message}, go to set?", "Tip", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -189,7 +196,11 @@ namespace VsTranslator.Core.Utils
         }
 
 
-
+        /// <summary>
+        /// Change the enabled status of the translate menu
+        /// </summary>
+        /// <param name="cmdId"></param>
+        /// <param name="enableCmd"></param>
         private void ChangeTranslatorCommand(int cmdId, bool enableCmd)
         {
             var mcs = ServiceProvider.GetService(typeof(IMenuCommandService))
@@ -210,6 +221,13 @@ namespace VsTranslator.Core.Utils
             ChangeTranslatorCommand((int)PkgCmdIdList.YoudaoTranslate, enableCmd);
         }
 
+        /// <summary>
+        /// Bind event to translate menu and set the menu enabled status
+        /// </summary>
+        /// <param name="commandSet"></param>
+        /// <param name="commandId"></param>
+        /// <param name="eventHandler"></param>
+        /// <param name="isEnabled"></param>
         public static void AddCommand2OleMenu(Guid commandSet, int commandId, EventHandler eventHandler, bool isEnabled = false)
         {
             OleMenuCommandService mcs = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;

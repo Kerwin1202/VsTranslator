@@ -26,6 +26,7 @@ namespace VsTranslator.Adornment.TransResult
 
         private static SnapshotSpan _selectedSpans;
 
+
         public TranslatorControl(SnapshotSpan selectedSpans, TranslationRequest transRequest)
         {
             InitializeComponent();
@@ -43,6 +44,10 @@ namespace VsTranslator.Adornment.TransResult
             //}));
         }
 
+        /// <summary>
+        /// Append translate result text to Translate Control 
+        /// </summary>
+        /// <param name="translationResult"></param>
         private void TransRequest_OnTranslationComplete(TranslateResult translationResult)
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -103,6 +108,10 @@ namespace VsTranslator.Adornment.TransResult
             RemoveEvent?.Invoke();
         }
 
+        /// <summary>
+        /// Replace selected text in vs code editor when click the translate result text
+        /// </summary>
+        /// <param name="targetText"></param>
         public static void ReplaceSelectedText(string targetText)
         {
             var span = _selectedSpans.Snapshot.CreateTrackingSpan(_selectedSpans, SpanTrackingMode.EdgeExclusive);
