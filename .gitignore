@@ -17,3 +17,9 @@
 /*.DotSettings
 /VsTranslatorTest/obj
 /VsTranslatorTest/bin
+/VsComment/obj/Debug
+/VsComment/bin/Debug
+/VsComment.Entities/obj/Debug
+/VsComment.Entities/bin/Debug
+/VsComment.Tests/obj/Debug
+/VsComment.Tests/bin/Debug
