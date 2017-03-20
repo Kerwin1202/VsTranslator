@@ -1,11 +1,7 @@
-﻿using System;
-using System.Globalization;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VsTranslator.Core;
-using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Baidu;
-using VsTranslator.Core.Translator.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Translate.Core.Translator;
+using Translate.Core.Translator.Baidu;
+using Translate.Core.Translator.Entities;
 
 namespace VsTranslatorTest
 {

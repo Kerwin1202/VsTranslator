@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VsTranslator.Core;
-using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Bing;
-using VsTranslator.Core.Translator.Entities;
+using Translate.Core.Translator;
+using Translate.Core.Translator.Bing;
+using Translate.Core.Translator.Entities;
 
 namespace VsTranslatorTest
 {

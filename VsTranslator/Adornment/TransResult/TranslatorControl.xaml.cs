@@ -6,8 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Text;
-using VsTranslator.Adornment.TransResult;
-using VsTranslator.Core.Translator.Enums;
+using Translate.Core.Translator.Enums;
 using VsTranslator.Settings;
 
 namespace VsTranslator.Adornment.TransResult

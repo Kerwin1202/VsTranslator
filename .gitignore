@@ -23,3 +23,7 @@
 /VsComment.Entities/bin/Debug
 /VsComment.Tests/obj/Debug
 /VsComment.Tests/bin/Debug
+/Translate.Core/obj
+/Translate.Core/bin
+/Translate Client/bin
+/Translate Client/obj

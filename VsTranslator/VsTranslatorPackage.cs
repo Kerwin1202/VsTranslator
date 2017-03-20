@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using VsTranslator.Adornment.Translate;
 using VsTranslator.Core.Utils;
 using VsTranslator.Settings;
 
@@ -36,7 +37,7 @@ namespace VsTranslator
     [Guid(GuidList.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
 
-
+    [ProvideToolWindow(typeof(TranslateClient))]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [ProvideAutoLoad(UIContextGuids.NoSolution)]//设置当VS打开的时候就运行本类
     [ProvideAutoLoad(UIContextGuids.SolutionExists)]//同上

@@ -4,18 +4,15 @@ using System.ComponentModel.Design;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Translate.Core.Translator;
 using VsTranslator.Adornment;
+using VsTranslator.Adornment.Translate;
 using VsTranslator.Adornment.TransResult;
 using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Baidu;
-using VsTranslator.Core.Translator.Baidu.Entities;
-using VsTranslator.Core.Translator.Bing;
-using VsTranslator.Core.Translator.Entities;
-using VsTranslator.Core.Translator.Enums;
-using VsTranslator.Core.Translator.Google;
 using VsTranslator.Settings;
 
 namespace VsTranslator.Core.Utils
@@ -55,7 +52,17 @@ namespace VsTranslator.Core.Utils
 
         private static void TranslateClient_Clicked(object sender, EventArgs e)
         {
-            OptionsSettings.ShowClient();
+            //OptionsSettings.ShowClient();
+            ToolWindowPane window = _package.FindToolWindow(typeof(TranslateClient), 0, true);
+            if ((null == window) || (null == window.Frame))
+            {
+                throw new NotSupportedException("Cannot create tool window");
+            }
+            Guid nullGuid = Guid.Empty;
+            IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
+            Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
+            //set the width and height
+            windowFrame.SetFramePos(VSSETFRAMEPOS.SFP_fSize, ref nullGuid, 0, 0, 640, 400);
         }
 
         private static void TranslateOptions_Clicked(object sender, EventArgs e)

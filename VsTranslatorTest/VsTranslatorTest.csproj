@@ -57,6 +57,10 @@
     <Compile Include="YoudaoTranslatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Translate.Core\Translate.Core.csproj">
+      <Project>{70DD5B86-868A-4AD1-8513-A29F7CA09C0C}</Project>
+      <Name>Translate.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VsTranslator\VsTranslator.csproj">
       <Project>{295C9623-6A13-4DF1-9C84-31DCE1C1EB9F}</Project>
       <Name>VsTranslator</Name>

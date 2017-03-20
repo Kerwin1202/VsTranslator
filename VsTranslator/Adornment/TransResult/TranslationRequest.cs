@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Newtonsoft.Json;
-using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Entities;
+using Translate.Core.Translator;
+using Translate.Core.Translator.Entities;
 
 namespace VsTranslator.Adornment.TransResult
 {

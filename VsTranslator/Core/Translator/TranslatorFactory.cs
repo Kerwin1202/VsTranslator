@@ -1,8 +1,9 @@
 ﻿using System.Text.RegularExpressions;
-using VsTranslator.Core.Translator.Baidu;
-using VsTranslator.Core.Translator.Bing;
-using VsTranslator.Core.Translator.Google;
-using VsTranslator.Core.Translator.Youdao;
+using Translate.Core.Translator;
+using Translate.Core.Translator.Baidu;
+using Translate.Core.Translator.Bing;
+using Translate.Core.Translator.Google;
+using Translate.Core.Translator.Youdao;
 using VsTranslator.Settings;
 
 namespace VsTranslator.Core.Translator

@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VsTranslator.Core;
-using VsTranslator.Core.Translator;
-using VsTranslator.Core.Translator.Entities;
-using VsTranslator.Core.Translator.Youdao;
+using Translate.Core.Translator;
+using Translate.Core.Translator.Entities;
+using Translate.Core.Translator.Youdao;
 
 namespace VsTranslatorTest
 {

@@ -75,10 +75,7 @@ namespace VsTranslator.Settings
             Init();
         }
 
-        public static void ShowClient()
-        {
-            new TranslateClient(Settings).Show();
-        }
+      
 
         private static void SaveSettings(Settings settings)
         {
