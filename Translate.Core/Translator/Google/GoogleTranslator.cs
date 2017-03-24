@@ -95,6 +95,7 @@ namespace Translate.Core.Translator.Google
             {
                 return null;
             }
+            text = text.Replace("\\", "");
 
             var tk = GetTk(text);
 
@@ -117,7 +118,7 @@ namespace Translate.Core.Translator.Google
 
             targetText = nextAll.Cast<Match>().Aggregate(targetText, (current, match) => current + match.Groups[1].Value);
 
-            targetText = targetText.Replace("\\r\\n", "\r\n");
+            targetText = targetText.Replace("\\r\\n", "\r\n").Replace("\\u003c", "<").Replace("\\u003e", ">");
 
             return new GoogleTransResult()
             {

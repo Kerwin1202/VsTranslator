@@ -32,6 +32,11 @@ namespace VsTranslatorTest
             Assert.IsNotNull(transResult);
             Assert.AreEqual("你好", transResult.TargetText);
 
+
+            sourceText = "<result>";
+            transResult = _baiduTranslator.Translate(sourceText, "en", "zh");
+            Assert.AreEqual("<结果>", transResult.TargetText);
+
         }
     }
 }

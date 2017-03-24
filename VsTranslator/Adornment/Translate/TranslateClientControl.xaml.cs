@@ -115,6 +115,15 @@ namespace VsTranslator.Adornment.Translate
         }
         #endregion
 
+        #region set the source textbox's text to be text from Clipboard
+        private void btnPaste_OnClick(object sender, RoutedEventArgs e)
+        {
+            AbortWrokThread();
+            txtSource.Text = Clipboard.GetText();
+            PreparationAndTranslation(txtSource.Text);
+        } 
+        #endregion
+
         #region when click Ctrl + Enter to translate
         /// <summary>
         /// when click Ctrl + Enter to translate

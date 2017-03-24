@@ -63,6 +63,11 @@
                             <Image Source="pack://application:,,,/VsTranslator;component/Resources/copy.png" Height="29" ToolTip="Copy (Ctrl + C)"></Image>
                         </Button.Content>
                     </Button>
+                    <Button Name="btnPaste" Margin="5,2,5,2" Height="40" Width="40" Click="btnPaste_OnClick" >
+                        <Button.Content>
+                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (ctrl + v)"></Image>
+                        </Button.Content>
+                    </Button>
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
                     <WrapPanel Visibility="Hidden">
                         <Button Name="btnPrev"  Margin="5,2,5,2" Height="40" Width="40" Click="btnPrev_OnClick">

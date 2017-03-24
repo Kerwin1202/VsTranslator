@@ -30,7 +30,9 @@ namespace VsTranslatorTest
             transResult = _youdaoTranslator.Translate(sourceText, "EN", "ZH_CN");
             Assert.AreEqual("你好", transResult.TargetText);
 
-
+            sourceText = "<result>";
+            transResult = _youdaoTranslator.Translate(sourceText, "EN", "ZH_CN");
+            Assert.AreEqual("<结果>", transResult.TargetText);
         }
     }
 }

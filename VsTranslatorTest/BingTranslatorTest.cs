@@ -34,6 +34,10 @@ namespace VsTranslatorTest
             sourceText = "hello";
             transResult = _bingTranslator.Translate(sourceText, "en", "zh-CHS");
             Assert.AreEqual("你好", transResult.TargetText);
+
+            sourceText = "<result>";
+            transResult = _bingTranslator.Translate(sourceText, "en", "zh-CHS");
+            Assert.AreEqual("<result>", transResult.TargetText);
         }
 
     }
