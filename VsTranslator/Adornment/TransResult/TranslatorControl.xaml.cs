@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.VisualStudio.Text;
 using Translate.Core.Translator.Enums;
-using VsTranslator.Settings;
+using Translate.Settings;
 
 namespace VsTranslator.Adornment.TransResult
 {

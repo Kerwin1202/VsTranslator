@@ -4,7 +4,7 @@ using Translate.Core.Translator.Baidu;
 using Translate.Core.Translator.Bing;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
-using VsTranslator.Settings;
+using Translate.Settings;
 
 namespace VsTranslator.Core.Translator
 {

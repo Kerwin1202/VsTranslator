@@ -71,14 +71,6 @@
     <Compile Include="Core\Utils\TextViewCreationListener .cs" />
     <Compile Include="PkgCmdIdList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\LetterSpliter.xaml.cs">
-      <DependentUpon>LetterSpliter.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Settings\OptionsSettings.cs" />
-    <Compile Include="Settings\Settings.cs" />
-    <Compile Include="Settings\TranslateOptions.xaml.cs">
-      <DependentUpon>TranslateOptions.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VsTranslatorPackage.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -281,19 +273,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Settings\LetterSpliter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Settings\TranslateOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Translate.Core\Translate.Core.csproj">
       <Project>{70dd5b86-868a-4ad1-8513-a29f7ca09c0c}</Project>
       <Name>Translate.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Translate.Settings\Translate.Settings.csproj">
+      <Project>{37238584-099c-453f-a67d-93671fb556bc}</Project>
+      <Name>Translate.Settings</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

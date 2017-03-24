@@ -27,3 +27,7 @@
 /Translate.Core/bin
 /Translate Client/bin
 /Translate Client/obj
+/Translate.Settings/obj
+/Translate.Settings/bin
+/Translate.Settings/obj/Debug
+/Translate.Settings/bin/Debug

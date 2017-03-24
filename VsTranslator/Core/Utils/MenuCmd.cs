@@ -9,11 +9,11 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Translate.Core.Translator;
+using Translate.Settings;
 using VsTranslator.Adornment;
 using VsTranslator.Adornment.Translate;
 using VsTranslator.Adornment.TransResult;
 using VsTranslator.Core.Translator;
-using VsTranslator.Settings;
 
 namespace VsTranslator.Core.Utils
 {

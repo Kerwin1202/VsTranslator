@@ -11,9 +11,9 @@ using Translate.Core.Translator.Bing;
 using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
+using Translate.Settings;
 using VsTranslator.Adornment.TransResult;
 using VsTranslator.Core.Translator;
-using VsTranslator.Settings;
 
 namespace VsTranslator.Adornment.Translate
 {
@@ -25,7 +25,7 @@ namespace VsTranslator.Adornment.Translate
 
         #region fields
 
-        private Settings.Settings _settings;
+        private Settings _settings;
 
         /// <summary>
         /// The work thread of translate
@@ -52,7 +52,7 @@ namespace VsTranslator.Adornment.Translate
         #endregion
 
         #region constructor
-        public TranslateClientControl(Settings.Settings settings)
+        public TranslateClientControl(Settings settings)
         {
             _settings = settings;
             InitializeComponent();

@@ -11,7 +11,6 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using VsTranslator.Adornment.Translate;
 using VsTranslator.Core.Utils;
-using VsTranslator.Settings;
 
 namespace VsTranslator
 {

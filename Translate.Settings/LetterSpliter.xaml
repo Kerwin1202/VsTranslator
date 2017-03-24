@@ -1,9 +1,9 @@
-﻿<Window x:Class="VsTranslator.Settings.LetterSpliter"
+﻿<Window x:Class="Translate.Settings.LetterSpliter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VsTranslator.Settings" ResizeMode="CanMinimize"  WindowStartupLocation="CenterScreen"  
+             xmlns:local="clr-namespace:Translate.Settings" ResizeMode="CanMinimize"  WindowStartupLocation="CenterScreen"  
              mc:Ignorable="d" Title="Letter Spliter" SizeToContent="WidthAndHeight">
     <Grid  Margin="10">
         <Grid.RowDefinitions>

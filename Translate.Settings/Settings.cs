@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
 
-namespace VsTranslator.Settings
+namespace Translate.Settings
 {
     public class Settings
     {

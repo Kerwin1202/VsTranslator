@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using VsTranslator.Adornment.Translate;
 
-namespace VsTranslator.Settings
+namespace Translate.Settings
 {
     public class OptionsSettings
     {
@@ -56,7 +55,7 @@ namespace VsTranslator.Settings
                         if (_settings.BingSettings == null) _settings.BingSettings = new TransSettings();
                         if (_settings.YoudaoSettings == null) _settings.YoudaoSettings = new TransSettings();
                         if (_settings.LetterSpliters == null) _settings.LetterSpliters = new List<Spliter>();
-                        if (string.IsNullOrWhiteSpace(_settings.TranslateCachePath) || !System.IO.Directory.Exists(_settings.TranslateCachePath)) _settings.TranslateCachePath = Settings.TranslateCacheDefaultPath;
+                        if (string.IsNullOrWhiteSpace(_settings.TranslateCachePath) || !Directory.Exists(_settings.TranslateCachePath)) _settings.TranslateCachePath = Settings.TranslateCacheDefaultPath;
                     }
                     catch (Exception)
                     {

@@ -10,7 +10,7 @@ using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
 
-namespace VsTranslator.Settings
+namespace Translate.Settings
 {
     /// <summary>
     /// Interaction logic for TranslateOptionsControl2.xaml

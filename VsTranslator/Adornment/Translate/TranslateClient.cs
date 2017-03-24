@@ -3,8 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using VsTranslator.Settings;
+using Translate.Settings;
 
 namespace VsTranslator.Adornment.Translate
 {

@@ -1,23 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MessageBox = System.Windows.Forms.MessageBox;
 
-namespace VsTranslator.Settings
+namespace Translate.Settings
 {
     /// <summary>
     /// Interaction logic for LetterSpliter.xaml
@@ -57,15 +45,15 @@ namespace VsTranslator.Settings
 
         private void ShowWarningMsgBox(string message)
         {
-            MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        System.Windows.Forms.MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         private void ShowErrorMsgBox(string message)
         {
-            MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            System.Windows.Forms.MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         private void ShowOKMsgBox(string message)
         {
-            MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            System.Windows.Forms.MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
