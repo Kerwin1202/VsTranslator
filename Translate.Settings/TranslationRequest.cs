@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Translate.Core.Translator;
 using Translate.Core.Translator.Entities;
 
-namespace VsTranslator.Adornment.TransResult
+namespace Translate.Settings
 {
     public class TranslationRequest
     {

@@ -13,7 +13,6 @@ using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
 using Translate.Settings;
 using VsTranslator.Adornment.TransResult;
-using VsTranslator.Core.Translator;
 
 namespace VsTranslator.Adornment.Translate
 {
@@ -348,15 +347,14 @@ namespace VsTranslator.Adornment.Translate
         {
             //splite text before translate 
             sourceText = OptionsSettings.SpliteLetterByRules(sourceText);
-            int cmdId = (int)_translateType;
-            var translator = TranslatorFactory.GetTranslator(cmdId);
+            var translator = TranslatorFactory.GetTranslator(_translateType);
             TranslationRequest transRequest = new TranslationRequest(sourceText, new List<Trans>()
             {
                 new Trans()
                 {
                     Translator = translator,
-                    SourceLanguage = TranslatorFactory.GetSourceLanguage(cmdId, sourceText),
-                    TargetLanguage = TranslatorFactory.GetTargetLanguage(cmdId, sourceText),
+                    SourceLanguage = TranslatorFactory.GetSourceLanguage(_translateType, sourceText),
+                    TargetLanguage = TranslatorFactory.GetTargetLanguage(_translateType, sourceText),
                 }
             });
             transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;

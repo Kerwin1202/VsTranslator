@@ -64,6 +64,9 @@
     <Compile Include="TranslateOptions.xaml.cs">
       <DependentUpon>TranslateOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TranslateType.cs" />
+    <Compile Include="TranslationRequest.cs" />
+    <Compile Include="TranslatorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="LetterSpliter.xaml">

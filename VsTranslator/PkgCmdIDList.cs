@@ -1,5 +1,8 @@
 ﻿namespace VsTranslator
 {
+    /// <summary>
+    /// In order to lazy some of the values ​​here and enumerate the value of the Translate Type
+    /// </summary>
     static class PkgCmdIdList
     {
         public const uint GoogleTranslate = 0x1022;

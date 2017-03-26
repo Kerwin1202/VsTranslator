@@ -10,10 +10,8 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Translate.Core.Translator;
 using Translate.Settings;
-using VsTranslator.Adornment;
 using VsTranslator.Adornment.Translate;
 using VsTranslator.Adornment.TransResult;
-using VsTranslator.Core.Translator;
 
 namespace VsTranslator.Core.Utils
 {
@@ -169,11 +167,12 @@ namespace VsTranslator.Core.Utils
 
         private static void Translate(int commandId, string selectedText)
         {
+            TranslateType translateType = (TranslateType) commandId;
             selectedText = OptionsSettings.SpliteLetterByRules(selectedText);
             ITranslator translator = null;
             try
             {
-                translator = TranslatorFactory.GetTranslator(commandId);
+                translator = TranslatorFactory.GetTranslator(translateType);
             }
             catch (Exception exception)
             {
@@ -196,8 +195,8 @@ namespace VsTranslator.Core.Utils
             TranslationRequest transRequest = new TranslationRequest(selectedText, new List<Trans>() { new Trans()
             {
                 Translator = translator,
-                SourceLanguage = TranslatorFactory.GetSourceLanguage(commandId,selectedText),
-                TargetLanguage = TranslatorFactory.GetTargetLanguage(commandId,selectedText),
+                SourceLanguage = TranslatorFactory.GetSourceLanguage(translateType,selectedText),
+                TargetLanguage = TranslatorFactory.GetTargetLanguage(translateType,selectedText),
             } });
             Connector.Execute(GetCurrentViewHost(), transRequest);
         }

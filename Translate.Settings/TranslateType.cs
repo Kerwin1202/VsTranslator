@@ -1,4 +1,4 @@
-﻿namespace VsTranslator.Adornment.Translate
+﻿namespace Translate.Settings
 {
     /// <summary>
     /// The enum's value must be the same of PkgCmdIdList.cs

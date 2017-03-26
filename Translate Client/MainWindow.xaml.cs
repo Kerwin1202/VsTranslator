@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Translate.Core.Translator.Baidu;
+using Translate.Core.Translator.Bing;
 using Translate.Core.Translator.Entities;
+using Translate.Core.Translator.Google;
+using Translate.Core.Translator.Youdao;
 using Translate.Settings;
+using Clipboard = System.Windows.Clipboard;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using RadioButton = System.Windows.Controls.RadioButton;
 
 namespace Translate_Client
 {
@@ -26,6 +34,7 @@ namespace Translate_Client
     {
         public MainWindow()
         {
+            _settings = OptionsSettings.Settings;
             InitializeComponent();
         }
         #region fields
@@ -44,7 +53,7 @@ namespace Translate_Client
         /// <summary>
         /// 
         /// </summary>
-       // private TranslateType _translateType = TranslateType.Google;
+       private TranslateType _translateType = TranslateType.Google;
 
         /// <summary>
         /// Next clipboard viewer window 
@@ -54,6 +63,8 @@ namespace Translate_Client
         /// The <see cref="HwndSource"/> for this window.
         /// </summary>
         private HwndSource _hWndSource;
+
+        private NotifyIcon _notifyIcon = new NotifyIcon();
         #endregion
 
         #region The event of window loaded, go to listen Clipboard
@@ -64,11 +75,70 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void win_Loaded(object sender, RoutedEventArgs e)
         {
-            //SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
+            SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
 
             txtSource.Text = Clipboard.GetText();
+
+            InitNotifyIcon();
         }
         #endregion
+
+        private void SetTip(string tipText,string tipTitle)
+        {
+            _notifyIcon.BalloonTipText = tipText;//这是气球提示的文本
+            _notifyIcon.BalloonTipTitle = tipTitle;//这是气球提示的标题
+            _notifyIcon.ShowBalloonTip(4000);//气泡显示时间
+        }
+
+        private void InitNotifyIcon()
+        {
+            _notifyIcon.Icon = Properties.Resources.translate;
+            _notifyIcon.Visible = true;
+            _notifyIcon.Text = @"Translate Client";
+            _notifyIcon.MouseClick += ShowMain_Click;
+
+            MenuItem showMainMenu = new MenuItem("显示主窗体");
+            showMainMenu.Click += ShowMain_Click;
+
+
+            MenuItem checkUpdateMenu = new MenuItem("检查更新");
+            checkUpdateMenu.Click += CheckUpdateMenu_Click;
+
+            MenuItem checkUpdateWhenStartMenu = new MenuItem("启动时检查更新");
+        
+
+            MenuItem updateMenu = new MenuItem("更新", new[] { checkUpdateMenu ,new MenuItem("-"), checkUpdateWhenStartMenu });
+           
+            MenuItem aboutMenu = new MenuItem("关于");
+            aboutMenu.Click += AboutMenu_Click;
+
+            MenuItem exitMenu = new MenuItem("退出");
+            exitMenu.Click += ExitMenu_Click;
+
+            //关联托盘控件
+            MenuItem[] childen = { showMainMenu, new MenuItem("-"), updateMenu, aboutMenu, new MenuItem("-"), exitMenu };
+            _notifyIcon.ContextMenu = new ContextMenu(childen);
+        }
+
+        private void CheckUpdateMenu_Click(object sender, EventArgs e)
+        {
+            SetTip("检查更新", "标题");
+        }
+
+        private void AboutMenu_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://www.zhanghuanglong.com/");
+        }
+
+        private void ExitMenu_Click(object sender, EventArgs e)
+        {
+           Close();
+        }
+
+        private void ShowMain_Click(object sender, EventArgs e)
+        {
+            this.Visibility = Visibility.Visible;
+        }
 
         #region set the textbox's content to be empty
         /// <summary>
@@ -78,10 +148,10 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void btnNew_OnClick(object sender, RoutedEventArgs e)
         {
-            //AbortWrokThread();
-            //txtSource.Text = "";
-            //ClearTargetText();
-            //SetStatusText("New successed...");
+            AbortWrokThread();
+            txtSource.Text = "";
+            ClearTargetText();
+            SetStatusText("New successed...");
         }
         #endregion
 
@@ -93,29 +163,29 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void btnCopy_OnClick(object sender, RoutedEventArgs e)
         {
-            //string targetText = txtTarget.Text;
-            //if (!string.IsNullOrWhiteSpace(targetText))
-            //{
-            //    try
-            //    {
-            //        Clipboard.SetText(txtTarget.Text);
-            //        SetStatusText("Copy successed...");
-            //    }
-            //    catch (Exception exception)
-            //    {
-            //        SetStatusText("Copy failed...");
-            //        SetTargetText(exception.Message);
-            //    }
-            //}
+            string targetText = txtTarget.Text;
+            if (!string.IsNullOrWhiteSpace(targetText))
+            {
+                try
+                {
+                    Clipboard.SetText(txtTarget.Text);
+                    SetStatusText("Copy successed...");
+                }
+                catch (Exception exception)
+                {
+                    SetStatusText("Copy failed...");
+                    SetTargetText(exception.Message);
+                }
+            }
         }
         #endregion
 
         #region set the source textbox's text to be text from Clipboard
         private void btnPaste_OnClick(object sender, RoutedEventArgs e)
         {
-            //AbortWrokThread();
-            //txtSource.Text = Clipboard.GetText();
-            //PreparationAndTranslation(txtSource.Text);
+            AbortWrokThread();
+            txtSource.Text = Clipboard.GetText();
+            PreparationAndTranslation(txtSource.Text);
         }
         #endregion
 
@@ -127,34 +197,34 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void txtSource_OnKeyDown(object sender, KeyEventArgs e)
         {
-            //if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
-            //{
-            //    switch (e.Key)
-            //    {
-            //        case Key.Enter:
-            //            var sourceText = txtSource.Text;
-            //            PreparationAndTranslation(sourceText);
-            //            break;
-            //            //case Key.A:
-            //            //    txtSource.SelectAll();
-            //            //    break;
-            //            //case Key.C:
-            //            //    Clipboard.SetText(txtSource.SelectedText);
-            //            //    break;
-            //            //case Key.X:
-            //            //    if (txtSource.SelectionLength <= 0)
-            //            //    {
-            //            //        txtSource.Text = string.Empty;
-            //            //    }
-            //            //    else
-            //            //    {
-            //            //        Clipboard.SetText(txtSource.SelectedText);
-            //            //        var text = txtSource.Text;
-            //            //        txtSource.Text = text.Substring(0, txtSource.SelectionStart) + text.Substring(txtSource.SelectionStart + txtSource.SelectionLength);
-            //            //    }
-            //            //    break;
-            //    }
-            //}
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) || e.KeyboardDevice.IsKeyDown(Key.RightCtrl))
+            {
+                switch (e.Key)
+                {
+                    case Key.Enter:
+                        var sourceText = txtSource.Text;
+                        PreparationAndTranslation(sourceText);
+                        break;
+                        //case Key.A:
+                        //    txtSource.SelectAll();
+                        //    break;
+                        //case Key.C:
+                        //    Clipboard.SetText(txtSource.SelectedText);
+                        //    break;
+                        //case Key.X:
+                        //    if (txtSource.SelectionLength <= 0)
+                        //    {
+                        //        txtSource.Text = string.Empty;
+                        //    }
+                        //    else
+                        //    {
+                        //        Clipboard.SetText(txtSource.SelectedText);
+                        //        var text = txtSource.Text;
+                        //        txtSource.Text = text.Substring(0, txtSource.SelectionStart) + text.Substring(txtSource.SelectionStart + txtSource.SelectionLength);
+                        //    }
+                        //    break;
+                }
+            }
         }
         #endregion
 
@@ -166,7 +236,7 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void btnPrev_OnClick(object sender, RoutedEventArgs e)
         {
-            //AbortWrokThread();
+            AbortWrokThread();
 
         }
         #endregion
@@ -179,7 +249,7 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void btnNext_OnClick(object sender, RoutedEventArgs e)
         {
-            //AbortWrokThread();
+            AbortWrokThread();
 
         }
         #endregion
@@ -204,8 +274,8 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void btnTranslate_OnClick(object sender, RoutedEventArgs e)
         {
-            //var sourceText = txtSource.Text;
-            //PreparationAndTranslation(sourceText);
+            var sourceText = txtSource.Text;
+            PreparationAndTranslation(sourceText);
         }
         #endregion
 
@@ -217,30 +287,53 @@ namespace Translate_Client
         /// <param name="e"></param>
         private void rbTranslateType_Checked(object sender, RoutedEventArgs e)
         {
-            //RadioButton radioButton = sender as RadioButton;
-            //if (string.IsNullOrWhiteSpace(radioButton?.Tag.ToString()))
-            //{
-            //    return;
-            //}
-            //_translateType = (TranslateType)Enum.Parse(typeof(TranslateType), radioButton.Tag.ToString());
+            RadioButton radioButton = sender as RadioButton;
+            if (string.IsNullOrWhiteSpace(radioButton?.Tag.ToString()))
+            {
+                return;
+            }
+            _translateType = (TranslateType)Enum.Parse(typeof(TranslateType), radioButton.Tag.ToString());
 
-            //switch (_translateType)
-            //{
-            //    case TranslateType.Google:
-            //        SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
-            //        break;
-            //    case TranslateType.Bing:
-            //        SetSettingText(BingTranslator.GetSourceLanguages(), BingTranslator.GetTargetLanguages(), _settings.BingSettings);
-            //        break;
-            //    case TranslateType.Baidu:
-            //        SetSettingText(BaiduTranslator.GetSourceLanguages(), BaiduTranslator.GetTargetLanguages(), _settings.BaiduSettings);
-            //        break;
-            //    case TranslateType.Youdao:
-            //        SetSettingText(YoudaoTranslator.GetSourceLanguages(), YoudaoTranslator.GetTargetLanguages(), _settings.YoudaoSettings);
-            //        break;
-            //    default:
-            //        throw new ArgumentOutOfRangeException();
-            //}
+            switch (_translateType)
+            {
+                case TranslateType.Google:
+                    SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
+                    break;
+                case TranslateType.Bing:
+                    SetSettingText(BingTranslator.GetSourceLanguages(), BingTranslator.GetTargetLanguages(), _settings.BingSettings);
+                    break;
+                case TranslateType.Baidu:
+                    SetSettingText(BaiduTranslator.GetSourceLanguages(), BaiduTranslator.GetTargetLanguages(), _settings.BaiduSettings);
+                    break;
+                case TranslateType.Youdao:
+                    SetSettingText(YoudaoTranslator.GetSourceLanguages(), YoudaoTranslator.GetTargetLanguages(), _settings.YoudaoSettings);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        #endregion
+
+
+        #region when all translate are completed, will callback this method
+        /// <summary>
+        /// when all translate are completed, will callback this method
+        /// </summary>
+        private void TransRequest_OnAllTranslationComplete()
+        {
+            SetStatusText("Translate successed...");
+            SetReady();
+        }
+        #endregion
+
+        #region  when any translate is completed, will callback this method
+        /// <summary>
+        /// when any translate is completed, will callback this method
+        /// </summary>
+        /// <param name="translateResult"></param>
+        private void TransRequest_OnTranslationComplete(TranslateResult translateResult)
+        {
+            SetTargetText(translateResult.TargetText);
         }
         #endregion
 
@@ -317,21 +410,20 @@ namespace Translate_Client
         /// <param name="sourceText"></param>
         private void Translate(string sourceText)
         {
-            //splite text before translate 
-            //sourceText = OptionsSettings.SpliteLetterByRules(sourceText);
-            //int cmdId = (int)_translateType;
-            //var translator = TranslatorFactory.GetTranslator(cmdId);
-            //TranslationRequest transRequest = new TranslationRequest(sourceText, new List<Trans>()
-            //{
-            //    new Trans()
-            //    {
-            //        Translator = translator,
-            //        SourceLanguage = TranslatorFactory.GetSourceLanguage(cmdId, sourceText),
-            //        TargetLanguage = TranslatorFactory.GetTargetLanguage(cmdId, sourceText),
-            //    }
-            //});
-            //transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
-            //transRequest.OnAllTranslationComplete += TransRequest_OnAllTranslationComplete;
+            //splite text before translate
+            sourceText = OptionsSettings.SpliteLetterByRules(sourceText);
+            var translator = TranslatorFactory.GetTranslator(_translateType);
+            TranslationRequest transRequest = new TranslationRequest(sourceText, new List<Trans>()
+            {
+                new Trans()
+                {
+                    Translator = translator,
+                    SourceLanguage = TranslatorFactory.GetSourceLanguage(_translateType, sourceText),
+                    TargetLanguage = TranslatorFactory.GetTargetLanguage(_translateType, sourceText),
+                }
+            });
+            transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
+            transRequest.OnAllTranslationComplete += TransRequest_OnAllTranslationComplete;
         }
         #endregion
 

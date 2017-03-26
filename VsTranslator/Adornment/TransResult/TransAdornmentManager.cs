@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using Translate.Settings;
 
 namespace VsTranslator.Adornment.TransResult
 {
