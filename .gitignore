@@ -31,3 +31,5 @@
 /Translate.Settings/bin
 /Translate.Settings/obj/Debug
 /Translate.Settings/bin/Debug
+/TranslateService/obj
+/TranslateService/bin

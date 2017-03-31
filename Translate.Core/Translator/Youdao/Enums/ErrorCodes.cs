@@ -1,6 +1,6 @@
 ﻿namespace Translate.Core.Translator.Youdao.Enums
 {
-    public enum ErrorCodes
+    internal enum ErrorCodes
     {
         Normal = 0,
 

@@ -216,6 +216,16 @@ namespace Translate.Core.Translator.Youdao
             return "http://fanyi.youdao.com/";
         }
 
+        public List<TranslationLanguage> GetAllTargetLanguages()
+        {
+            return TargetLanguages;
+        }
+
+        public List<TranslationLanguage> GetAllSourceLanguages()
+        {
+            return SourceLanguages;
+        }
+
         public static List<TranslationLanguage> GetTargetLanguages()
         {
             return TargetLanguages;

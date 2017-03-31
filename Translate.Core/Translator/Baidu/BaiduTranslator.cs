@@ -55,8 +55,8 @@ namespace Translate.Core.Translator.Baidu
                 new TranslationLanguage("hu","Hungarian / 匈牙利语"),
                 new TranslationLanguage("vie","Vietnamese / 越南语")
             };
-            _sourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("auto", "Auto-detect / 自动检测") };
-            _sourceLanguages.AddRange(TargetLanguages);
+            SourceLanguages = new List<TranslationLanguage>() { new TranslationLanguage("auto", "Auto-detect / 自动检测") };
+            SourceLanguages.AddRange(TargetLanguages);
         }
 
         private readonly string TranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate";
@@ -65,7 +65,7 @@ namespace Translate.Core.Translator.Baidu
         private readonly string _clientSecret;
 
         private static readonly List<TranslationLanguage> TargetLanguages;
-        private static readonly List<TranslationLanguage> _sourceLanguages;
+        private static readonly List<TranslationLanguage> SourceLanguages;
 
 
         public BaiduTranslator(string appid, string clientSecret)
@@ -166,13 +166,24 @@ namespace Translate.Core.Translator.Baidu
             return "zh";
         }
 
+        public List<TranslationLanguage> GetAllTargetLanguages()
+        {
+            return TargetLanguages;
+        }
+
+        public List<TranslationLanguage> GetAllSourceLanguages()
+        {
+            return SourceLanguages;
+        }
+
         public static List<TranslationLanguage> GetTargetLanguages()
         {
             return TargetLanguages;
         }
+
         public static List<TranslationLanguage> GetSourceLanguages()
         {
-            return _sourceLanguages;
+            return SourceLanguages;
         }
         /// <summary>
         /// 
@@ -191,7 +202,7 @@ namespace Translate.Core.Translator.Baidu
                 TargetText = "",
                 FailedReason = ""
             };
-            if (_sourceLanguages.Count(sl => sl.Code == @from) <= 0)
+            if (SourceLanguages.Count(sl => sl.Code == @from) <= 0)
             {
                 result.TranslationResultTypes = TranslationResultTypes.Failed;
                 result.FailedReason = "unrecognizable source language";

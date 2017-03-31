@@ -5,44 +5,44 @@ using Translate.Core.Translator.Youdao.Enums;
 namespace Translate.Core.Translator.Youdao.Entities
 {
     [DataContract]
-    public class YoudaoTransResult
+    internal class YoudaoTransResult
     {
         [DataMember(Name = "errorCode")]
-        public ErrorCodes ErrorCode { get; set; }
+        internal ErrorCodes ErrorCode { get; set; }
 
         [DataMember(Name = "query")]
-        public string Query { get; set; }
+        internal string Query { get; set; }
 
         [DataMember(Name = "translation")]
-        public List<string> Translation { get; set; }
+        internal List<string> Translation { get; set; }
 
         [DataMember(Name = "basic")]
-        public YoudaoBaseResult BasicResult { get; set; }
+        internal YoudaoBaseResult BasicResult { get; set; }
 
         [DataMember(Name = "web")]
-        public List<YoudaoWebResult> WebResult { get; set; }
+        internal List<YoudaoWebResult> WebResult { get; set; }
     }
     [DataContract]
-    public class YoudaoBaseResult
+    internal class YoudaoBaseResult
     {
         [DataMember(Name = "phonetic")]
-        public string Phonetic { get; set; }
+        internal string Phonetic { get; set; }
 
         [DataMember(Name = "uk-phonetic")]
-        public string UkPhonetic { get; set; }
+        internal string UkPhonetic { get; set; }
 
         [DataMember(Name = "us-phonetic")]
-        public string UsPhonetic { get; set; }
+        internal string UsPhonetic { get; set; }
 
         [DataMember(Name = "explains")]
-        public List<string> Explains { get; set; }
+        internal List<string> Explains { get; set; }
     }
     [DataContract]
-    public class YoudaoWebResult
+    internal class YoudaoWebResult
     {
         [DataMember(Name = "key")]
-        public string Key { get; set; }
+        internal string Key { get; set; }
         [DataMember(Name = "value")]
-        public List<string> Value { get; set; }
+        internal List<string> Value { get; set; }
     }
 }

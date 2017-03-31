@@ -3,7 +3,7 @@
 namespace Translate.Core.Translator.Youdao.Enums
 {
     [Flags]
-    public enum TranslateType
+    internal enum TranslateType
     {
         /// <summary>
         /// Gets the Dictionary data 

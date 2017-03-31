@@ -161,6 +161,16 @@ namespace Translate.Core.Translator.Google
             return "https://translate.google.cn/";
         }
 
+        public List<TranslationLanguage> GetAllTargetLanguages()
+        {
+            return TargetLanguages;
+        }
+
+        public List<TranslationLanguage> GetAllSourceLanguages()
+        {
+            return SourceLanguages;
+        }
+
         public static List<TranslationLanguage> GetTargetLanguages()
         {
             return TargetLanguages;

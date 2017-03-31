@@ -4,34 +4,34 @@ using System.Runtime.Serialization;
 namespace Translate.Core.Translator.Bing.Entities
 {
     [DataContract]
-    public class BingTransResult
+    internal class BingTransResult
     {
         [DataMember]
-        public string From { get; set; }
+        internal string From { get; set; }
 
 
         [DataMember]
-        public List<Translation> Translations { get; set; }
+        internal List<Translation> Translations { get; set; }
          
     }
 
     [DataContract]
-    public class Translation
+    internal class Translation
     {
         [DataMember]
-        public int Count { get; set; }
+        internal int Count { get; set; }
 
         [DataMember]
-        public int MatchDegree { get; set; }
+        internal int MatchDegree { get; set; }
 
         [DataMember]
-        public string MatchedOriginalText { get; set; }
+        internal string MatchedOriginalText { get; set; }
 
         [DataMember]
-        public int Rating { get; set; }
+        internal int Rating { get; set; }
 
         [DataMember]
-        public string TranslatedText { get; set; }
+        internal string TranslatedText { get; set; }
 
 
     }

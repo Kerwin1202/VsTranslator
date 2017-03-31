@@ -5,28 +5,28 @@ using Translate.Core.Translator.Youdao.Enums;
 namespace Translate.Core.Translator.Youdao.Entities
 {
     [DataContract]
-    public class YoudaoPostTransResult
+    internal class YoudaoPostTransResult
     {
         [DataMember(Name = "type")]
-        public string Type { get; set; }
+        internal string Type { get; set; }
 
         [DataMember(Name = "errorCode")]
-        public ErrorCodes ErrorCode { get; set; }
+        internal ErrorCodes ErrorCode { get; set; }
 
         [DataMember(Name = "elapsedTime")]
-        public int ElapsedTime { get; set; }
+        internal int ElapsedTime { get; set; }
 
         [DataMember(Name = "translateResult")]
-        public List<List<YoudaoTranslation>> TranslateResults { get; set; }
+        internal List<List<YoudaoTranslation>> TranslateResults { get; set; }
          
     }
     [DataContract]
-    public class YoudaoTranslation
+    internal class YoudaoTranslation
     {
         [DataMember(Name = "src")]
-        public string Src  { get; set; }
+        internal string Src  { get; set; }
 
         [DataMember(Name = "tgt")]
-        public string Tgt { get; set; }
+        internal string Tgt { get; set; }
     }
 }

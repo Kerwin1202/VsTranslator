@@ -264,6 +264,16 @@ namespace Translate.Core.Translator.Bing
             return "http://www.bing.com/translator/";
         }
 
+        public List<TranslationLanguage> GetAllTargetLanguages()
+        {
+            return TargetLanguages;
+        }
+
+        public List<TranslationLanguage> GetAllSourceLanguages()
+        {
+            return SourceLanguages;
+        }
+
         public static List<TranslationLanguage> GetTargetLanguages()
         {
             return TargetLanguages;

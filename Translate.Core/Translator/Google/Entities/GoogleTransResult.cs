@@ -1,9 +1,9 @@
 ﻿namespace Translate.Core.Translator.Google.Entities
 {
-    public class GoogleTransResult
+    internal class GoogleTransResult
     {
-        public string TargetText { get; set; }
+        internal string TargetText { get; set; }
 
-        public string From { get; set; } 
+        internal string From { get; set; } 
     }
 }

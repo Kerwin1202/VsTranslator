@@ -9,14 +9,14 @@ using Translate.Core.Translator.Bing.Entities;
 
 namespace Translate.Core.Translator.Bing
 {
-    public class BingAdmAuth
+    internal class BingAdmAuth
     {
         private BingAdmAuth()
         {
             
         }
 
-        public static readonly string DatamarketAccessUri = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
+        internal static readonly string DatamarketAccessUri = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly string _request;
@@ -25,7 +25,7 @@ namespace Translate.Core.Translator.Bing
         //Access token expires every 10 minutes. Renew it every 9 minutes only.
         private const int RefreshTokenDuration = 9;
 
-        public BingAdmAuth(string clientId, string clientSecret)
+        internal BingAdmAuth(string clientId, string clientSecret)
         {
             _clientId = clientId;
             _clientSecret = clientSecret;
@@ -36,7 +36,7 @@ namespace Translate.Core.Translator.Bing
             _accessTokenRenewer = new Timer(new TimerCallback(OnTokenExpiredCallback), this, TimeSpan.FromMinutes(RefreshTokenDuration), TimeSpan.FromMilliseconds(-1));
         }
 
-        public AdmAccessToken GetAccessToken()
+        internal AdmAccessToken GetAccessToken()
         {
             return _token;
         }

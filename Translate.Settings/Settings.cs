@@ -26,7 +26,7 @@ namespace Translate.Settings
         /// <summary>
         /// Translate cache's default directory
         /// </summary>
-        public readonly static string TranslateCacheDefaultPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VsTranslator"), "TranslateCache");
+        internal readonly static string TranslateCacheDefaultPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VsTranslator"), "TranslateCache");
 
         /// <summary>
         /// Get a Settings's instance with some default setting
