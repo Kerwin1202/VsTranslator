@@ -33,3 +33,10 @@
 /Translate.Settings/bin/Debug
 /TranslateService/obj
 /TranslateService/bin
+/VsComment/obj
+/VsComment/bin
+/VsComment.Entities/bin
+/VsComment.Entities/obj
+/VsComment.Tests/obj
+/VsComment.Tests/bin
+/.vs

@@ -13,5 +13,7 @@
         public const uint TranslateClient = 0x1027;
 
         public const uint OutputTranslateWindow = 0x2000;
+
+        public const uint TranslateInWebSite = 0x1030;
     };
 }

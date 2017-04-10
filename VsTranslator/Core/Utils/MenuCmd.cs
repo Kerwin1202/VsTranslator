@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
@@ -43,11 +44,30 @@ namespace VsTranslator.Core.Utils
             #endregion
 
             #region translate client menu
-            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateClient, TranslateClient_Clicked, true); 
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateClient, TranslateClient_Clicked, true);
             #endregion
 
+            #region translate in website
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateInWebSite, TranslateInWebSite_Clicked, true);
+            #endregion
         }
 
+
+        /// <summary>
+        /// Open the translate page in browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void TranslateInWebSite_Clicked(object sender, EventArgs e)
+        {
+            Process.Start("http://www.zhanghuanglong.com/translate/");
+        }
+
+        /// <summary>
+        /// Open translate client windows
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void TranslateClient_Clicked(object sender, EventArgs e)
         {
             //OptionsSettings.ShowClient();

@@ -44,11 +44,24 @@
         <Strings>
           <CommandName>Translator</CommandName>
           <ButtonText>Translator</ButtonText>
+          <ToolTipText>Translator</ToolTipText>
+        </Strings>
+      </Menu>
+
+      <Menu guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpSubMenu" priority="0x0701" type="Menu">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup"/>
+        <Strings>
+          <ButtonText>Translate Help</ButtonText>
+          <CommandName>Help</CommandName>
+          <ToolTipText>Translate Help</ToolTipText>
         </Strings>
       </Menu>
     </Menus>
 
     <Groups>
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpSubGroup" priority="0x0601">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpSubMenu"/>
+      </Group>
 
       <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenuGroup" priority="0x0600">
         <!--参考 https://msdn.microsoft.com/zh-cn/library/cc826118.aspx -->
@@ -132,6 +145,15 @@
         </Strings>
       </Button>
 
+      <Button guid="guidVsTranslatorPackageCmdSet" id="TranslateInWebSite" priority="0x0107" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpSubGroup" />
+        <Strings>
+          <CommandName>Translate In WebSite</CommandName>
+          <ButtonText>Translate In WebSite</ButtonText>
+          <ToolTipText>Translate In WebSite</ToolTipText>
+        </Strings>
+      </Button>
+      
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -211,6 +233,7 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="YoudaoTranslate" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="V" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateOptions" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="S" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateClient" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="X" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateInWebSite" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="W" mod2="CONTROL Shift"/>
   </KeyBindings>
 
   <Symbols>
@@ -227,6 +250,11 @@
       <IDSymbol name="YoudaoTranslate" value="0x1025" />
       <IDSymbol name="TranslateOptions" value="0x1026" />
       <IDSymbol name="TranslateClient" value="0x1027" />
+      <!-- translate help  -->
+      <IDSymbol name="TranslatorHelpSubMenu" value="0x1028"/>
+      <IDSymbol name="TranslatorHelpSubGroup" value="0x1029"/>
+      <IDSymbol name="TranslateInWebSite" value="0x1030"/>
+    
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{8e02b7d4-83b6-49b3-a9d3-acfec64aef00}" >

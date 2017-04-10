@@ -31,7 +31,7 @@ namespace VsTranslatorTest
 
             sourceText = "It's a very small project and may be fairly self explanatory if you are familiar with Visual Studio editor extensions. There are two components to the extension:";
             transResult = _googleTranslator.Translate(sourceText, "en", "zh-CN");
-            Assert.AreEqual("这是一个非常小的项目，如果你熟悉Visual Studio编辑器扩展可能是相当自我解释。扩展有两个组件：", transResult.TargetText);
+            Assert.AreEqual("这是一个非常小的项目，如果您熟悉Visual Studio编辑器扩展名可能是相当自解释的。扩展程序有两个组件：", transResult.TargetText);
 
 
             sourceText = "<result>";
