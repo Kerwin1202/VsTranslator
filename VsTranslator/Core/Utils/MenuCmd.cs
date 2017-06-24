@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
@@ -10,6 +11,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Translate.Core.Translator;
+using Translate.Core.Translator.Utils;
 using Translate.Settings;
 using VsTranslator.Adornment.Translate;
 using VsTranslator.Adornment.TransResult;
@@ -50,8 +52,58 @@ namespace VsTranslator.Core.Utils
             #region translate in website
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TranslateInWebSite, TranslateInWebSite_Clicked, true);
             #endregion
+
+            #region download in website
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.DownloadInWebSite, DownloadInWebSite_Clicked, true);
+            #endregion
+
+            #region check for updates
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.CheckForUpdates, CheckForUpdates_Clicked, true);
+            #endregion
         }
 
+
+
+        /// <summary>
+        /// Check for updates
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void CheckForUpdates_Clicked(object sender, EventArgs e)
+        {
+            StatusBarCmd.SetStatusTextWithoutFreeze("Checking for updates...");
+            var html = new HttpHelper().GetHtml(new HttpItem()
+            {
+                Url = "https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator",
+                Timeout = 10000
+            }).Html;
+            var versionRegex = new Regex("VsTranslator/([^<]+)/assetbyname");
+            if (!versionRegex.IsMatch(html))
+            {
+                StatusBarCmd.SetStatusTextWithoutFreeze("Check error,please make sure you can browser the website marketplace.visualstudio.com ...");
+                return;
+            }
+            var lastversion = versionRegex.Match(html).Groups[1].Value; //1.0.5
+
+            lastversion = new Regex(@"^[0-9]+\.[0-9]+\.[0-9]+$").IsMatch(lastversion)
+                ? (lastversion + ".0")
+                : lastversion;
+            
+            var nowversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();//1.0.5.0
+            StatusBarCmd.SetStatusTextWithoutFreeze(lastversion != nowversion
+                ? "There is a new version to be updated..."
+                : "There is nothing to update...");
+        }
+
+        /// <summary>
+        /// Open the download page in browser
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void DownloadInWebSite_Clicked(object sender, EventArgs e)
+        {
+            Process.Start("https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator");
+        }
 
         /// <summary>
         /// Open the translate page in browser
@@ -187,7 +239,7 @@ namespace VsTranslator.Core.Utils
 
         private static void Translate(int commandId, string selectedText)
         {
-            TranslateType translateType = (TranslateType) commandId;
+            TranslateType translateType = (TranslateType)commandId;
             selectedText = OptionsSettings.SpliteLetterByRules(selectedText);
             ITranslator translator = null;
             try

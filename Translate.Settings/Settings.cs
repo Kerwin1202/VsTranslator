@@ -23,6 +23,8 @@ namespace Translate.Settings
 
         public string TranslateCachePath { get; set; }
 
+        public bool AfterTranslateSuccessedAutoCopy { get; set; } = true;
+
         /// <summary>
         /// Translate cache's default directory
         /// </summary>
@@ -84,7 +86,8 @@ namespace Translate.Settings
                         ReplaceRegex = " "
                     }
                 },
-                TranslateCachePath = TranslateCacheDefaultPath
+                TranslateCachePath = TranslateCacheDefaultPath,
+                AfterTranslateSuccessedAutoCopy = true
             };
         }
     }

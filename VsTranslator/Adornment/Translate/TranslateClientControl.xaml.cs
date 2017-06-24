@@ -70,7 +70,12 @@ namespace VsTranslator.Adornment.Translate
         {
             SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
 
+            cbAutoCopyAfterTransateSuccessed.IsChecked = _settings.AfterTranslateSuccessedAutoCopy;
+
             txtSource.Text = Clipboard.GetText();
+            txtSource.Focus();
+            txtSource.SelectAll();
+            btnTranslate_OnClick(null, null);
         }
         #endregion
 
@@ -97,20 +102,7 @@ namespace VsTranslator.Adornment.Translate
         /// <param name="e"></param>
         private void btnCopy_OnClick(object sender, RoutedEventArgs e)
         {
-            string targetText = txtTarget.Text;
-            if (!string.IsNullOrWhiteSpace(targetText))
-            {
-                try
-                {
-                    Clipboard.SetText(txtTarget.Text);
-                    SetStatusText("Copy successed...");
-                }
-                catch (Exception exception)
-                {
-                    SetStatusText("Copy failed...");
-                    SetTargetText(exception.Message);
-                }
-            }
+            CoptTheTargetText2Clipboard();
         }
         #endregion
 
@@ -120,7 +112,7 @@ namespace VsTranslator.Adornment.Translate
             AbortWrokThread();
             txtSource.Text = Clipboard.GetText();
             PreparationAndTranslation(txtSource.Text);
-        } 
+        }
         #endregion
 
         #region when click Ctrl + Enter to translate
@@ -136,8 +128,7 @@ namespace VsTranslator.Adornment.Translate
                 switch (e.Key)
                 {
                     case Key.Enter:
-                        var sourceText = txtSource.Text;
-                        PreparationAndTranslation(sourceText);
+                        btnTranslate_OnClick(null, null);
                         break;
                         //case Key.A:
                         //    txtSource.SelectAll();
@@ -159,7 +150,7 @@ namespace VsTranslator.Adornment.Translate
                         //    break;
                 }
             }
-        } 
+        }
         #endregion
 
         #region set previous translate source text
@@ -246,6 +237,17 @@ namespace VsTranslator.Adornment.Translate
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        private void cbAutoCopyAfterTransateSuccessed_Checked(object sender, RoutedEventArgs e)
+        {
+            var isChecked = (sender as CheckBox)?.IsChecked ?? false;
+            if (OptionsSettings.Settings.AfterTranslateSuccessedAutoCopy == isChecked)
+            {
+                return;
+            }
+            OptionsSettings.Settings.AfterTranslateSuccessedAutoCopy = isChecked;
+            OptionsSettings.SaveSettings();
+        }
         #endregion
 
         #region when all translate are completed, will callback this method
@@ -267,6 +269,10 @@ namespace VsTranslator.Adornment.Translate
         private void TransRequest_OnTranslationComplete(TranslateResult translateResult)
         {
             SetTargetText(translateResult.TargetText);
+            if (OptionsSettings.Settings.AfterTranslateSuccessedAutoCopy)
+            {
+                CoptTheTargetText2Clipboard();
+            }
         }
         #endregion
 
@@ -297,10 +303,10 @@ namespace VsTranslator.Adornment.Translate
             lblSettingText.Text = from.ToUpper() + " -> " +
                                  targetLanguages[settings.TargetLanguageIndex].Code.ToUpper() + " -> " +
                                  targetLanguages[settings.LastLanguageIndex].Code.ToUpper();
+
         }
         #endregion
-
-
+        
         #region Clear the target text and set the enabled status of copy button to be disabled
         /// <summary>
         /// Clear the target text and set the enabled status of copy button to be disabled
@@ -417,6 +423,30 @@ namespace VsTranslator.Adornment.Translate
             }));
         }
         #endregion
+
+        /// <summary>
+        /// When the text of Target text's box is not be empty, will be copy to the clipboard
+        /// </summary>
+        private void CoptTheTargetText2Clipboard()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                string targetText = txtTarget.Text;
+                if (!string.IsNullOrWhiteSpace(targetText))
+                {
+                    try
+                    {
+                        Clipboard.SetText(txtTarget.Text);
+                    }
+                    catch (Exception exception)
+                    {
+                        //SetStatusText("Copy failed...");
+                        //SetTargetText(exception.Message);
+                    }
+                    SetStatusText("Copy successed...");
+                }
+            }));
+        }
 
         #endregion
 

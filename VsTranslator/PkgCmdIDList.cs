@@ -15,5 +15,7 @@
         public const uint OutputTranslateWindow = 0x2000;
 
         public const uint TranslateInWebSite = 0x1030;
+        public const uint DownloadInWebSite = 0x1031;
+        public const uint CheckForUpdates = 0x1033;
     };
 }
