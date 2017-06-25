@@ -40,3 +40,7 @@
 /VsComment.Tests/obj
 /VsComment.Tests/bin
 /.vs
+packages
+TestResults
+obj
+bin
