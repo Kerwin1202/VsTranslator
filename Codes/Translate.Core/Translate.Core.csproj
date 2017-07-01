@@ -37,7 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSharpRunJavascript">
-      <HintPath>..\..\Libs\CSharpRunJavascript\CSharpRunJavascript.dll</HintPath>
+      <HintPath>..\..\Libs\VsTranslator\CSharpRunJavascript\CSharpRunJavascript.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
