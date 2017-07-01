@@ -24,14 +24,11 @@
                     <RadioButton Margin="5,0,0,0" Tag="Bing" Checked="rbTranslateType_Checked">Bing</RadioButton>
                     <RadioButton Margin="5,0,0,0" Tag="Baidu" Checked="rbTranslateType_Checked">Baidu</RadioButton>
                     <RadioButton Margin="5,0,0,0" Tag="Youdao" Checked="rbTranslateType_Checked">Youdao</RadioButton>
+                    <CheckBox Margin="20,0,0,0" Name="cbAutoCopyAfterTransateSuccessed" Checked="cbAutoCopyAfterTransateSuccessed_Checked" Unchecked="cbAutoCopyAfterTransateSuccessed_Checked">Auto Copy</CheckBox>
                 </WrapPanel>
             </StatusBarItem>
             <Separator Grid.Column="1" />
-            <StatusBarItem  Grid.Column="2">
-                <TextBlock>Author Kerwin</TextBlock>
-            </StatusBarItem>
-            <Separator Grid.Column="3" />
-            <StatusBarItem  Grid.Column="4" Padding="5,0,10,0">
+            <StatusBarItem  Grid.Column="2" Padding="5,0,10,0">
                 <TextBlock Name="lblStatus">ready...</TextBlock>
             </StatusBarItem>
         </StatusBar>

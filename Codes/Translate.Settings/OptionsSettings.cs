@@ -74,7 +74,10 @@ namespace Translate.Settings
             Init();
         }
 
-      
+        public static void SaveSettings()
+        {
+            Settings = Settings;
+        }
 
         private static void SaveSettings(Settings settings)
         {

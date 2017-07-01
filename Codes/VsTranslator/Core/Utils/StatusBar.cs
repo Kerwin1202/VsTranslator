@@ -30,7 +30,7 @@ namespace VsTranslator.Core.Utils
                 statusBar.FreezeOutput(0);
             }
             // Set the status bar text and make its display static.  
-            statusBar.SetText(statusText);
+            statusBar.SetText($"[VsTranslate] {statusText}");
             // Freeze the status bar.  
             statusBar.FreezeOutput(1);
         }
@@ -46,7 +46,7 @@ namespace VsTranslator.Core.Utils
                 statusBar.FreezeOutput(0);
             }
             // Set the status bar text and make its display static.  
-            statusBar.SetText(statusText);
+            statusBar.SetText($"[VsTranslate] {statusText}");
             statusBar.FreezeOutput(0);
         }
 

@@ -54,6 +54,7 @@ namespace VsTranslator.Adornment.TransResult
 
                 //
                 //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
+                Panel.SetZIndex(tc, 1314520);
                 _layer.AddAdornment(sp, null, tc);
             }
         }

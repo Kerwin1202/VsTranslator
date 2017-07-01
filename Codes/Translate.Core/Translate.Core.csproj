@@ -36,9 +36,8 @@
     <AssemblyOriginatorKeyFile>key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSharpRunJavascript, Version=0.0.0.0, Culture=neutral, PublicKeyToken=3b285db079201d69, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libs\vstranslator\CSharpRunJavascript.dll</HintPath>
+    <Reference Include="CSharpRunJavascript">
+      <HintPath>..\..\Libs\VsTranslator\CSharpRunJavascript\CSharpRunJavascript.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.JScript" />
     <Reference Include="System" />
