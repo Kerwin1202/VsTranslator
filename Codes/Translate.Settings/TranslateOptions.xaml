@@ -51,11 +51,16 @@
                 </DockPanel>
            </GroupBox>
 
-            <GroupBox Header="Translate Cache" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3" IsEnabled="False">
+            <GroupBox Header="Translate Cache" HorizontalAlignment="Left" Margin="20,5" VerticalAlignment="Top" Padding="15,3,15,3">
                 <DockPanel Margin="5">
-                    <TextBlock Padding="10,3" Margin="3,0" VerticalAlignment="Center">Cache Path</TextBlock>
-                    <TextBox Name="txtTranslateCachePath" VerticalAlignment="Center" IsReadOnly="True" Width="150" Margin="3,0" Padding="2" Text="{Binding Path=TranslateCachePath,Mode=TwoWay}"></TextBox>
-                    <Button Padding="10,3" Margin="8,0,0,0"  Background="Transparent" Click="btnChange_OnClick" >Change</Button>
+                    <WrapPanel DockPanel.Dock="Top">
+                        <TextBlock Padding="10,3" Margin="3,0" VerticalAlignment="Center">Cache Path</TextBlock>
+                        <TextBox Name="txtTranslateCachePath" VerticalAlignment="Center" IsReadOnly="True" Width="150" Margin="3,0" Padding="2" Text="{Binding Path=TranslateCachePath,Mode=TwoWay}"></TextBox>
+                        <Button Padding="10,3" Margin="8,0,0,0"  Background="Transparent" Click="btnChange_OnClick" >Change</Button>
+                    </WrapPanel>
+                    <WrapPanel DockPanel.Dock="Top" Margin="0 10 0 0">
+                        <Button Padding="10,3" Margin="10,0,0,0" Width="310" Background="Transparent" Click="btnClearUp_OnClick" >Clean up more than 60 days of cache</Button>
+                    </WrapPanel>
                 </DockPanel>
             </GroupBox>
         </StackPanel>

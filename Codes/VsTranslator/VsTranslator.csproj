@@ -141,6 +141,9 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\translate_client.png" />
+    <Resource Include="Resources\volum.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\VsTranslatorPackage.ico" />
     <Content Include="Resources\youdao_64.ico" />
     <Content Include="stylesheet.css" />

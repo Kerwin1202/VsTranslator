@@ -54,6 +54,7 @@
     <Compile Include="BingTranslatorTest.cs" />
     <Compile Include="GoogleTranslatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextToSpeechTest.cs" />
     <Compile Include="YoudaoTranslatorTest.cs" />
   </ItemGroup>
   <ItemGroup>

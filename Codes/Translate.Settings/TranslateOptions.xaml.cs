@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -9,6 +10,7 @@ using Translate.Core.Translator.Bing;
 using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Translate.Settings
 {
@@ -93,14 +95,80 @@ namespace Translate.Settings
             {
                 return;
             }
-            var selectedPath = fbd.SelectedPath;
-            if (!System.IO.Directory.Exists(selectedPath))
+            var selectFolder = fbd.SelectedPath;
+            if (!System.IO.Directory.Exists(selectFolder))
             {
                 return;
             }
+            var newFolder = selectFolder;
+            var foldername = Path.GetFileName(Settings.TranslateCacheDefaultPath) ?? "VsTranslateCache";
+            newFolder = Path.Combine(newFolder, foldername);
+            MoveCache2NewFolder(Settings.TranslateCachePath, newFolder);
+            Directory.Delete(Settings.TranslateCachePath);
             //Do not know why only set one of the other will not change
-            Settings.TranslateCachePath = txtTranslateCachePath.Text = selectedPath;
+            Settings.TranslateCachePath = txtTranslateCachePath.Text = newFolder;
+            OptionsSettings.SaveSettings();
         }
+        /// <summary>
+        /// move cache to new folder
+        /// </summary>
+        /// <param name="oldFolder"></param>
+        /// <param name="newFolder"></param>
+        private void MoveCache2NewFolder(string oldFolder, string newFolder)
+        {
+            if (!Directory.Exists(newFolder))
+            {
+                Directory.CreateDirectory(newFolder);
+            }
+            var files = Directory.GetFiles(oldFolder);
+            foreach (var file in files)
+            {
+                var destFilePath = Path.Combine(newFolder, Path.GetFileName(file) ?? "nofilename");
+                File.Copy(file, destFilePath);
+                File.Delete(file);
+            }
+            var dirs = Directory.GetDirectories(oldFolder);
+            foreach (var subDir in dirs)
+            {
+                MoveCache2NewFolder(subDir, Path.Combine(newFolder, Path.GetFileName(subDir) ?? "sub_folder"));
+                Directory.Delete(subDir);
+            }
+        }
+
+        #region clear up more than 60 days cache files
+        /// <summary>
+        /// trigger this even when click clear up button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClearUp_OnClick(object sender, RoutedEventArgs e)
+        {
+            var clearUpDir = OptionsSettings.Settings.TranslateCachePath;
+            ClearUp(clearUpDir);
+            MessageBox.Show("Clear up successed!", @"Tip");
+        }
+        /// <summary>
+        /// recursively to clear up more than 60 days cache files
+        /// </summary>
+        /// <param name="dir"></param>
+        private void ClearUp(string dir)
+        {
+            var files = Directory.GetFiles(dir);
+            foreach (var file in files)
+            {
+                var fileinfo = new FileInfo(file);
+                if ((DateTime.Now - fileinfo.CreationTime).TotalDays > 60)
+                {
+                    File.Delete(file);
+                }
+            }
+            var dirs = Directory.GetDirectories(dir);
+            foreach (var subDir in dirs)
+            {
+                ClearUp(subDir);
+            }
+        }
+        #endregion
 
         #region translate service changed
         /// <summary>
@@ -187,7 +255,7 @@ namespace Translate.Settings
             {
                 transSettings.TargetLanguageIndex = cbTargetLanguage.SelectedIndex;
             }
-        } 
+        }
         #endregion
 
         private TransSettings GetTransSettings()

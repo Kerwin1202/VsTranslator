@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using Translate.Core.Translator;
 using Translate.Core.Translator.Utils;
 using Translate.Settings;
+using Translate.Settings.TTS;
 using VsTranslator.Adornment.Translate;
 using VsTranslator.Adornment.TransResult;
 
@@ -60,8 +61,17 @@ namespace VsTranslator.Core.Utils
             #region check for updates
             AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.CheckForUpdates, CheckForUpdates_Clicked, true);
             #endregion
+
+            #region text to speech
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.TextToSpeech, TextToSpeech_Clicked, true);
+            #endregion
         }
 
+        private static void TextToSpeech_Clicked(object sender, EventArgs e)
+        {
+            var selectedText = GetSelectedText();
+            Tts.Play(selectedText);
+        }
 
 
         /// <summary>
@@ -186,16 +196,16 @@ namespace VsTranslator.Core.Utils
         {
             return viewHost.TextView.Selection;
         }
-
-
-        private static void TranslateMenu_Clicked(object sender, EventArgs e)
+        /// <summary>
+        /// get the selected text of current active code editor window
+        /// </summary>
+        /// <returns></returns>
+        private static string GetSelectedText()
         {
-            MenuCommand menuCommand = sender as MenuCommand;
-            //MenuCommand.Enabled = false;
             var viewHost = GetCurrentViewHost();
-            if (viewHost == null || menuCommand == null)
+            if (viewHost == null)
             {
-                return;
+                return string.Empty;
             }
             IWpfTextView view = viewHost.TextView;
             ITextSelection selection = view.Selection;
@@ -207,32 +217,43 @@ namespace VsTranslator.Core.Utils
                 if (string.IsNullOrEmpty(selectedText))
                 {
                     #region commented //selected whole line when no selection text
+
                     //ITextSnapshotLine line = span.Start.GetContainingLine();
                     //selectedText = span.Start.GetContainingLine().GetText();
                     //view.Selection.Select(new SnapshotSpan(line.Start, line.End), false); 
+
                     #endregion
 
                     StatusBarCmd.SetStatusTextWithoutFreeze("nothing selected, make sure selected, then try again");
                 }
-                //still no selection
-                if (string.IsNullOrWhiteSpace(selectedText))
+                return selectedText;
+            }
+            return string.Empty;
+        }
+
+        private static void TranslateMenu_Clicked(object sender, EventArgs e)
+        {
+            MenuCommand menuCommand = sender as MenuCommand;
+            if (menuCommand == null)
+            {
+                return;
+            }
+            var selectedText = GetSelectedText();
+
+            //still no selection
+            if (string.IsNullOrWhiteSpace(selectedText))
+            {
+                StatusBarCmd.SetStatusTextWithoutFreeze("nothing selected, make sure selected, then try again");
+            }
+            else
+            {
+                try
                 {
-                    StatusBarCmd.SetStatusTextWithoutFreeze("nothing selected, make sure selected, then try again");
+                    Translate(menuCommand.CommandID.ID, selectedText);
                 }
-                else
+                catch (Exception exception)
                 {
-                    var span = selectionSpan.Snapshot.CreateTrackingSpan(selectionSpan, SpanTrackingMode.EdgeExclusive);
-                    ITextBuffer buffer = view.Selection.TextView.TextBuffer;
-                    Span sp = span.GetSpan(buffer.CurrentSnapshot);
-                    try
-                    {
-                        Translate(menuCommand.CommandID.ID, selectedText);
-                        //buffer.Replace(sp, selectedText);
-                    }
-                    catch (Exception exception)
-                    {
-                        //
-                    }
+                    //
                 }
             }
         }
@@ -290,13 +311,17 @@ namespace VsTranslator.Core.Utils
                 mc.Enabled = enableCmd;
             }
         }
-
-        public void ChangeTranslatorCommand(bool enableCmd)
+        /// <summary>
+        /// 改变菜单的可用状态
+        /// </summary>
+        /// <param name="enableCmd"></param>
+        public void ChangeMenuCommandEnableStatus(bool enableCmd)
         {
             ChangeTranslatorCommand((int)PkgCmdIdList.GoogleTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.BingTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.BaiduTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.YoudaoTranslate, enableCmd);
+            ChangeTranslatorCommand((int)PkgCmdIdList.TextToSpeech, enableCmd);
         }
 
         /// <summary>

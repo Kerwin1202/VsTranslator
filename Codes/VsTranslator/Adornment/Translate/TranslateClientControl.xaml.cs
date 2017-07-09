@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +14,10 @@ using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
 using Translate.Settings;
+using Translate.Settings.TTS;
 using VsTranslator.Adornment.TransResult;
+using VsTranslator.Core;
+using VsTranslator.Core.Utils;
 
 namespace VsTranslator.Adornment.Translate
 {
@@ -112,6 +117,17 @@ namespace VsTranslator.Adornment.Translate
             AbortWrokThread();
             txtSource.Text = Clipboard.GetText();
             PreparationAndTranslation(txtSource.Text);
+        }
+        #endregion 
+        #region play the origin text sound
+        private void btnVolum_OnClick(object sender, RoutedEventArgs e)
+        {
+            var sourceText = txtSource.Text;
+            if (string.IsNullOrWhiteSpace(sourceText))
+            {
+                return;
+            }
+            Tts.Play(sourceText);
         }
         #endregion
 
@@ -306,7 +322,7 @@ namespace VsTranslator.Adornment.Translate
 
         }
         #endregion
-        
+
         #region Clear the target text and set the enabled status of copy button to be disabled
         /// <summary>
         /// Clear the target text and set the enabled status of copy button to be disabled

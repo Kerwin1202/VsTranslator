@@ -62,7 +62,13 @@
                     </Button>
                     <Button Name="btnPaste" Margin="5,2,5,2" Height="40" Width="40" Click="btnPaste_OnClick" >
                         <Button.Content>
-                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (ctrl + v)"></Image>
+                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (Ctrl + V)"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
+                    <Button Name="btnVolum" Margin="5,2,5,2" Height="40" Width="40" Click="btnVolum_OnClick" >
+                        <Button.Content>
+                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/volum.png" Height="28" ToolTip="Play the original text sound"></Image>
                         </Button.Content>
                     </Button>
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
