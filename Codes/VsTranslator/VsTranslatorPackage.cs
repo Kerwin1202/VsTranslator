@@ -77,6 +77,7 @@ namespace VsTranslator
         // Load事件的方法
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            MenuCmd.Instance.ChangeMenuCommandEnableStatus(false);
         }
     }
 }

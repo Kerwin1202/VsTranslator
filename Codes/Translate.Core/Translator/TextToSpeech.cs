@@ -43,7 +43,12 @@ namespace Translate.Core.Translator
         /// <returns></returns>
         public static void Text2Speech(string text, string lang, string savePath)
         {
-            File.WriteAllBytes(savePath, Text2Speech(text, lang));
+            var buffer = Text2Speech(text, lang);
+            if (buffer == null)
+            {
+                return;
+            }
+            File.WriteAllBytes(savePath, buffer);
         }
     }
 }

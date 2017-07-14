@@ -25,6 +25,7 @@
                     <RadioButton Margin="5,0,0,0" Tag="Baidu" Checked="rbTranslateType_Checked">Baidu</RadioButton>
                     <RadioButton Margin="5,0,0,0" Tag="Youdao" Checked="rbTranslateType_Checked">Youdao</RadioButton>
                     <CheckBox Margin="20,0,0,0" Name="cbAutoCopyAfterTransateSuccessed" Checked="cbAutoCopyAfterTransateSuccessed_Checked" Unchecked="cbAutoCopyAfterTransateSuccessed_Checked">Auto Copy</CheckBox>
+                    <CheckBox Margin="20,0,0,0" Name="cnAutoPasteAndTranslate" Checked="cnAutoPasteAndTranslate_Checked" Unchecked="cnAutoPasteAndTranslate_Checked" ToolTip="To paste the text of clipboard and translate, when open this translate window">Auto Paste</CheckBox>
                 </WrapPanel>
             </StatusBarItem>
             <Separator Grid.Column="1" />

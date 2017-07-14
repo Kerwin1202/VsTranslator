@@ -42,6 +42,8 @@ namespace Translate.Settings
 
         public bool AfterTranslateSuccessedAutoCopy { get; set; } = true;
 
+        public bool AfterOpenWindowAutoPasteAndTranslate { get; set; } = true;
+
         /// <summary>
         /// Translate cache's default directory
         /// </summary>
@@ -104,7 +106,8 @@ namespace Translate.Settings
                     }
                 },
                 TranslateCachePath = TranslateCacheDefaultPath,
-                AfterTranslateSuccessedAutoCopy = true
+                AfterTranslateSuccessedAutoCopy = true,
+                AfterOpenWindowAutoPasteAndTranslate = true
             };
         }
     }

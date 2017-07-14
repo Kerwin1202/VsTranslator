@@ -135,6 +135,16 @@ namespace Translate.Settings
             }
         }
 
+        /// <summary>
+        /// Open the cache folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOpen_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("explorer.exe", OptionsSettings.Settings.TranslateCachePath);
+        }
+
         #region clear up more than 60 days cache files
         /// <summary>
         /// trigger this even when click clear up button
