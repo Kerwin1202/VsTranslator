@@ -15,12 +15,12 @@ namespace VsTranslatorTest
             string sourceText = "TDD completely turns traditional development around.";
             TranslationResult transResult = _baiduTranslator.Translate(sourceText, "en", "zh");
             Assert.IsNotNull(transResult);
-            Assert.AreEqual("TDD完全变传统发展。", transResult.TargetText);
+            Assert.AreEqual("TDD完全改变了传统的发展方向。", transResult.TargetText);
 
             sourceText = "你今天过得好不好";
             transResult = _baiduTranslator.Translate(sourceText, "zh", "en");
             Assert.IsNotNull(transResult);
-            Assert.AreEqual("Do you have a good day", transResult.TargetText);
+            Assert.AreEqual("Did you have a good day?", transResult.TargetText);
 
             sourceText = "hello\"";
              transResult = _baiduTranslator.Translate(sourceText, "en", "zh");

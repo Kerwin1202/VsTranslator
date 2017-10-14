@@ -11,7 +11,7 @@ namespace Translate.Core.Translator.Utils
         /// <param name="inputString">原字符串</param>
         /// <param name="md5Encoding">编码格式</param>
         /// <returns></returns>
-        public static string CreateMd5EncryptFromString(string inputString, Encoding md5Encoding)
+        public static string CreateMd5EncryptFromString(this string inputString, Encoding md5Encoding)
         {
             var buffer = md5Encoding.GetBytes(inputString);
             var md5StringBuilder = new StringBuilder();
