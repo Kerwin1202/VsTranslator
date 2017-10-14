@@ -71,7 +71,7 @@ namespace VsTranslator.Core.Utils
 
         private void _view_Closed(object sender, EventArgs e)
         {
-            MenuCmd.Instance.ChangeTranslatorCommand(false);
+            MenuCmd.Instance.ChangeMenuCommandEnableStatus(false);
         }
 
         private void Selection_SelectionChanged(object sender, EventArgs e)
@@ -83,11 +83,11 @@ namespace VsTranslator.Core.Utils
                 SnapshotSpan span = selection.SelectedSpans[0];
                 string selectedText = span.GetText();
                 var hasSelectedText = !string.IsNullOrWhiteSpace(selectedText);
-                MenuCmd.Instance.ChangeTranslatorCommand(hasSelectedText);
+                MenuCmd.Instance.ChangeMenuCommandEnableStatus(hasSelectedText);
             }
             else
             {
-                MenuCmd.Instance.ChangeTranslatorCommand(false);
+                MenuCmd.Instance.ChangeMenuCommandEnableStatus(false);
             }
         }
 

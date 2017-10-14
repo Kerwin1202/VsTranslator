@@ -21,9 +21,28 @@ namespace Translate.Settings
 
         public List<Spliter> LetterSpliters { get; set; }
 
-        public string TranslateCachePath { get; set; }
+        private string _translateCachePath;
+
+        public string TranslateCachePath
+        {
+            get
+            {
+                if (!Directory.Exists(_translateCachePath))
+                {
+                    Directory.CreateDirectory(_translateCachePath);
+                }
+                return _translateCachePath;
+            }
+            set
+            {
+                _translateCachePath = value;
+            }
+        }
+        
 
         public bool AfterTranslateSuccessedAutoCopy { get; set; } = true;
+
+        public bool AfterOpenWindowAutoPasteAndTranslate { get; set; } = true;
 
         /// <summary>
         /// Translate cache's default directory
@@ -87,7 +106,8 @@ namespace Translate.Settings
                     }
                 },
                 TranslateCachePath = TranslateCacheDefaultPath,
-                AfterTranslateSuccessedAutoCopy = true
+                AfterTranslateSuccessedAutoCopy = true,
+                AfterOpenWindowAutoPasteAndTranslate = true
             };
         }
     }
@@ -106,7 +126,7 @@ namespace Translate.Settings
         public int TargetLanguageIndex { get; set; }
 
         public int LastLanguageIndex { get; set; }
-        
+
         public AppClient AppClient { get; set; }
     }
 

@@ -25,6 +25,7 @@
                     <RadioButton Margin="5,0,0,0" Tag="Baidu" Checked="rbTranslateType_Checked">Baidu</RadioButton>
                     <RadioButton Margin="5,0,0,0" Tag="Youdao" Checked="rbTranslateType_Checked">Youdao</RadioButton>
                     <CheckBox Margin="20,0,0,0" Name="cbAutoCopyAfterTransateSuccessed" Checked="cbAutoCopyAfterTransateSuccessed_Checked" Unchecked="cbAutoCopyAfterTransateSuccessed_Checked">Auto Copy</CheckBox>
+                    <CheckBox Margin="20,0,0,0" Name="cnAutoPasteAndTranslate" Checked="cnAutoPasteAndTranslate_Checked" Unchecked="cnAutoPasteAndTranslate_Checked" ToolTip="To paste the text of clipboard and translate, when open this translate window">Auto Paste</CheckBox>
                 </WrapPanel>
             </StatusBarItem>
             <Separator Grid.Column="1" />
@@ -62,7 +63,13 @@
                     </Button>
                     <Button Name="btnPaste" Margin="5,2,5,2" Height="40" Width="40" Click="btnPaste_OnClick" >
                         <Button.Content>
-                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (ctrl + v)"></Image>
+                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (Ctrl + V)"></Image>
+                        </Button.Content>
+                    </Button>
+                    <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
+                    <Button Name="btnVolum" Margin="5,2,5,2" Height="40" Width="40" Click="btnVolum_OnClick" >
+                        <Button.Content>
+                            <Image Source="pack://application:,,,/VsTranslator;component/Resources/volum.png" Height="28" ToolTip="Play the original text sound"></Image>
                         </Button.Content>
                     </Button>
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Media;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +14,10 @@ using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Google;
 using Translate.Core.Translator.Youdao;
 using Translate.Settings;
+using Translate.Settings.TTS;
 using VsTranslator.Adornment.TransResult;
+using VsTranslator.Core;
+using VsTranslator.Core.Utils;
 
 namespace VsTranslator.Adornment.Translate
 {
@@ -71,11 +76,15 @@ namespace VsTranslator.Adornment.Translate
             SetSettingText(GoogleTranslator.GetSourceLanguages(), GoogleTranslator.GetTargetLanguages(), _settings.GoogleSettings);
 
             cbAutoCopyAfterTransateSuccessed.IsChecked = _settings.AfterTranslateSuccessedAutoCopy;
+            cnAutoPasteAndTranslate.IsChecked = _settings.AfterOpenWindowAutoPasteAndTranslate;
 
-            txtSource.Text = Clipboard.GetText();
-            txtSource.Focus();
-            txtSource.SelectAll();
-            btnTranslate_OnClick(null, null);
+            if (_settings.AfterOpenWindowAutoPasteAndTranslate)
+            {
+                txtSource.Text = Clipboard.GetText();
+                txtSource.Focus();
+                txtSource.SelectAll();
+                btnTranslate_OnClick(null, null);
+            }
         }
         #endregion
 
@@ -112,6 +121,19 @@ namespace VsTranslator.Adornment.Translate
             AbortWrokThread();
             txtSource.Text = Clipboard.GetText();
             PreparationAndTranslation(txtSource.Text);
+        }
+        #endregion 
+        #region play the origin text sound
+        private void btnVolum_OnClick(object sender, RoutedEventArgs e)
+        {
+            var sourceText = txtSource.Text;
+            if (string.IsNullOrWhiteSpace(sourceText))
+            {
+                return;
+            }
+            lblStatus.Text = "Playing...";
+            Tts.Play(sourceText);
+            lblStatus.Text = "Played...";
         }
         #endregion
 
@@ -248,6 +270,17 @@ namespace VsTranslator.Adornment.Translate
             OptionsSettings.Settings.AfterTranslateSuccessedAutoCopy = isChecked;
             OptionsSettings.SaveSettings();
         }
+
+        private void cnAutoPasteAndTranslate_Checked(object sender, RoutedEventArgs e)
+        {
+            var isChecked = (sender as CheckBox)?.IsChecked ?? false;
+            if (OptionsSettings.Settings.AfterOpenWindowAutoPasteAndTranslate == isChecked)
+            {
+                return;
+            }
+            OptionsSettings.Settings.AfterOpenWindowAutoPasteAndTranslate = isChecked;
+            OptionsSettings.SaveSettings();
+        }
         #endregion
 
         #region when all translate are completed, will callback this method
@@ -256,7 +289,7 @@ namespace VsTranslator.Adornment.Translate
         /// </summary>
         private void TransRequest_OnAllTranslationComplete()
         {
-            SetStatusText("Translate successed...");
+            SetStatusText("Successed...");
             SetReady();
         }
         #endregion
@@ -306,7 +339,7 @@ namespace VsTranslator.Adornment.Translate
 
         }
         #endregion
-        
+
         #region Clear the target text and set the enabled status of copy button to be disabled
         /// <summary>
         /// Clear the target text and set the enabled status of copy button to be disabled

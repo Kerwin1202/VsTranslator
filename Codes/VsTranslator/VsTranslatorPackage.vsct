@@ -47,7 +47,7 @@
           <ToolTipText>Translator</ToolTipText>
         </Strings>
       </Menu>
-
+      
       <Menu guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpSubMenu" priority="0x0701" type="Menu">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpMenuGroup"/>
         <Strings>
@@ -73,9 +73,11 @@
         <!--移动至 CommandPlacements -->
       </Group>
 
-      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpMenuGroup" priority="0x0605"></Group>
-      
-      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorOptionSubGroup" priority="0x0604"></Group>
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorTtsSubGroup" priority="0x0604"></Group>
+
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorOptionSubGroup" priority="0x0605"></Group>
+
+      <Group guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpMenuGroup" priority="0x0606"></Group>
 
     </Groups>
 
@@ -127,6 +129,16 @@
           <ToolTipText>Youdao  Translate</ToolTipText>
         </Strings>
       </Button>
+      
+      <Button guid="guidVsTranslatorPackageCmdSet" id="TextToSpeech" priority="0x0110" type="Button">
+        <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorTtsSubGroup" />
+        <Strings>
+          <CommandName>Text To Speech</CommandName>
+          <ButtonText>Text To Speech</ButtonText>
+          <ToolTipText>Text To Speech</ToolTipText>
+        </Strings>
+      </Button>
+      
       <Button guid="guidVsTranslatorPackageCmdSet" id="TranslateOptions" priority="0x0104" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorOptionSubGroup" />
         <Strings>
@@ -194,11 +206,15 @@
       <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
     </CommandPlacement>
     <!-- 父节点为菜单栏 -->
-    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpMenuGroup" priority="0x0605">
+    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorHelpMenuGroup" priority="0x0606">
       <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
     </CommandPlacement>
     <!-- 父节点为菜单栏 -->
-    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorOptionSubGroup" priority="0x0604">
+    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorTtsSubGroup" priority="0x0604">
+      <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
+    </CommandPlacement>
+    <!-- 父节点为菜单栏 -->
+    <CommandPlacement guid="guidVsTranslatorPackageCmdSet" id="TranslatorOptionSubGroup" priority="0x0605">
       <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorMenu"/>
     </CommandPlacement>
     <!-- 父节点为右键菜单栏 -->
@@ -262,6 +278,7 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateInWebSite" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="W" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="DownloadInWebSite" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="P" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="CheckForUpdates" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="U" mod2="CONTROL Shift"/>
+    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TextToSpeech" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="Z" mod2="CONTROL Shift"/>
   </KeyBindings>
 
   <Symbols>
@@ -287,6 +304,8 @@
       <IDSymbol name="TranslatorCheckSubGroup" value="0x1032"/>
       <IDSymbol name="CheckForUpdates" value="0x1033"/>
       <IDSymbol name="TranslatorOptionSubGroup" value="0x1034"/>
+      <IDSymbol name="TranslatorTtsSubGroup" value="0x1035"/>
+      <IDSymbol name="TextToSpeech" value="0x1036"/>
 
     </GuidSymbol>
 

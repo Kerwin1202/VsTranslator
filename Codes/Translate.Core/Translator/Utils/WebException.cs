@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Translate.Core.Translator.Utils
 {
-    public class WebException
+    internal class WebException
     {
-        public static void ProcessWebException(System.Net.WebException e)
+        internal static void ProcessWebException(System.Net.WebException e)
         {
             Console.WriteLine("{0}", e.ToString());
             // Obtain detailed error information
