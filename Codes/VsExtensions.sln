@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translate.Settings", "Trans
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslateService", "TranslateService\TranslateService.csproj", "{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visual Studio 2017 Translator", "Visual Studio 2017 Translator\Visual Studio 2017 Translator.csproj", "{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{4FAA09DF-1CA4-434A-B7BC-3C503489E01F} = {3523F31E-AD73-48AD-990F-65CA6645A773}
 		{37238584-099C-453F-A67D-93671FB556BC} = {3523F31E-AD73-48AD-990F-65CA6645A773}
 		{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2} = {04850484-8315-4815-A094-DD96E6E0633F}
+		{DD23AB72-3722-4EEF-866F-534B6B3B9EE5} = {3523F31E-AD73-48AD-990F-65CA6645A773}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D4A272D-B8FA-4D6F-AD0B-B24FBD3CAC28}
