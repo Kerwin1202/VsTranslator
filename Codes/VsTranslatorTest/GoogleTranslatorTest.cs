@@ -15,7 +15,7 @@ namespace VsTranslatorTest
         {
             string sourceText = "TDD completely turns traditional development around.";
             TranslationResult transResult = _googleTranslator.Translate(sourceText, "en", "zh-CN");
-            Assert.AreEqual("TDD完全转变传统的发展。", transResult.TargetText);
+            Assert.AreEqual("TDD完全转变了传统的发展。", transResult.TargetText);
 
             sourceText = "你今天过得好不好";
             transResult = _googleTranslator.Translate(sourceText, "zh-CN", "en");

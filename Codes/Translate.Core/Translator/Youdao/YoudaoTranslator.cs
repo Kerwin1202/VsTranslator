@@ -8,8 +8,10 @@ using System.Text;
 using System.Web;
 using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Enums;
+using Translate.Core.Translator.Utils;
 using Translate.Core.Translator.Youdao.Entities;
 using Translate.Core.Translator.Youdao.Enums;
+using WebException = System.Net.WebException;
 
 namespace Translate.Core.Translator.Youdao
 {
@@ -141,16 +143,17 @@ namespace Translate.Core.Translator.Youdao
                 //http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=https://www.baidu.com/link
 
                 string uri = "http://fanyi.youdao.com/translate";
-                string type = @from + "2" + to;
-                if (@from == Auto)
-                {
-                    type = @from;
-                }
-                string requestDetails = $"type={type}&i={HttpUtility.UrlEncode(Encoding.GetEncoding("ISO-8859-1").GetString(Encoding.UTF8.GetBytes(text)))}&doctype=json&xmlVersion=1.8&keyfrom=fanyi.web&ue=UTF-8&action=FY_BY_CLICKBUTTON&typoResult=true";
+                var salt = Times.TimeStampWithMsec/1000;
+                var client = "fanyideskweb";
+
+                var sign = $"{client}{text}{salt}{"rY0D^0'nM0}g5Mm1z%1G4"}".CreateMd5EncryptFromString(Encoding.UTF8);
+
+                var formData = $"i={HttpUtility.UrlEncode(Encoding.GetEncoding("ISO-8859-1").GetString(Encoding.UTF8.GetBytes(text)))}&from={@from}&to={to}&smartresult=dict&client={client}&salt={salt}&sign={sign}&doctype=json&version=2.1&keyfrom=fanyi.web&action=FY_BY_CLICKBUTTION&typoResult=true";
+
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
                 httpWebRequest.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
                 httpWebRequest.Method = "POST";
-                byte[] bytes = Encoding.ASCII.GetBytes(requestDetails);
+                byte[] bytes = Encoding.ASCII.GetBytes(formData);
                 httpWebRequest.ContentLength = bytes.Length;
                 using (Stream outputStream = httpWebRequest.GetRequestStream())
                 {
