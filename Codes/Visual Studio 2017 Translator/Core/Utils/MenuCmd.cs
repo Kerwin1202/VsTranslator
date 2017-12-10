@@ -84,7 +84,7 @@ namespace Visual_Studio_2017_Translator.Core.Utils
             StatusBarCmd.SetStatusTextWithoutFreeze("Checking for updates...");
             var html = new HttpHelper().GetHtml(new HttpItem()
             {
-                Url = "https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator",
+                Url = "https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VisualStudio2017Translator",
                 Timeout = 10000
             }).Html;
             var versionRegex = new Regex("VsTranslator/([^<]+)/assetbyname");
@@ -112,7 +112,7 @@ namespace Visual_Studio_2017_Translator.Core.Utils
         /// <param name="e"></param>
         private static void DownloadInWebSite_Clicked(object sender, EventArgs e)
         {
-            Process.Start("https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator");
+            Process.Start("https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VisualStudio2017Translator");
         }
 
         /// <summary>
