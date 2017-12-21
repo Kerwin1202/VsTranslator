@@ -66,25 +66,6 @@
             </GroupBox>
         </StackPanel>
         <DockPanel Grid.Row="0" Grid.Column="1">
-            <GroupBox x:Name="gbBingSettings" Header="Bing Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3"  DockPanel.Dock="Top">
-                <DockPanel>
-                    <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Center" MinWidth="100">App Key</TextBlock>
-                        <TextBox Name="txtBingAppkey" Width="200" Margin="20,0,0,0" Text="{Binding Path=BingSettings.AppClient.AppKey, Mode=TwoWay}"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
-                        <TextBox Name="txtBingClientSecret" Width="200" Margin="20,0,0,0" Height="40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Path=BingSettings.AppClient.ClientSecret, Mode=TwoWay}"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" Padding="3">
-                            <Hyperlink Name="lblBing" Click="lblBing_OnClick">
-                                <Run Text="You can click me to get it"></Run>
-                            </Hyperlink>
-                        </TextBlock>
-                    </WrapPanel>
-                </DockPanel>
-            </GroupBox>
             <GroupBox x:Name="gbBaiduSettings" Header="Baidu Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top">
                 <DockPanel>
                     <WrapPanel Margin="5" DockPanel.Dock="Top">
@@ -99,25 +80,6 @@
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" Padding="3">
                             <Hyperlink Name="lblBaidu" Click="lblBaidu_OnClick">
                                 <Run Text="You can click me to get it"></Run>
-                            </Hyperlink>
-                        </TextBlock>
-                    </WrapPanel>
-                </DockPanel>
-            </GroupBox>
-            <GroupBox x:Name="gbYoudaoSe2ttings" Header="Youdao Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top" IsEnabled="False">
-                <DockPanel>
-                    <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Center" MinWidth="100">App Key</TextBlock>
-                        <TextBox Name="txtYoudaoAppkey" Width="200" Margin="20,0,0,0" Text="{Binding Path=YoudaoSettings.AppClient.AppKey, Mode=TwoWay}"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
-                        <TextBox Name="txtYoudaoClientSecret" Width="200" Margin="20,0,0,0" Height="40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Text="{Binding Path=YoudaoSettings.AppClient.ClientSecret, Mode=TwoWay}"></TextBox>
-                    </WrapPanel>
-                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" Padding="3">
-                            <Hyperlink Name="lblYoudao" Click="lblYoudao_OnClick">
-                                <Run Text="you can click me to get it"></Run>
                             </Hyperlink>
                         </TextBlock>
                     </WrapPanel>

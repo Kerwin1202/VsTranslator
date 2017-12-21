@@ -46,15 +46,6 @@ namespace Translate.Settings
             Process.Start("http://api.fanyi.baidu.com/api/trans/product/index");
         }
 
-        private void lblBing_OnClick(object sender, RoutedEventArgs e)
-        {
-            Process.Start("https://datamarket.azure.com/developer/applications/");
-        }
-
-        private void lblYoudao_OnClick(object sender, RoutedEventArgs e)
-        {
-            Process.Start("http://fanyi.youdao.com/openapi");
-        }
 
         private void btnSave_OnClick(object sender, RoutedEventArgs e)
         {

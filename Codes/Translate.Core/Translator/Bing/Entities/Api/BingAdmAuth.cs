@@ -5,9 +5,8 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Web;
-using Translate.Core.Translator.Bing.Entities;
 
-namespace Translate.Core.Translator.Bing
+namespace Translate.Core.Translator.Bing.Entities.Api
 {
     internal class BingAdmAuth
     {

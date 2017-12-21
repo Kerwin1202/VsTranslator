@@ -20,7 +20,7 @@ namespace VsTranslatorTest
             sourceText = "你今天过得好不好";
             transResult = _baiduTranslator.Translate(sourceText, "zh", "en");
             Assert.IsNotNull(transResult);
-            Assert.AreEqual("Did you have a good day?", transResult.TargetText);
+            Assert.AreEqual("Do you have a good day", transResult.TargetText);
 
             sourceText = "hello\"";
              transResult = _baiduTranslator.Translate(sourceText, "en", "zh");

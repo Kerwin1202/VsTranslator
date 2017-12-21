@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Translate.Core.Translator.Bing.Entities
+namespace Translate.Core.Translator.Bing.Entities.Api
 {
     [DataContract]
     internal class AdmAccessToken

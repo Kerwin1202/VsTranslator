@@ -137,7 +137,7 @@ namespace Translate.Settings
                 case TranslateType.Bing:
                     if (_bingTranslator == null)
                     {
-                        _bingTranslator = new BingTranslator(OptionsSettings.Settings.BingSettings.AppClient.AppKey, OptionsSettings.Settings.BingSettings.AppClient.ClientSecret);
+                        _bingTranslator = new BingTranslator();
                     }
                     translator = _bingTranslator;
                     break;

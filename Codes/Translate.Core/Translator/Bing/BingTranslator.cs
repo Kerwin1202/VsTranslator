@@ -6,10 +6,16 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
+using Newtonsoft.Json;
 using Translate.Core.Translator.Bing.Entities;
+using Translate.Core.Translator.Bing.Entities.Api;
+using Translate.Core.Translator.Bing.Entities.Post;
 using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Enums;
+using Translate.Core.Translator.Utils;
+using WebException = System.Net.WebException;
 
 namespace Translate.Core.Translator.Bing
 {
@@ -21,9 +27,22 @@ namespace Translate.Core.Translator.Bing
         private static readonly List<TranslationLanguage> TargetLanguages;
         private static readonly List<TranslationLanguage> SourceLanguages;
 
-        private BingTranslator()
+        public BingTranslator()
         {
+            InitCookie();
+        }
 
+
+        public BingTranslator(string clientId, string clientSecret)
+        {
+            //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
+            //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
+
+            if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
+            {
+                throw new Exception("app id and client secret is necessary");
+            }
+            _admAuth = new BingAdmAuth(clientId, clientSecret);
         }
 
         static BingTranslator()
@@ -94,23 +113,11 @@ namespace Translate.Core.Translator.Bing
             SourceLanguages.AddRange(TargetLanguages);
         }
 
+        #region api
         //soap : https://msdn.microsoft.com/en-us/library/ff512435.aspx
         //ajax : https://msdn.microsoft.com/en-us/library/ff512404.aspx
         //http : https://msdn.microsoft.com/en-us/library/ff512419.aspx
 
-        public BingTranslator(string clientId, string clientSecret)
-        {
-            //Get Client Id and Client Secret from https://datamarket.azure.com/developer/applications/
-            //Refer obtaining AccessToken (http://msdn.microsoft.com/en-us/library/hh454950.aspx) 
-
-            if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
-            {
-                throw new Exception("app id and client secret is necessary");
-            }
-            _admAuth = new BingAdmAuth(clientId, clientSecret);
-
-
-        }
 
         /// <summary>
         /// https://msdn.microsoft.com/en-us/library/ff512419.aspx
@@ -233,6 +240,115 @@ namespace Translate.Core.Translator.Bing
             // Create a header with the access_token property of the returned token
             return "Bearer " + _admToken.AccessToken;
         }
+        #endregion
+
+        #region post
+        private BingPostTransResult TranslateByPost(string text, string from = "-", string to = "zh-CHS")
+        {
+            var texts = text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            var transParams = texts.Select(t => new BingPostTransParams() { Text = t }).ToList();
+            return TranslateByPost(transParams, from, to);
+        }
+
+        private readonly Regex _mtstknRegex = new Regex("mtstkn=([^;]+);");
+
+        private readonly Regex _muidbRegex = new Regex("MUIDB=([^;]+);");
+
+        private string _mtstkn = string.Empty;
+        private string _muidb = string.Empty;
+        private void InitCookie()
+        {
+            var cookie = new HttpHelper().GetHtml(new HttpItem()
+            {
+                Url = "https://www.bing.com/translator/?mkt=zh-CN",
+                Timeout = 5000
+            }).Cookie;
+
+            _mtstkn = _mtstknRegex.Match(cookie).Groups[1].Value;
+            _muidb = _muidbRegex.Match(cookie).Groups[1].Value;
+        }
+
+        /// <summary>
+        /// Translate from bing website  https://www.bing.com/translator/?mkt=zh-CN
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private BingPostTransResult TranslateByPost(List<BingPostTransParams> text, string from = "-", string to = "zh-CHS")
+        {
+            //https://www.bing.com/translator/api/Translate/TranslateArray?from=-&to=zh-CHS
+
+            if (string.IsNullOrWhiteSpace(from))
+            {
+                from = "-";//auto
+            }
+            var maxTryCount = 3;
+            var tryCount = 0;
+            try
+            {
+                StartTrans: var uri = $"https://www.bing.com/translator/api/Translate/TranslateArray?from={from}&to={to}";
+                var formData = JsonConvert.SerializeObject(text.Where(t=>!string.IsNullOrWhiteSpace(t.Text)));
+
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+                httpWebRequest.ContentType = "application/json; charset=utf-8";
+                httpWebRequest.Method = "POST";
+                var cookie = new CookieContainer();
+                cookie.Add(new Cookie("mtstkn", _mtstkn, "/", ".bing.com"));
+                cookie.Add(new Cookie("MUIDB", _muidb, "/", ".bing.com"));
+                httpWebRequest.CookieContainer = cookie;
+                httpWebRequest.UserAgent = "PostmanRuntime/6.4.1";
+                httpWebRequest.Accept = "*/*";
+                httpWebRequest.Headers.Add("accept-encoding", "gzip, deflate");
+                httpWebRequest.Headers.Add("cache-control", "no-cache");
+                byte[] bytes = Encoding.UTF8.GetBytes(formData);
+                httpWebRequest.ContentLength = bytes.Length;
+                using (Stream outputStream = httpWebRequest.GetRequestStream())
+                {
+                    outputStream.Write(bytes, 0, bytes.Length);
+                }
+                WebResponse response = null;
+                try
+                {
+                    response = httpWebRequest.GetResponse();
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        if (stream == null)
+                        {
+                            return null;
+                        }
+                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BingPostTransResult));
+                        //Get deserialized object from JSON stream
+                        BingPostTransResult bingTransResult = (BingPostTransResult)serializer.ReadObject(stream);
+                        return bingTransResult;
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (tryCount++ < maxTryCount)
+                    {
+                        InitCookie();
+                        goto StartTrans;
+                    }
+                    throw;
+                }
+                finally
+                {
+                    response?.Close();
+                }
+            }
+            catch (WebException e)
+            {
+                Utils.WebException.ProcessWebException(e);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
+        }
+
+        #endregion
 
 
         //http://api.microsofttranslator.com/v2/ajax.svc/
@@ -240,7 +356,7 @@ namespace Translate.Core.Translator.Bing
         //get Support languages : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguagesForTranslate
         //get support languages's names : http://api.microsofttranslator.com/v2/ajax.svc/GetLanguageNames?locale=en&languageCodes=["af","ar","bs-Latn","bg","ca","zh-CHS","zh-CHT","yue","hr","cs","da","nl","en","et","fj","fil","fi","fr","de","el","ht","he","hi","mww","hu","id","it","ja","sw","tlh","tlh-Qaak","ko","lv","lt","mg","ms","mt","yua","no","otq","fa","pl","pt","ro","ru","sm","sr-Cyrl","sr-Latn","sk","sl","es","sv","ty","th","to","tr","uk","ur","vi","cy"]
 
-        public  string GetIdentity()
+        public string GetIdentity()
         {
             return "Bing";
         }
@@ -256,7 +372,7 @@ namespace Translate.Core.Translator.Bing
 
         public static string GetDescription()
         {
-            return "you can on the website translation http://www.bing.com/translator/";
+            return "You can on the website translation http://www.bing.com/translator/";
         }
 
         public static string GetWebsite()
@@ -311,13 +427,25 @@ namespace Translate.Core.Translator.Bing
                     result.TranslationResultTypes = TranslationResultTypes.Successed;
 
                     #region ajax
-                    BingTransResult bingTransResult = TranslateByAjax(text, from, to);
-                    result.SourceLanguage = bingTransResult?.From;
-                    result.TargetText = bingTransResult?.Translations?[0].TranslatedText;
+                    //BingTransResult bingTransResult = TranslateByAjax(text, from, to);
+                    //result.SourceLanguage = bingTransResult?.From;
+                    //result.TargetText = bingTransResult?.Translations?[0].TranslatedText;
                     #endregion
 
                     #region http
                     //result.TargetText = TranslateByHttp(text, from, to); 
+                    #endregion
+
+                    #region post
+
+                    var bingTransResult = TranslateByPost(text, from, to);
+                    result.SourceLanguage = bingTransResult?.From;
+                    foreach (var item in bingTransResult?.Items ?? new List<BingPostTransResultItem>())
+                    {
+                        result.TargetText += item.Text + "\r\n";
+                    }
+                    result.TargetText = result.TargetText.TrimEnd();
+
                     #endregion
                 }
                 catch (Exception exception)
