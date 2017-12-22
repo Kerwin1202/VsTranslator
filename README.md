@@ -3,7 +3,7 @@ Visual Studio's Translate Plugin
 
 ----------------------------------------
 
-[README](https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator) | [简体中文](https://www.zhanghuanglong.com/detail/visual-studio-translation-extension)
+[README](README.md) | [简体中文](https://www.zhanghuanglong.com/detail/visual-studio-translation-extension)
 
 # Download 
 
