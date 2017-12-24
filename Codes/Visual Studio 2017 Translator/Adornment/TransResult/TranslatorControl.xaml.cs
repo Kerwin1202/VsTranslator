@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Text;
 using Translate.Core.Translator.Enums;
 using Translate.Settings;
@@ -19,17 +20,50 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
             InitializeComponent();
 
         }
-
         private static SnapshotSpan _selectedSpans;
 
 
         public TranslatorControl(SnapshotSpan selectedSpans, TranslationRequest transRequest)
         {
             InitializeComponent();
+
+            //https://msdn.microsoft.com/zh-cn/library/mt162312.aspx?f=255&MSPPError=-2147217396#%E4%BD%BF%E7%94%A8 Visual Studio %E4%B8%AD%E7%9A%84%E9%A2%9C%E8%89%B2
+            VSColorTheme.ThemeChanged += VSColorTheme_ThemeChanged; ;
+
+            RefreshColors();
+
             _selectedSpans = selectedSpans;
             transRequest.OnTranslationComplete += TransRequest_OnTranslationComplete;
 
             transRequest.OnAllTranslationComplete += TransRequest_OnAllTranslationComplete;
+        }
+        private void VSColorTheme_ThemeChanged(ThemeChangedEventArgs e)
+        {
+            RefreshColors();
+
+            // Also post a message to all the children so they can apply the current theme appropriately  
+            //foreach (System.Windows.Forms.Control child in this.Controls)
+            //{
+            //    NativeMethods.SendMessage(child.Handle, e.Message, IntPtr.Zero, IntPtr.Zero);
+            //}
+        }
+
+        
+        private System.Drawing.Color _bgColor => VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey);
+
+        private System.Drawing.Color _foreColor => VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowTextColorKey);
+
+        private void RefreshColors()
+        {
+            //foreach (var rowDefinition in this.grid.RowDefinitions)
+            //{
+            //    rowDefinition.
+            //}
+
+            var bgColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(_bgColor.A, _bgColor.R, _bgColor.G, _bgColor.B));
+            var foreColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(_foreColor.A, _foreColor.R, _foreColor.G, _foreColor.B));
+            btnSettings.Background = btnClose.Background = this.grid.Background = bgColor;
+            btnSettings.Foreground = btnClose.Foreground = this.lbltitle.Foreground = foreColor;
         }
 
         private void TransRequest_OnAllTranslationComplete()
@@ -78,10 +112,12 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
             {
                 Text = targetText,
                 TextWrapping = TextWrapping.Wrap,
-                ToolTip = "click to replace selcted text with this translation",
+                ToolTip = "Click to replace the selected text with this translation",
                 FontWeight = FontWeights.Bold,
-                Padding = new Thickness(3, 1, 3, 1),
-                MinWidth = 180
+                Padding = new Thickness(6, 3, 6, 3),
+                MinWidth = 180,
+                Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(_bgColor.A, _bgColor.R, _bgColor.G, _bgColor.B)),
+                Foreground = new SolidColorBrush(System.Windows.Media.Color.FromArgb(_foreColor.A, _foreColor.R, _foreColor.G, _foreColor.B)),
             };
 
             label.MouseDown += Label_MouseDown;
@@ -126,6 +162,7 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
+            VSColorTheme.ThemeChanged -= this.VSColorTheme_ThemeChanged;
             RemoveEvent?.Invoke();
         }
     }

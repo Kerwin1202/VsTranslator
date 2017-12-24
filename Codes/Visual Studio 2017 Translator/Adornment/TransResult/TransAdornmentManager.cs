@@ -1,6 +1,8 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel.Composition;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Translate.Settings;
 
@@ -18,11 +20,25 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
             _layer = view.GetAdornmentLayer("TranslatorAdornmentLayer");
 
             _view.LayoutChanged += _view_LayoutChanged;
+
+           // _view.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+
+            var curBgColor = (_view.Background as SolidColorBrush)?.Color;
+
+            _view.BackgroundBrushChanged += _view_BackgroundBrushChanged;
+        }
+
+        private void _view_BackgroundBrushChanged(object sender, BackgroundBrushChangedEventArgs e)
+        {
+            // triggered when change color theme,, 
+            //e.NewBackgroundBrush.Color
+
+            var curBgColor = (_view.Background as SolidColorBrush)?.Color;
         }
 
         private static void _view_LayoutChanged(object sender, TextViewLayoutChangedEventArgs e)
         {
-            //_layer.RemoveAllAdornments();
+            _layer.RemoveAllAdornments();
         }
 
         public static TransAdornmentManager Create(IWpfTextView view)
