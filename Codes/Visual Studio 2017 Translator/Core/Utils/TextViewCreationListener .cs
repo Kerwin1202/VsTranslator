@@ -80,6 +80,10 @@ namespace Visual_Studio_2017_Translator.Core.Utils
                 string selectedText = span.GetText();
                 var hasSelectedText = !string.IsNullOrWhiteSpace(selectedText);
                 MenuCmd.Instance.ChangeMenuCommandEnableStatus(hasSelectedText);
+                if (hasSelectedText)
+                {
+                    MenuCmd.Instance.DelayTranslate(selectedText);
+                }
             }
             else
             {

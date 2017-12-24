@@ -85,6 +85,18 @@
                     </WrapPanel>
                 </DockPanel>
             </GroupBox>
+            <GroupBox x:Name="gbAutoTranslateSettings" Header="Auto Translate Settings" HorizontalAlignment="Left" Margin="20,5,20,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top">
+                <DockPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">Auto Translate</TextBlock>
+                        <CheckBox Name="cbAutoTranslate" Checked="cbAutoTranslate_Checked" Unchecked="cbAutoTranslate_Checked" IsChecked="{Binding Path=IsAutoTranslate,Mode=TwoWay}" Margin="20,0,0,0" >Auto Translate</CheckBox>
+                    </WrapPanel>
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
+                        <TextBox Name="txtDelayMilli" VerticalAlignment="Center" Width="200" Margin="20,0,0,0" Text="{Binding Path=DelayMilliOfAutoTranslate,Mode=TwoWay}"></TextBox>
+                    </WrapPanel>
+                </DockPanel>
+            </GroupBox>
         </DockPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DockPanel Dock="Right" HorizontalAlignment="Right">

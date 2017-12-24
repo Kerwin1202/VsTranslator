@@ -38,7 +38,14 @@ namespace Translate.Settings
                 _translateCachePath = value;
             }
         }
-        
+
+        /// <summary>
+        /// After the selected text is automatically translated
+        /// </summary>
+        public bool IsAutoTranslate { get; set; } = false;
+
+        public int DelayMilliOfAutoTranslate { get; set; } = 300;
+
 
         public bool AfterTranslateSuccessedAutoCopy { get; set; } = true;
 

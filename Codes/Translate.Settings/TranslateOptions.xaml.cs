@@ -306,5 +306,10 @@ namespace Translate.Settings
                 transSettings.LastLanguageIndex = cbLastLanguage.SelectedIndex;
             }
         }
+
+        private void cbAutoTranslate_Checked(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

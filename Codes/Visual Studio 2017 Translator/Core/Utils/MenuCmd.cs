@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -322,6 +324,23 @@ namespace Visual_Studio_2017_Translator.Core.Utils
             ChangeTranslatorCommand((int)PkgCmdIdList.BaiduTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.YoudaoTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.TextToSpeech, enableCmd);
+        }
+
+        public void DelayTranslate(string selectedText)
+        {
+            if (OptionsSettings.Settings.IsAutoTranslate)
+            {
+                new Thread(() =>
+                    {
+                        Thread.Sleep(OptionsSettings.Settings.DelayMilliOfAutoTranslate);
+
+                        System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            Translate((int)TranslateType.Google, selectedText);
+                        }));
+                    })
+                { IsBackground = true }.Start();
+            }
         }
 
         /// <summary>
