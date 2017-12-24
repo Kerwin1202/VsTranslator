@@ -98,6 +98,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Resources\fonts\iconfont.ttf" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -113,13 +114,7 @@
     </Resource>
     <Content Include="Resources\bing_16_1.ico" />
     <Content Include="Resources\bing_64.ico" />
-    <Resource Include="Resources\close.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\google_16.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\setting.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\copy.png">

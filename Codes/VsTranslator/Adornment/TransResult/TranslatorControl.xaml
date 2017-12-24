@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <Border BorderThickness="1" MaxWidth="800" MinWidth="150" BorderBrush="Brown" Background="#FF83BD68" Cursor="Arrow">
+    <Border BorderThickness="1" MaxWidth="800" MinWidth="150" Cursor="Arrow">
         <Border.Effect>
             <DropShadowEffect ShadowDepth="0" Color="DarkGray" Opacity="0.5"/>
         </Border.Effect>
@@ -13,16 +13,13 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" Margin="0,0,43,0" >
-                <TextBlock  Name="lbltitle" Text="Translating..." Margin="1,1,0,1"  VerticalAlignment="Center" HorizontalAlignment="Left" />
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Grid.Row="0" Margin="0,0,43,0" >
+                <TextBlock Name="lbltitle" Text="Translating..." Margin="1,1,0,1" Padding="5,2,5,2"  VerticalAlignment="Center" HorizontalAlignment="Left"  />
             </StackPanel>
             <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" >
-                <Button Name="btnSettings" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click">
-                    <Image Stretch="Fill" Width="14" Height="14" Source="pack://application:,,,/VsTranslator;component/Resources/setting.png" Opacity="1" />
-                </Button>
-                <Button Name="btnClose"  ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click">
-                    <Image Stretch="Fill" Width="14" Height="14" Source="pack://application:,,,/VsTranslator;component/Resources/close.png"/>
-                </Button>
+                <!--https://www.cnblogs.com/sntetwt/p/5635107.html-->
+                <Button Name="btnSettings" Margin="5,0,2,0" ToolTip="Settings" AutomationProperties.Name="btnSettings" Click="btnSettings_Click" Content="&#xe64c;" Style="{DynamicResource FontAwesome}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Cursor="Hand"/>
+                <Button Name="btnClose" Margin="3,0,5,0" ToolTip="Close" AutomationProperties.Name="btnClose" Click="btnClose_Click" Content="&#xe6c0;" Style="{DynamicResource FontAwesome}" Background="Transparent"  BorderBrush="Transparent" BorderThickness="0" Cursor="Hand"></Button>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Name="transResult">
@@ -32,16 +29,31 @@
             <Grid.Background>
                 <LinearGradientBrush>
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Offset="0.1" Color="Azure"></GradientStop>
-                        <GradientStop Offset="0.3" Color="CadetBlue"></GradientStop>
-                        <GradientStop Offset="0.6" Color="DarkGray"></GradientStop>
-                        <GradientStop Offset="1.0" Color="Khaki"></GradientStop>
+                        <GradientStop Offset="0.299" Color="#FFD6DBE9"></GradientStop>
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
         </Grid>
     </Border>
     <UserControl.Resources>
+        <Style x:Key="FontAwesome" TargetType="{x:Type Button}" >
+            <Setter Property="TextElement.FontFamily" Value="pack://application:,,,/VsTranslator;component/Resources/fonts/#iconfont" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="MouseOver" TargetType="{x:Type WrapPanel}">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -110,16 +122,6 @@
 
         <!--scroll viewer is "redefined" too, to make custom scroll bar work in Windows 8-->
         <Style TargetType="{x:Type ScrollViewer}">
-        </Style>
-
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Background" Value="{x:Null}" />
-            <Setter Property="Foreground" Value="{x:Null}" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Margin" Value="1" />
-            <Setter Property="BorderBrush" Value="{x:Null}" />
         </Style>
 
     </UserControl.Resources>
