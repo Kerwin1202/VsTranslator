@@ -25,7 +25,7 @@ namespace Translate.Settings
 
         public static string GetSourceLanguage(TranslateType type, string selectedText)
         {
-            if (ChineseRegex.IsMatch(selectedText))
+            if (OptionsSettings.Settings.IsEnabledFirstJudgeChinese && ChineseRegex.IsMatch(selectedText))
             {
                 return GetChineseLanguage(type);
             }

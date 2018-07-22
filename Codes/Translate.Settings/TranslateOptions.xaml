@@ -29,16 +29,24 @@
                         <TextBlock VerticalAlignment="Center" MinWidth="100">Translate to</TextBlock>
                         <ComboBox Name="cbTargetLanguage" Width="200" Margin="20,0,0,0" SelectionChanged="cbTargetLanguage_OnSelectionChanged" ></ComboBox>
                     </WrapPanel>
-                    <WrapPanel Width="200" Margin="5" DockPanel.Dock="Top" Orientation="Vertical" HorizontalAlignment="Right">
-                        <TextBlock  HorizontalAlignment="Left">if translate from</TextBlock>
-                        <TextBlock Name="lblLastLanguage">
+                    <WrapPanel MaxWidth="350" Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">
+                            <CheckBox Name="cbJudgeChineseFirst" IsChecked="{Binding Path=IsEnabledFirstJudgeChinese,Mode=TwoWay}" >
+                                Enabled
+                            </CheckBox>
+                        </TextBlock>
+                        <TextBlock HorizontalAlignment="Left" Margin="20 0 0 0">
+                            If translate from
+                        </TextBlock>
+                        <TextBlock  Margin="120 0 0 0" Name="lblLastLanguage">
                             Chinese (Simplified) / 简体中文
                         </TextBlock>
-                        <TextBlock> then translate to</TextBlock>
+                        <TextBlock   Margin="120 0 0 0" > then translate to</TextBlock>
                     </WrapPanel>
 
                     <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Center" MinWidth="100"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" MinWidth="100">
+                        </TextBlock>
                         <ComboBox Name="cbLastLanguage" Width="200" Margin="20,0,0,0" SelectionChanged="cbLastLanguage_OnSelectionChanged" ></ComboBox>
                     </WrapPanel>
                 </DockPanel>
@@ -92,7 +100,7 @@
                         <CheckBox Name="cbAutoTranslate" Checked="cbAutoTranslate_Checked" Unchecked="cbAutoTranslate_Checked" IsChecked="{Binding Path=IsAutoTranslate,Mode=TwoWay}" Margin="20,0,0,0" >Auto Translate</CheckBox>
                     </WrapPanel>
                     <WrapPanel Margin="5" DockPanel.Dock="Top">
-                        <TextBlock VerticalAlignment="Top" MinWidth="100">Client Secret</TextBlock>
+                        <TextBlock VerticalAlignment="Top" MinWidth="100">Translate Delay</TextBlock>
                         <TextBox Name="txtDelayMilli" VerticalAlignment="Center" Width="200" Margin="20,0,0,0" Text="{Binding Path=DelayMilliOfAutoTranslate,Mode=TwoWay}"></TextBox>
                     </WrapPanel>
                 </DockPanel>
