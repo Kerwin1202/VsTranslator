@@ -136,6 +136,10 @@
     </Resource>
     <Content Include="Resources\VsTranslatorPackage.ico" />
     <Content Include="Resources\youdao_64.ico" />
+    <Content Include="Samples\build-in client.jpg" />
+    <Content Include="Samples\settings.jpg" />
+    <Content Include="Samples\shortcut.jpg" />
+    <Content Include="Samples\translate.jpg" />
     <Content Include="stylesheet.css" />
     <VSCTCompile Include="VsTranslatorPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>

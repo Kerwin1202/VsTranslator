@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Translate_Client"
         mc:Ignorable="d"
-        Title="Translate Client -- Kerwin"  Width="630" Height="400" MinWidth="630"  Loaded="win_Loaded" Icon="/Resources/translate.png" WindowStartupLocation="CenterScreen">
+        Title="Translate Client"  Width="630" Height="400" MinWidth="630"  Loaded="win_Loaded" Icon="/Resources/translate.png" WindowStartupLocation="CenterScreen">
     <DockPanel Background="#FFF3F3F3">
         <StatusBar DockPanel.Dock="Bottom" VerticalAlignment="Center">
             <StatusBar.ItemsPanel>

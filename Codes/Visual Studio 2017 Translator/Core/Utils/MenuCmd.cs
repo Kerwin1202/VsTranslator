@@ -61,7 +61,7 @@ namespace Visual_Studio_2017_Translator.Core.Utils
             #endregion
 
             #region check for updates
-            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.CheckForUpdates, CheckForUpdates_Clicked, true);
+            AddCommand2OleMenu(GuidList.CommandSet, (int)PkgCmdIdList.AboutTranslator, AboutTranslator_Clicked, true);
             #endregion
 
             #region text to speech
@@ -81,30 +81,9 @@ namespace Visual_Studio_2017_Translator.Core.Utils
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void CheckForUpdates_Clicked(object sender, EventArgs e)
+        private static void AboutTranslator_Clicked(object sender, EventArgs e)
         {
-            StatusBarCmd.SetStatusTextWithoutFreeze("Checking for updates...");
-            var html = new HttpHelper().GetHtml(new HttpItem()
-            {
-                Url = "https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VisualStudio2017Translator",
-                Timeout = 10000
-            }).Html;
-            var versionRegex = new Regex("VsTranslator/([^<]+)/assetbyname");
-            if (!versionRegex.IsMatch(html))
-            {
-                StatusBarCmd.SetStatusTextWithoutFreeze("Check error,please make sure you can browser the website marketplace.visualstudio.com ...");
-                return;
-            }
-            var lastversion = versionRegex.Match(html).Groups[1].Value; //1.0.5
-
-            lastversion = new Regex(@"^[0-9]+\.[0-9]+\.[0-9]+$").IsMatch(lastversion)
-                ? (lastversion + ".0")
-                : lastversion;
-            
-            var nowversion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();//1.0.5.0
-            StatusBarCmd.SetStatusTextWithoutFreeze(lastversion != nowversion
-                ? "There is a new version to be updated..."
-                : "There is nothing to update...");
+            Process.Start("https://www.zhanghuanglong.com/");
         }
 
         /// <summary>
@@ -124,7 +103,7 @@ namespace Visual_Studio_2017_Translator.Core.Utils
         /// <param name="e"></param>
         private static void TranslateInWebSite_Clicked(object sender, EventArgs e)
         {
-            Process.Start("http://www.zhanghuanglong.com/translate/");
+            Process.Start("https://translate.google.com/");
         }
 
         /// <summary>

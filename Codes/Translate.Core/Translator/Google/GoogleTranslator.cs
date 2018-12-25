@@ -119,7 +119,7 @@ namespace Translate.Core.Translator.Google
 
             targetText = nextAll.Cast<Match>().Aggregate(targetText, (current, match) => current + match.Groups[1].Value);
 
-            targetText = targetText.Replace("\\r\\n", "\r\n").Replace("\\u003c", "<").Replace("\\u003e", ">");
+            targetText = targetText.Replace("\\r", "\r").Replace("\\n", "\n").Replace("\\u003c", "<").Replace("\\u003e", ">");
 
             return new GoogleTransResult()
             {

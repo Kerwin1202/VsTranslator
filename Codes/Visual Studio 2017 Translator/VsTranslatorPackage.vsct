@@ -172,12 +172,12 @@
         </Strings>
       </Button>
 
-      <Button guid="guidVsTranslatorPackageCmdSet" id="CheckForUpdates" priority="0x0109" type="Button">
+      <Button guid="guidVsTranslatorPackageCmdSet" id="AboutTranslator" priority="0x0109" type="Button">
         <Parent guid="guidVsTranslatorPackageCmdSet" id="TranslatorCheckSubGroup" />
         <Strings>
-          <CommandName>Check For Updates</CommandName>
-          <ButtonText>Check For Updates</ButtonText>
-          <ToolTipText>Check For Updates</ToolTipText>
+          <CommandName>About Translator</CommandName>
+          <ButtonText>About Translator</ButtonText>
+          <ToolTipText>About Translator</ToolTipText>
         </Strings>
       </Button>
 
@@ -271,7 +271,6 @@
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateClient" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="X" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TranslateInWebSite" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="W" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="DownloadInWebSite" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="P" mod2="CONTROL Shift"/>
-    <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="CheckForUpdates" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="U" mod2="CONTROL Shift"/>
     <KeyBinding guid="guidVsTranslatorPackageCmdSet" id="TextToSpeech" editor="guidVSStd97"  key1="D" mod1="CONTROL Shift"  key2="Z" mod2="CONTROL Shift"/>
   </KeyBindings>
 
@@ -296,7 +295,7 @@
       <IDSymbol name="TranslateInWebSite" value="0x1030"/>
       <IDSymbol name="DownloadInWebSite" value="0x1031"/>
       <IDSymbol name="TranslatorCheckSubGroup" value="0x1032"/>
-      <IDSymbol name="CheckForUpdates" value="0x1033"/>
+      <IDSymbol name="AboutTranslator" value="0x1033"/>
       <IDSymbol name="TranslatorOptionSubGroup" value="0x1034"/>
       <IDSymbol name="TranslatorTtsSubGroup" value="0x1035"/>
       <IDSymbol name="TextToSpeech" value="0x1036"/>
