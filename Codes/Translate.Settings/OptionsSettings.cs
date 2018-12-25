@@ -67,10 +67,11 @@ namespace Translate.Settings
 
         public static void ShowOptions()
         {
-            new TranslateOptions(Settings)
+            var frmOption = new TranslateOptions(Settings)
             {
-                OnSave = SaveSettings
-            }.ShowDialog();
+                OnSave = SaveSettings, ShowInTaskbar = false, Owner = System.Windows.Application.Current.MainWindow
+            };
+            frmOption.ShowDialog();
             Init();
         }
 

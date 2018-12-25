@@ -65,7 +65,7 @@ namespace Translate.Settings
         /// <param name="e"></param>
         private void btnSpliter_OnClick(object sender, RoutedEventArgs e)
         {
-            new LetterSpliter(OptionsSettings.Settings.LetterSpliters).ShowDialog();
+            new LetterSpliter(OptionsSettings.Settings.LetterSpliters) { Owner = this, ShowInTaskbar = false }.ShowDialog();
         }
 
         /// <summary>
