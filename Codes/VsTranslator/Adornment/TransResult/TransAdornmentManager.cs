@@ -48,14 +48,21 @@ namespace VsTranslator.Adornment.TransResult
             Geometry g = view.TextViewLines.GetMarkerGeometry(sp);
             if (g != null)
             {
-                var tc = new TranslatorControl(view.Selection.SelectedSpans[0], transRequest) { RemoveEvent = RemoveAllAdornments };
-                Canvas.SetLeft(tc, g.Bounds.BottomLeft.X);
-                Canvas.SetTop(tc, g.Bounds.BottomLeft.Y);
+                if ((OptionsSettings.Settings.TranslateResultShowType & TranslateResultShowType.Modal) == TranslateResultShowType.Modal)
+                {
+                    var tc = new TranslatorControl(view.Selection.SelectedSpans[0], transRequest) { RemoveEvent = RemoveAllAdornments };
+                    Canvas.SetLeft(tc, g.Bounds.BottomLeft.X);
+                    Canvas.SetTop(tc, g.Bounds.BottomLeft.Y);
 
-                //
-                //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
-                Panel.SetZIndex(tc, 1314520);
-                _layer.AddAdornment(sp, null, tc);
+                    //
+                    //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
+                    Panel.SetZIndex(tc, 1314520);
+                    _layer.AddAdornment(sp, null, tc);
+                }
+                if ((OptionsSettings.Settings.TranslateResultShowType & TranslateResultShowType.Output) == TranslateResultShowType.Output)
+                {
+                    new TranslatorOutput(transRequest);
+                }
             }
         }
 

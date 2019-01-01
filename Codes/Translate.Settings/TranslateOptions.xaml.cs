@@ -311,5 +311,15 @@ namespace Translate.Settings
         {
             //throw new NotImplementedException();
         }
+
+        private void CbTranslateResultModal_OnChecked(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void CbTranslateResultOutput_OnChecked(object sender, RoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

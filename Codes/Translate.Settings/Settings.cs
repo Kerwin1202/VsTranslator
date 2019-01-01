@@ -58,6 +58,8 @@ namespace Translate.Settings
         /// </summary>
         internal readonly static string TranslateCacheDefaultPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VsTranslator"), "TranslateCache");
 
+        public TranslateResultShowType TranslateResultShowType { get; set; } = TranslateResultShowType.Modal;
+
         /// <summary>
         /// Get a Settings's instance with some default setting
         /// </summary>
@@ -153,5 +155,15 @@ namespace Translate.Settings
         /// Test example
         /// </summary>
         public string Example { get; set; }
+    }
+
+    [Flags]
+    public enum TranslateResultShowType
+    {
+        Modal = 1,
+
+        Output = 2,
+
+        All = Modal | Output,
     }
 }

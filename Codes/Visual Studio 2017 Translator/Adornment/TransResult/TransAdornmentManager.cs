@@ -1,9 +1,7 @@
-﻿using System.ComponentModel.Composition;
+﻿using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Classification;
-using Microsoft.VisualStudio.Text.Editor;
 using Translate.Settings;
 
 namespace Visual_Studio_2017_Translator.Adornment.TransResult
@@ -21,7 +19,7 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
 
             _view.LayoutChanged += _view_LayoutChanged;
 
-           // _view.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+            // _view.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0));
 
             var curBgColor = (_view.Background as SolidColorBrush)?.Color;
 
@@ -52,7 +50,7 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
             _view = view;
             _layer = view.GetAdornmentLayer("TranslatorAdornmentLayer");
             _view.LayoutChanged -= _view_LayoutChanged;
-            _view.LayoutChanged += _view_LayoutChanged; 
+            _view.LayoutChanged += _view_LayoutChanged;
             #endregion
 
             RemoveAllAdornments();
@@ -64,14 +62,21 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
             Geometry g = view.TextViewLines.GetMarkerGeometry(sp);
             if (g != null)
             {
-                var tc = new TranslatorControl(view.Selection.SelectedSpans[0], transRequest) { RemoveEvent = RemoveAllAdornments };
-                Canvas.SetLeft(tc, g.Bounds.BottomLeft.X);
-                Canvas.SetTop(tc, g.Bounds.BottomLeft.Y);
+                if ((OptionsSettings.Settings.TranslateResultShowType & TranslateResultShowType.Modal) == TranslateResultShowType.Modal)
+                {
+                    var tc = new TranslatorControl(view.Selection.SelectedSpans[0], transRequest) { RemoveEvent = RemoveAllAdornments };
+                    Canvas.SetLeft(tc, g.Bounds.BottomLeft.X);
+                    Canvas.SetTop(tc, g.Bounds.BottomLeft.Y);
 
-                //
-                //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
-                Panel.SetZIndex(tc, 1314520);
-                _layer.AddAdornment(sp, null, tc);
+                    //
+                    //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
+                    Panel.SetZIndex(tc, 1314520);
+                    _layer.AddAdornment(sp, null, tc);
+                }
+                if ((OptionsSettings.Settings.TranslateResultShowType & TranslateResultShowType.Output) == TranslateResultShowType.Output)
+                {
+                    new TranslatorOutput(transRequest);
+                }
             }
         }
 

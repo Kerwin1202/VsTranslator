@@ -63,7 +63,9 @@
     <Compile Include="Adornment\TransResult\TranslatorControl.xaml.cs">
       <DependentUpon>TranslatorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Adornment\TransResult\TranslatorOutput.cs" />
     <Compile Include="Core\Utils\MenuCmd.cs" />
+    <Compile Include="Core\Utils\Output.cs" />
     <Compile Include="Core\Utils\StatusBar.cs" />
     <Compile Include="Core\Utils\TextViewCreationListener .cs" />
     <Compile Include="Global.cs" />
