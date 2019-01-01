@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Visual_Studio_2017_Translator.8fecb095-6cfc-45fa-9b5b-c153e0b78513" Version="1.0.7" Language="en-US" Publisher="Kerwin" />
+        <Identity Id="Visual_Studio_2017_Translator.8fecb095-6cfc-45fa-9b5b-c153e0b78513" Version="1.0.8" Language="en-US" Publisher="Kerwin" />
         <DisplayName>Visual_Studio_2017_Translator</DisplayName>
         <Description xml:space="preserve">Translate selected text via Google or Bing or Baidu or Youdao translation</Description>
         <MoreInfo>https://www.zhanghuanglong.com/detail/visual-studio-translation-extension</MoreInfo>

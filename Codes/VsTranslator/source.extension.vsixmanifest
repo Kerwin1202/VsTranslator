@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VsTranslator.Kerwin.bf91e58f-767e-4a3c-8abf-c95ef685aed5" Version="1.1.4" Language="en-US" Publisher="Kerwin" />
+        <Identity Id="VsTranslator.Kerwin.bf91e58f-767e-4a3c-8abf-c95ef685aed5" Version="1.1.5" Language="en-US" Publisher="Kerwin" />
         <DisplayName>VsTranslator</DisplayName>
         <Description xml:space="preserve">Translate selected text via Google or Bing or Baidu or Youdao translation</Description>
         <MoreInfo>https://www.zhanghuanglong.com/detail/visual-studio-translation-extension</MoreInfo>
