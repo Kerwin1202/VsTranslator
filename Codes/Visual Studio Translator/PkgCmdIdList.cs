@@ -1,4 +1,4 @@
-﻿namespace Visual_Studio_2017_Translator
+﻿namespace Visual_Studio_Translator
 {
     /// <summary>
     /// In order to lazy some of the values ​​here and enumerate the value of the Translate Type

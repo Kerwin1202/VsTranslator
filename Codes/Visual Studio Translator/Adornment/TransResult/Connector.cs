@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.TransResult
+namespace Visual_Studio_Translator.Adornment.TransResult
 {
     [Export(typeof(IWpfTextViewCreationListener))]
     [ContentType("text")]

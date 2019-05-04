@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace Visual_Studio_2017_Translator.Core.Utils
+namespace Visual_Studio_Translator.Core.Utils
 {
     public class StatusBarCmd
     {

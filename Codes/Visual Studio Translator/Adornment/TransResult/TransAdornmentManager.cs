@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.VisualStudio.Text;
+using Microsoft.VisualStudio.Text.Editor;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.TransResult
+namespace Visual_Studio_Translator.Adornment.TransResult
 {
     public class TransAdornmentManager
     {

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Threading;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -13,13 +11,12 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Translate.Core.Translator;
-using Translate.Core.Translator.Utils;
 using Translate.Settings;
 using Translate.Settings.TTS;
-using Visual_Studio_2017_Translator.Adornment.Translate;
-using Visual_Studio_2017_Translator.Adornment.TransResult;
+using Visual_Studio_Translator.Adornment.Translate;
+using Visual_Studio_Translator.Adornment.TransResult;
 
-namespace Visual_Studio_2017_Translator.Core.Utils
+namespace Visual_Studio_Translator.Core.Utils
 {
     public class MenuCmd
     {
@@ -93,7 +90,7 @@ namespace Visual_Studio_2017_Translator.Core.Utils
         /// <param name="e"></param>
         private static void DownloadInWebSite_Clicked(object sender, EventArgs e)
         {
-            Process.Start("https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VisualStudio2017Translator");
+            Process.Start("https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.Visual-Studio-Translator");
         }
 
         /// <summary>

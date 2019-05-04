@@ -13,7 +13,7 @@ using Translate.Core.Translator.Youdao;
 using Translate.Settings;
 using Translate.Settings.TTS;
 
-namespace Visual_Studio_2017_Translator.Adornment.Translate
+namespace Visual_Studio_Translator.Adornment.Translate
 {
     /// <summary>
     /// TranslateClient.xaml 的交互逻辑

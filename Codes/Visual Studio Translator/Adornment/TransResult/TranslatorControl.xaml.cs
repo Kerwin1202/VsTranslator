@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.Text;
 using Translate.Core.Translator.Enums;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.TransResult
+namespace Visual_Studio_Translator.Adornment.TransResult
 {
     /// <summary>
     /// Interaction logic for TranslatorControl.xaml
@@ -101,7 +101,7 @@ namespace Visual_Studio_2017_Translator.Adornment.TransResult
 
             //System.Windows.Controls.Image image = new System.Windows.Controls.Image
             //{
-            //    Source = new BitmapImage(new Uri("pack://application:,,,/Visual Studio 2017 Translator;component/Resources/google_16.ico")),
+            //    Source = new BitmapImage(new Uri("pack://application:,,,/Visual Studio Translator;component/Resources/google_16.ico")),
             //    Width = 14,
             //    Height = 14
             //};

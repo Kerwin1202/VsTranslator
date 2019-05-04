@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Visual_Studio_2017_Translator.Adornment.Translate.TranslateClientControl"
+﻿<UserControl x:Class="Visual_Studio_Translator.Adornment.Translate.TranslateClientControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   Width="630" Height="400"  Loaded="win_Loaded">
@@ -53,35 +53,35 @@
                 <WrapPanel Grid.Column="0">
                     <Button Name="btnNew"  Margin="5,2,5,2" Height="40" Width="40" Click="btnNew_OnClick">
                         <Button.Content>
-                            <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/new.png" Height="36" ToolTip="New (Ctrl + N)"></Image>
+                            <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/new.png" Height="36" ToolTip="New (Ctrl + N)"></Image>
                         </Button.Content>
                     </Button>
                     <Button Name="btnCopy" Margin="5,2,5,2" Height="40" Width="40" Click="btnCopy_OnClick" IsEnabled="False"  Opacity="0.5">
                         <Button.Content>
-                            <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/copy.png" Height="29" ToolTip="Copy (Ctrl + C)"></Image>
+                            <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/copy.png" Height="29" ToolTip="Copy (Ctrl + C)"></Image>
                         </Button.Content>
                     </Button>
                     <Button Name="btnPaste" Margin="5,2,5,2" Height="40" Width="40" Click="btnPaste_OnClick" >
                         <Button.Content>
-                            <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (Ctrl + V)"></Image>
+                            <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/paste.png" Height="28" ToolTip="Paste and translate (Ctrl + V)"></Image>
                         </Button.Content>
                     </Button>
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
                     <Button Name="btnVolum" Margin="5,2,5,2" Height="40" Width="40" Click="btnVolum_OnClick" >
                         <Button.Content>
-                            <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/volum.png" Height="28" ToolTip="Play the original text sound"></Image>
+                            <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/volum.png" Height="28" ToolTip="Play the original text sound"></Image>
                         </Button.Content>
                     </Button>
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
                     <WrapPanel Visibility="Hidden">
                         <Button Name="btnPrev"  Margin="5,2,5,2" Height="40" Width="40" Click="btnPrev_OnClick">
                             <Button.Content>
-                                <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/prev2.png" Height="32" ToolTip="Back (Alt + Left)"></Image>
+                                <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/prev2.png" Height="32" ToolTip="Back (Alt + Left)"></Image>
                             </Button.Content>
                         </Button>
                         <Button Name="btnNext" Margin="5,2,5,2" Height="40" Width="40" Click="btnNext_OnClick">
                             <Button.Content>
-                                <Image Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/next2.png" Height="32" ToolTip="Forward (Alt + Right)"></Image>
+                                <Image Source="pack://application:,,,/Visual Studio Translator;component/Resources/next2.png" Height="32" ToolTip="Forward (Alt + Right)"></Image>
                             </Button.Content>
                         </Button>
                     </WrapPanel>
@@ -91,7 +91,7 @@
                     <Button Name="btnSettings" Height="40" Margin="5,2" Click="btnSettings_OnClick">
                         <Button.Content>
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Orientation="Horizontal" Margin="5,0">
-                                <Image Stretch="Fill" Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/translate.png" Height="32" Margin="5,0"  />
+                                <Image Stretch="Fill" Source="pack://application:,,,/Visual Studio Translator;component/Resources/translate.png" Height="32" Margin="5,0"  />
                                 <TextBlock Name="lblSettingText" VerticalAlignment="Center">Auto -> ZH-CN -> EN</TextBlock>
                             </StackPanel>
                         </Button.Content>
@@ -101,7 +101,7 @@
                 <Button Name="btnTranslate" Grid.Column="2" ToolTip="Translate (Ctrl + Enter)" VerticalAlignment="Center"  Height="40" Margin="0,0,20,0" Click="btnTranslate_OnClick">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="5,0">
-                            <Image Stretch="Fill" Source="pack://application:,,,/Visual Studio 2017 Translator;component/Resources/translate3.png" Height="32"  />
+                            <Image Stretch="Fill" Source="pack://application:,,,/Visual Studio Translator;component/Resources/translate3.png" Height="32"  />
                             <TextBlock VerticalAlignment="Center" Text="Translate" Margin="5,0,0,0" />
                         </StackPanel>
                     </Button.Content>

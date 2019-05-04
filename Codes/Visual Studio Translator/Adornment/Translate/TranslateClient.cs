@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.Translate
+namespace Visual_Studio_Translator.Adornment.Translate
 {
     /// <summary>
     /// how to create this ,you can see https://msdn.microsoft.com/en-us/library/cc138567.aspx

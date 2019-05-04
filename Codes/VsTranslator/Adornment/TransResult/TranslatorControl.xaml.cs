@@ -101,7 +101,7 @@ namespace VsTranslator.Adornment.TransResult
 
             //System.Windows.Controls.Image image = new System.Windows.Controls.Image
             //{
-            //    Source = new BitmapImage(new Uri("pack://application:,,,/Visual Studio 2017 Translator;component/Resources/google_16.ico")),
+            //    Source = new BitmapImage(new Uri("pack://application:,,,/Visual Studio Translator;component/Resources/google_16.ico")),
             //    Width = 14,
             //    Height = 14
             //};

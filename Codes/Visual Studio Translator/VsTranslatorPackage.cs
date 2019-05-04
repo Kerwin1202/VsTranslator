@@ -1,19 +1,12 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.Win32;
-using Visual_Studio_2017_Translator.Adornment.Translate;
-using Visual_Studio_2017_Translator.Core.Utils;
+using Visual_Studio_Translator.Adornment.Translate;
+using Visual_Studio_Translator.Core.Utils;
 
-namespace Visual_Studio_2017_Translator
+namespace Visual_Studio_Translator
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
