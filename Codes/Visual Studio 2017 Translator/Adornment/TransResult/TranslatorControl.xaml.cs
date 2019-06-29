@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.Text;
 using Translate.Core.Translator.Enums;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.TransResult
+namespace Visual_Studio_2019_Translator.Adornment.TransResult
 {
     /// <summary>
     /// Interaction logic for TranslatorControl.xaml

@@ -12,7 +12,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -23,8 +24,8 @@
     <ProjectGuid>{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Visual_Studio_2017_Translator</RootNamespace>
-    <AssemblyName>Visual Studio 2017 Translator</AssemblyName>
+    <RootNamespace>Visual_Studio_2019_Translator</RootNamespace>
+    <AssemblyName>Visual Studio 2019 Translator</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
@@ -76,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Key.snk" />
     <None Include="packages.config" />
     <Resource Include="Resources\fonts\iconfont.ttf" />
     <None Include="source.extension.vsixmanifest">

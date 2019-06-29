@@ -16,10 +16,10 @@ using Translate.Core.Translator;
 using Translate.Core.Translator.Utils;
 using Translate.Settings;
 using Translate.Settings.TTS;
-using Visual_Studio_2017_Translator.Adornment.Translate;
-using Visual_Studio_2017_Translator.Adornment.TransResult;
+using Visual_Studio_2019_Translator.Adornment.Translate;
+using Visual_Studio_2019_Translator.Adornment.TransResult;
 
-namespace Visual_Studio_2017_Translator.Core.Utils
+namespace Visual_Studio_2019_Translator.Core.Utils
 {
     public class MenuCmd
     {

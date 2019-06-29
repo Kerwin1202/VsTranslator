@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Shell;
 using Translate.Settings;
 
-namespace Visual_Studio_2017_Translator.Adornment.Translate
+namespace Visual_Studio_2019_Translator.Adornment.Translate
 {
     /// <summary>
     /// how to create this ,you can see https://msdn.microsoft.com/en-us/library/cc138567.aspx
@@ -18,7 +18,7 @@ namespace Visual_Studio_2017_Translator.Adornment.Translate
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
             this.Content = new TranslateClientControl(OptionsSettings.Settings);
-            
+
         }
     }
 }
