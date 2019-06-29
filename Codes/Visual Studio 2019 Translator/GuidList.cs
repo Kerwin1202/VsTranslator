@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Visual_Studio_2017_Translator
+namespace Visual_Studio_2019_Translator
 {
     public class GuidList
     {

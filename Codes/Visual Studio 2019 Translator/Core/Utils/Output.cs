@@ -1,7 +1,7 @@
 ﻿using System;
 using EnvDTE;
 
-namespace Visual_Studio_2017_Translator.Core.Utils
+namespace Visual_Studio_2019_Translator.Core.Utils
 {
     public class Output
     {

@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media;
 using Translate.Core.Translator.Enums;
 using Translate.Settings;
-using Visual_Studio_2017_Translator.Core.Utils;
+using Visual_Studio_2019_Translator.Core.Utils;
 
-namespace Visual_Studio_2017_Translator.Adornment.TransResult
+namespace Visual_Studio_2019_Translator.Adornment.TransResult
 {
     public class TranslatorOutput
     {

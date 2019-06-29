@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
-namespace Visual_Studio_2017_Translator.Core.Utils
+namespace Visual_Studio_2019_Translator.Core.Utils
 {
     //[ContentType("code")]
     [ContentType("text")]
