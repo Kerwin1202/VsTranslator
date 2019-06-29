@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translate.Settings", "Trans
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslateService", "TranslateService\TranslateService.csproj", "{575E8FD9-C16D-43BD-999C-6DCC8E31E2A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visual Studio 2019 Translator", "Visual Studio 2017 Translator\Visual Studio 2019 Translator.csproj", "{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visual Studio 2019 Translator", "Visual Studio 2019 Translator\Visual Studio 2019 Translator.csproj", "{DD23AB72-3722-4EEF-866F-534B6B3B9EE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{787E0668-720A-45DC-BC92-089FD932726B}"
 	ProjectSection(SolutionItems) = preProject
