@@ -111,7 +111,7 @@ namespace Translate.Core.Translator.Google
             //@"\[\[\[""(.+?)"",""(.+?)"",,,[0-9]+?\](,\[""(.+?)"",""(.+?)"",,,[0-9]+\])*\],,""(.+?)""\]"
             //[[["这是一个非常小的项目，如果你熟悉Visual Studio编辑器扩展可能是相当自我解释。","It's a very small project and may be fairly self explanatory if you are familiar with Visual Studio editor extensions.",,,3],["扩展有两个组件：","There are two components to the extension:",,,3]],,"en"]
 
-            var mcs = new Regex(@"(\[""(.+?)"",""(.+?)"",.+?\]\]\].+?){1,}.+?").Matches(result);
+            var mcs = new Regex(@"(\[""(.+?)"",""(.+?)"",.+?\]\].+?){1,}.+?").Matches(result);
 
             var mcLang = new Regex(@"\[\[""([^""]+)""\].+?\[""\1""\]\]").Match(result);
 
