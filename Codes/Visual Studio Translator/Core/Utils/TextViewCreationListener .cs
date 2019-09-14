@@ -67,11 +67,18 @@ namespace Visual_Studio_Translator.Core.Utils
 
         private void _view_Closed(object sender, EventArgs e)
         {
-            MenuCmd.Instance.ChangeMenuCommandEnableStatus(false);
+            MenuCmd.Instance?.ChangeMenuCommandEnableStatus(false);
         }
 
         private void Selection_SelectionChanged(object sender, EventArgs e)
         {
+            if (MenuCmd.Instance == null)
+            {
+                //todo make async  
+                //https://github.com/microsoft/VSSDK-Extensibility-Samples/tree/master/AsyncPackageMigration
+                //https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-use-asyncpackage-to-load-vspackages-in-the-background?view=vs-2019
+                return;
+            }
             //TransAdornmentManager.RemoveAllAdornments();
             ITextSelection selection = sender as ITextSelection;
             if (selection != null)
