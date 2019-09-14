@@ -3,7 +3,9 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -12,6 +14,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using Visual_Studio_2017_Translator.Adornment.Translate;
 using Visual_Studio_2017_Translator.Core.Utils;
+using Visual_Studio_2017_Translator.Properties;
 
 namespace Visual_Studio_2017_Translator
 {
@@ -77,6 +80,24 @@ namespace Visual_Studio_2017_Translator
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             MenuCmd.Instance.ChangeMenuCommandEnableStatus(false);
+            new Thread(() =>
+            {
+                Thread.Sleep((3000));
+                OpenChangeLog();
+            }) { IsBackground = true}.Start();
+        }
+
+
+        public static void OpenChangeLog()
+        {
+            var changeLogDir = Path.Combine(Path.GetTempPath(), "VisualStudioTranslator");
+            if (!Directory.Exists(changeLogDir))
+            {
+                Directory.CreateDirectory(changeLogDir);
+            }
+            var changeLogPath = Path.Combine(changeLogDir, "change.log");
+            File.WriteAllText(changeLogPath, Resources.CHANGE_LOG);
+            Global.Dte.ItemOperations.OpenFile(changeLogPath);
         }
     }
 }
