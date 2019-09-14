@@ -7,7 +7,7 @@ Visual Studio's Translate Plugin
 
 # Download 
 
-Download this extenstion from Visual Studio marketplace  [Visual Studio 2013 and 2015](https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator) , it support [Visual Studio 2017 and 2019](https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VisualStudio2017Translator) too.
+Download this extenstion from Visual Studio marketplace  [Visual Studio 2013 and 2015](https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.VsTranslator) , it support [Visual Studio 2017 and 2019](https://marketplace.visualstudio.com/items?itemName=vs-publisher-1462295.Visual-Studio-Translator) too.
 
 
 # Feature
