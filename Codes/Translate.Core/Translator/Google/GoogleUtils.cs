@@ -1,17 +1,80 @@
-﻿namespace Translate.Core.Translator.Google
+﻿using System;
+using System.Text;
+
+namespace Translate.Core.Translator.Google
 {
+    /// <summary>
+    /// 版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+    /// 本文链接：https://blog.csdn.net/u013070165/article/details/85096834
+    /// </summary>
     internal class GoogleUtils
     {
-        private readonly static CSharpRunJavascript Javascript = new CSharpRunJavascript();
-        /// <summary>
-        /// 获取tk
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        internal static string GetTk(string text)
+
+        internal static string GetTk(string a, string TKK = "406398.2087938574")
         {
-            text = text.Replace("\n", "\\n").Replace("\r", "\\r").Replace("'", "\\'");
-            return Javascript.Eval("((function() {var TKK = ((function() {var a = 561666268;var b = 1526272306;return 406398 + '.' + (a + b);  })()); function b(a, b) {for (var d = 0; d < b.length - 2; d += 3) {        var c = b.charAt(d + 2),            c = 'a' <= c ? c.charCodeAt(0) - 87 : Number(c),            c = '+' == b.charAt(d + 1) ? a >>> c : a << c;        a = '+' == b.charAt(d) ? a + c & 4294967295 : a ^ c    }    return a  }    function tk(a) {      for (var e = TKK.split('.'), h = Number(e[0]) || 0, g = [], d = 0, f = 0; f < a.length; f++) {          var c = a.charCodeAt(f);          128 > c ? g[d++] = c : (2048 > c ? g[d++] = c >> 6 | 192 : (55296 == (c & 64512) && f + 1 < a.length && 56320 == (a.charCodeAt(f + 1) & 64512) ? (c = 65536 + ((c & 1023) << 10) + (a.charCodeAt(++f) & 1023), g[d++] = c >> 18 | 240, g[d++] = c >> 12 & 63 | 128) : g[d++] = c >> 12 | 224, g[d++] = c >> 6 & 63 | 128), g[d++] = c & 63 | 128)      }      a = h;      for (d = 0; d < g.length; d++) a += g[d], a = b(a, '+-a^+6');      a = b(a, '+-3^+b+-f');      a ^= Number(e[1]) || 0;      0 > a && (a = (a & 2147483647) + 2147483648);      a %= 1E6;      return a.toString() + '.' + (a ^ h)  }  return tk('" + text + "'); })())").ToString();
+            string[] e = TKK.Split('.');
+            int d = 0;
+            int h = 0;
+            h = Number(e[0]);
+            byte[] g0 = Encoding.UTF8.GetBytes(a);
+            long aa = h;
+            for (d = 0; d < g0.Length; d++)
+            {
+                aa += g0[d];
+                aa = Convert.ToInt64(B(aa, "+-a^+6"));
+            }
+            aa = Convert.ToInt64(B(aa, "+-3^+b+-f"));
+            long bb = aa ^ Number(e[1]);
+            aa = bb;
+            aa = aa + bb;
+            bb = aa - bb;
+            aa = aa - bb;
+            if (0 > aa)
+            {
+                aa = (aa & 2147483647) + 2147483648;
+            }
+            aa %= (long)1e6;
+            return aa.ToString() + "." + (aa ^ h);
+        }
+        internal static string B(long a, string b)
+        {
+            for (int d = 0; d < b.Length - 2; d += 3)
+            {
+                char c = CharAt(b, d + 2);
+                int c0 = 'a' <= c ? CharCodeAt(c, 0) - 87 : Number(c);
+                long c1 = '+' == CharAt(b, d + 1) ? a >> c0 : a << c0;
+                a = '+' == CharAt(b, d) ? a + c1 & 4294967295 : a ^ c1;
+            }
+            a = Number(a);
+            return a.ToString();
+        }
+
+        //实现js的charAt方法
+        internal static char CharAt(object obj, int index)
+        {
+            char[] chars = obj.ToString().ToCharArray();
+            return chars[index];
+        }
+        //实现js的charCodeAt方法
+        internal static int CharCodeAt(object obj, int index)
+        {
+            char[] chars = obj.ToString().ToCharArray();
+            return (int)chars[index];
+        }
+
+        //实现js的Number方法
+        internal static int Number(object cc)
+        {
+            try
+            {
+                long a = Convert.ToInt64(cc.ToString());
+                int b = a > 2147483647 ? (int)(a - 4294967296) : a < -2147483647 ? (int)(a + 4294967296) : (int)a;
+                return b;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
     }
 }

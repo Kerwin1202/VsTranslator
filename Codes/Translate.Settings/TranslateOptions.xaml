@@ -119,6 +119,15 @@
 
                 </DockPanel>
             </GroupBox>
+            <GroupBox x:Name="gbAutoTtsSettings" Header="" HorizontalAlignment="Left" Margin="20,5,0,5" VerticalAlignment="Top" Padding="15,3,15,3" DockPanel.Dock="Top">
+                <DockPanel Width="330">
+                    <WrapPanel Margin="5" DockPanel.Dock="Top">
+                        <TextBlock VerticalAlignment="Center" MinWidth="50">TTS</TextBlock>
+                        <CheckBox Name="cbAutoTts" IsChecked="{Binding Path=TextToSpeechWhenTranslate,Mode=TwoWay}" Margin="20,0,0,0" >Auto TTS (Limit 7 words (Space Split))</CheckBox>
+                    </WrapPanel>
+
+                </DockPanel>
+            </GroupBox>
         </DockPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <DockPanel Dock="Right" HorizontalAlignment="Right">

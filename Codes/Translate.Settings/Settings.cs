@@ -61,6 +61,11 @@ namespace Translate.Settings
         public TranslateResultShowType TranslateResultShowType { get; set; } = TranslateResultShowType.Modal;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public bool TextToSpeechWhenTranslate { get; set; }
+
+        /// <summary>
         /// Get a Settings's instance with some default setting
         /// </summary>
         /// <returns></returns>

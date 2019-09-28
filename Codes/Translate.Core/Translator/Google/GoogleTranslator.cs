@@ -98,7 +98,7 @@ namespace Translate.Core.Translator.Google
             }
             text = text.Replace("\\", "");
 
-            var tk = GetTk(text);
+            var tk = GoogleUtils.GetTk(text);
 
             var result = new HttpHelper().GetHtml(new HttpItem()
             {
@@ -108,28 +108,20 @@ namespace Translate.Core.Translator.Google
                 ContentType = "application/x-www-form-urlencoded;charset=UTF-8"
             }).Html.Replace("\n", "");
 
-            //@"\[\[\[""(.+?)"",""(.+?)"",,,[0-9]+?\](,\[""(.+?)"",""(.+?)"",,,[0-9]+\])*\],,""(.+?)""\]"
-            //[[["这是一个非常小的项目，如果你熟悉Visual Studio编辑器扩展可能是相当自我解释。","It's a very small project and may be fairly self explanatory if you are familiar with Visual Studio editor extensions.",,,3],["扩展有两个组件：","There are two components to the extension:",,,3]],,"en"]
-
-            var mcs = new Regex(@"(\[""(.+?)"",""(.+?)"",.+?\]\].+?){1,}.+?").Matches(result);
-
-            var mcLang = new Regex(@"\[\[""([^""]+)""\].+?\[""\1""\]\]").Match(result);
-
-            var targetText = string.Empty;
-
-            targetText = mcs.Cast<Match>().Aggregate(targetText, (current, match) => current + match.Groups[2].Value);
-
-            targetText = targetText.Replace("\\r", "\r").Replace("\\n", "\n").Replace("\\u003c", "<").Replace("\\u003e", ">");
-
+            dynamic tempResult = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
+            var resarry = Newtonsoft.Json.JsonConvert.DeserializeObject(tempResult[0].ToString());
+            var length = (resarry.Count);
+            var str = new System.Text.StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                var res = Newtonsoft.Json.JsonConvert.DeserializeObject(resarry[i].ToString());
+                str.Append(res[0].ToString());
+            }
             return new GoogleTransResult()
             {
-                From = mcLang.Success ? mcLang.Groups[1].Value : string.Empty,
-                TargetText = targetText
+                From = tempResult[tempResult.Count - 1][0][0].ToString(),
+                TargetText = str.ToString()
             };
-
-            //[[["You have a good day today","你今天过得好不好",,,3]],,"zh-CN"]
-            //[[["你好”","hello\"",,,1]],,"en"]
-            //[[["你好","hello",,,1]],,"en"]
         }
 
         public string GetIdentity()

@@ -233,6 +233,11 @@ namespace Visual_Studio_Translator.Core.Utils
                 {
                     //
                 }
+
+                if (OptionsSettings.Settings.TextToSpeechWhenTranslate && selectedText.Split(' ').Length <= 7)
+                {
+                    TextToSpeech_Clicked(null, null);
+                }
             }
         }
 

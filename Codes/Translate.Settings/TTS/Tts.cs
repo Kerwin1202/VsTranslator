@@ -17,22 +17,21 @@ namespace Translate.Settings.TTS
         {
             text = OptionsSettings.SpliteLetterByRules(text);
 
-            var result = TranslatorFactory.GetTranslator(TranslateType.Google).Translate(text, "auto", "zh-CN");
-            var lang = result.SourceLanguage;
-
             //不能采用静态的,,因为如果改变了cache目录 静态的会有问题了
             string ttsCacheDir = Path.Combine(OptionsSettings.Settings.TranslateCachePath, "tts");
-            var dir = Path.Combine(ttsCacheDir, lang);
-            if (!Directory.Exists(dir))
+        
+            if (!Directory.Exists(ttsCacheDir))
             {
-                Directory.CreateDirectory(dir);
+                Directory.CreateDirectory(ttsCacheDir);
             }
             var md5 = Encrypts.CreateMd5EncryptFromString(text, Encoding.UTF8).Substring(8, 16);
-            var mp3Path = Directory.GetFiles(dir, md5 + "*").FirstOrDefault();
+            var mp3Path = Directory.GetFiles(ttsCacheDir, md5 + "*").FirstOrDefault();
             if (mp3Path == null)
             {
-                mp3Path = Path.Combine(dir, md5 + "_" + DateTime.Now.ToString("yyyyMMddHHmmssff") + ".mp3");
-                TextToSpeech.Text2Speech(text, lang, mp3Path);
+                mp3Path = Path.Combine(ttsCacheDir, md5 + "_" + DateTime.Now.ToString("yyyyMMddHHmmssff") + ".mp3");
+
+                var result = TranslatorFactory.GetTranslator(TranslateType.Google).Translate(text, "auto", "zh-CN");
+                TextToSpeech.Text2Speech(text, result.SourceLanguage, mp3Path);
                 if (!File.Exists(mp3Path))
                 {
                     return;
