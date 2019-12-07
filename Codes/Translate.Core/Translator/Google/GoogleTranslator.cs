@@ -117,28 +117,11 @@ namespace Translate.Core.Translator.Google
                 var res = Newtonsoft.Json.JsonConvert.DeserializeObject(resarry[i].ToString());
                 str.Append(res[0].ToString());
             }
-            try
+            return new GoogleTransResult()
             {
-                //[[["为AES解密","To Aes Decrypt",null,null,0]],null,"en",null,null,null,1.0,null,[["en"],null,[1.0],["en"]]]
-                return new GoogleTransResult()
-                {
-                    From = tempResult[tempResult.Count - 1][0][0].ToString(),
-                    TargetText = str.ToString()
-                };
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message.Contains("Cannot access child value on Newtonsoft.Json.Linq.JValue."))
-                {
-                    //[[["API敬亭分享信息","Api Jing Ting Share Info",null,null,0]],null,"en"]
-                    return new GoogleTransResult()
-                    {
-                        From = tempResult[tempResult.Count - 1].ToString(),
-                        TargetText = str.ToString()
-                    };
-                }
-                throw ex;
-            }
+                From = tempResult[2].ToString(),
+                TargetText = str.ToString()
+            };
         }
 
         public string GetIdentity()
