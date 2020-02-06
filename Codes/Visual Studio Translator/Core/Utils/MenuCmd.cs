@@ -306,20 +306,28 @@ namespace Visual_Studio_Translator.Core.Utils
             ChangeTranslatorCommand((int)PkgCmdIdList.YoudaoTranslate, enableCmd);
             ChangeTranslatorCommand((int)PkgCmdIdList.TextToSpeech, enableCmd);
         }
-
+        private static string _beforeSelectText;
         public void DelayTranslate(string selectedText)
         {
+            if (_beforeSelectText == selectedText)
+            {
+                return;
+            }
+            _beforeSelectText = selectedText;
             if (OptionsSettings.Settings.IsAutoTranslate)
             {
-                new Thread(() =>
-                    {
-                        Thread.Sleep(OptionsSettings.Settings.DelayMilliOfAutoTranslate);
-
-                        System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-                        {
-                            Translate((int)TranslateType.Google, selectedText);
-                        }));
-                    })
+               new Thread(() =>
+                      {
+                          Thread.Sleep(OptionsSettings.Settings.DelayMilliOfAutoTranslate);
+                          if (_beforeSelectText != selectedText)
+                          {
+                              return;
+                          }
+                          System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                          {
+                              Translate((int)TranslateType.Google + OptionsSettings.Settings.ServiceIndex, selectedText);
+                          }));
+                      })
                 { IsBackground = true }.Start();
             }
         }

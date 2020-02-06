@@ -95,10 +95,8 @@ namespace Translate.Core.Translator.Baidu
                 var timestamp = Times.TimeStampWithMsec;
                 string uri = $"{TranslateUrl}?q={ HttpUtility.UrlEncode(text)}&from={from}&to={to}&appid={_appid}&salt={timestamp}&sign={Encrypts.CreateMd5EncryptFromString($"{_appid}{text}{timestamp}{_clientSecret}", Encoding.UTF8)}";
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-                WebResponse response = null;
-                try
+                using (var response = httpWebRequest.GetResponse())
                 {
-                    response = httpWebRequest.GetResponse();
                     using (Stream stream = response.GetResponseStream())
                     {
                         if (stream == null)
@@ -115,18 +113,10 @@ namespace Translate.Core.Translator.Baidu
                         }
                         catch (Exception)
                         {
-                            //
+                            throw new Exception("翻译失败. 可能原因有：百度的免费版和高级版的QPS分别为 1/s 10/s。 具体：http://api.fanyi.baidu.com/api/trans/product/identify 2020-02-06 ");
                         }
                         return baiduTransResult;
                     }
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    response?.Close();
                 }
             }
             catch (WebException e)
@@ -136,6 +126,7 @@ namespace Translate.Core.Translator.Baidu
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                throw;
             }
             return null;
         }
@@ -219,7 +210,7 @@ namespace Translate.Core.Translator.Baidu
                     BaiduTransResult baiduTransResult = TranslateByHttp(text, from, to);
                     if (baiduTransResult == null)
                     {
-                        result.FailedReason = "translate failed";
+                        result.FailedReason = "Translate Failed!";
                         result.TranslationResultTypes = TranslationResultTypes.Failed;
                     }
                     else

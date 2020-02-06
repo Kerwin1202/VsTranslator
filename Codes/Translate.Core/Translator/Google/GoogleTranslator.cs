@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using Translate.Core.Translator.Entities;
@@ -98,17 +100,44 @@ namespace Translate.Core.Translator.Google
             }
             text = text.Replace("\\", "");
 
-            var tk = GoogleUtils.GetTk(text);
+            var tk = GetTk(text);
 
-            var result = new HttpHelper().GetHtml(new HttpItem()
+            var uri = $"https://translate.google.cn/translate_a/single?client=webapp&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}&q={HttpUtility.UrlEncode(text)}";
+            var html = string.Empty;
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+            using (var response = httpWebRequest.GetResponse())
             {
-                Url = $"http://translate.google.cn/translate_a/single?client=t&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}",
-                Method = "post",
-                Postdata = $"q={HttpUtility.UrlEncode(text)}",
-                ContentType = "application/x-www-form-urlencoded;charset=UTF-8"
-            }).Html.Replace("\n", "");
+                using (Stream stream = response.GetResponseStream())
+                {
+                    if (stream == null)
+                    {
+                        return null;
+                    }
+                    using (var sr = new StreamReader(stream))
+                    {
+                        html = sr.ReadToEnd();
+                    }
+                }
+            }
 
-            dynamic tempResult = Newtonsoft.Json.JsonConvert.DeserializeObject(result);
+            if (html.Contains("/sorry/index?continue=") && html.Contains("302 Moved"))
+            {
+                return new GoogleTransResult()
+                {
+                    From = "Unknown",
+                    TargetText = "Current IP traffic anomaly, can not be translated!"
+                };
+            }
+            if (html.Contains("Error 403 (禁止访问)!"))
+            {
+                return new GoogleTransResult()
+                {
+                    From = "Unknown",
+                    TargetText = "Error 403 (禁止访问)!"
+                };
+            }
+
+            dynamic tempResult = Newtonsoft.Json.JsonConvert.DeserializeObject(html);
             var resarry = Newtonsoft.Json.JsonConvert.DeserializeObject(tempResult[0].ToString());
             var length = (resarry.Count);
             var str = new System.Text.StringBuilder();

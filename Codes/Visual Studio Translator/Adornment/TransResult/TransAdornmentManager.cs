@@ -71,7 +71,14 @@ namespace Visual_Studio_Translator.Adornment.TransResult
                     //
                     //_layer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, tc, null);
                     Panel.SetZIndex(tc, 1314520);
-                    _layer.AddAdornment(sp, null, tc);
+                    try
+                    {
+                        _layer.AddAdornment(sp, null, tc);
+                    }
+                    catch (System.Exception)
+                    {
+
+                    }
                 }
                 if ((OptionsSettings.Settings.TranslateResultShowType & TranslateResultShowType.Output) == TranslateResultShowType.Output)
                 {
