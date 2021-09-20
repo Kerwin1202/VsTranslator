@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows.Forms;
-using Microsoft.VisualStudio.Editor;
+﻿using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Diagnostics;
+using System.Threading;
+using System.Windows.Forms;
 using Translate.Core.Translator;
 using Translate.Settings;
 using Translate.Settings.TTS;
@@ -316,18 +316,18 @@ namespace Visual_Studio_Translator.Core.Utils
             _beforeSelectText = selectedText;
             if (OptionsSettings.Settings.IsAutoTranslate)
             {
-               new Thread(() =>
-                      {
-                          Thread.Sleep(OptionsSettings.Settings.DelayMilliOfAutoTranslate);
-                          if (_beforeSelectText != selectedText)
-                          {
-                              return;
-                          }
-                          System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
-                          {
-                              Translate((int)TranslateType.Google + OptionsSettings.Settings.ServiceIndex, selectedText);
-                          }));
-                      })
+                new Thread(() =>
+                       {
+                           Thread.Sleep(OptionsSettings.Settings.DelayMilliOfAutoTranslate);
+                           if (_beforeSelectText != selectedText)
+                           {
+                               return;
+                           }
+                           System.Windows.Application.Current.Dispatcher.Invoke(new Action(() =>
+                           {
+                               Translate((int)TranslateType.Google + OptionsSettings.Settings.ServiceIndex, selectedText);
+                           }));
+                       })
                 { IsBackground = true }.Start();
             }
         }

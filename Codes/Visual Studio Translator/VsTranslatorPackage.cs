@@ -1,9 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using System.Windows;
-using Microsoft.VisualStudio;
+﻿using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using Visual_Studio_Translator.Adornment.Translate;
 using Visual_Studio_Translator.Core.Utils;
 
@@ -30,15 +32,16 @@ namespace Visual_Studio_Translator
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
 
-
     [Guid(GuidList.PackageGuidString)]
     [ProvideToolWindow(typeof(TranslateClient))]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-
+    //[ProvideAutoLoad(UIContextGuids.NoSolution)]//设置当VS打开的时候就运行本类
+    //[ProvideAutoLoad(UIContextGuids.SolutionExists)]//同上
+    [ProvideService(typeof(VsTranslatorPackage), IsAsyncQueryable = true)]
     //https://github.com/microsoft/VSSDK-Extensibility-Samples/tree/master/AsyncPackageMigration
     //https://docs.microsoft.com/en-us/visualstudio/extensibility/how-to-use-asyncpackage-to-load-vspackages-in-the-background?view=vs-2019
     [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string, PackageAutoLoadFlags.BackgroundLoad)]
-    public sealed class VsTranslatorPackage : Package
+    public sealed class VsTranslatorPackage : AsyncPackage
     {
         /// <summary>
         /// VsTranslatorPackage GUID string.
@@ -56,17 +59,16 @@ namespace Visual_Studio_Translator
             // initialization is the Initialize method.
         }
 
-
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override void Initialize()
+        protected override System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
             MenuCmd.Initialize(this);
             StatusBarCmd.Initialize(this);
-            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded;
+            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded; 
+            return base.InitializeAsync(cancellationToken, progress);
         }
 
         // Load事件的方法
