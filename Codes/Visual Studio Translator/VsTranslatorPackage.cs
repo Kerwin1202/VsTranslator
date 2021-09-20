@@ -63,12 +63,15 @@ namespace Visual_Studio_Translator
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            MenuCmd.Initialize(this);
-            StatusBarCmd.Initialize(this);
-            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded; 
-            return base.InitializeAsync(cancellationToken, progress);
+            await ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                MenuCmd.Initialize(this);
+                StatusBarCmd.Initialize(this);
+                if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded;
+            });
         }
 
         // Load事件的方法
