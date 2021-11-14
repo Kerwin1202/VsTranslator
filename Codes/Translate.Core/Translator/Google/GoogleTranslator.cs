@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using Translate.Core.Translator.Entities;
@@ -94,9 +96,29 @@ namespace Translate.Core.Translator.Google
         /// <returns></returns>
         private GoogleTransResult TranslateByHttp(string text, string from = "en", string to = "zh-CN")
         {
+            if (new Regex(@"[^\S\r\n]+").IsMatch(text))
+            {
+                return TranslateByMobile(text, from, to);
+            }
+            return TranslateByWebapp(text, from, to);
+        }
+
+        /// <summary>
+        /// 旧版的
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private GoogleTransResult TranslateByWebapp(string text, string from = "en", string to = "zh-CN")
+        {
             if (!(text.Length > 0 && text.Length < 5000))
             {
-                return null;
+                return new GoogleTransResult()
+                {
+                    From = "Unknown",
+                    TargetText = "Only 5000 letters!"
+                };
             }
             text = text.Replace("\\", "");
 
@@ -150,6 +172,58 @@ namespace Translate.Core.Translator.Google
             {
                 From = tempResult[2].ToString(),
                 TargetText = str.ToString()
+            };
+        }
+
+        /// <summary>
+        /// 手机版
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        private GoogleTransResult TranslateByMobile(string text, string from = "en", string to = "zh-CN")
+        {
+            if (!(text.Length > 0 && text.Length < 5000))
+            {
+                return new GoogleTransResult()
+                {
+                    From = "Unknown",
+                    TargetText = "Only 5000 letters!"
+                };
+            }
+            var url = $"https://translate.google.cn/m?sl={from}&tl={to}&hl={to}&q={HttpUtility.UrlEncode(text)}";
+            var html = string.Empty;
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.UserAgent = "Mozilla/5.0 (Linux; Android 10; GM1910) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.85 Mobile Safari/537.36";
+            using (var response = httpWebRequest.GetResponse())
+            {
+                using (Stream stream = response.GetResponseStream())
+                {
+                    if (stream == null)
+                    {
+                        return null;
+                    }
+                    using (var sr = new StreamReader(stream))
+                    {
+                        html = sr.ReadToEnd();
+                    }
+                }
+            }
+
+            var match = new Regex(@"<div[^>]*?class=""result-container""[^>]*>([\s\S]*?)<\/div>").Match(html);
+            if (match.Success)
+            {
+                return new GoogleTransResult()
+                {
+                    From = from,
+                    TargetText = new Regex(@"(<\/?[^>]+>)").Replace(match.Groups[1].Value, string.Empty)
+                };
+            }
+            return new GoogleTransResult()
+            {
+                From = "Unknown",
+                TargetText = "No Result!"
             };
         }
 
