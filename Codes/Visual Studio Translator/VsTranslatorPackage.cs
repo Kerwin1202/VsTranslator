@@ -68,6 +68,7 @@ namespace Visual_Studio_Translator
             await ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                Global.Package = this;
                 MenuCmd.Initialize(this);
                 StatusBarCmd.Initialize(this);
                 if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded;

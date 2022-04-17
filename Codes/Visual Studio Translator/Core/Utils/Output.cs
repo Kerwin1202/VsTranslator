@@ -1,29 +1,42 @@
 ﻿using System;
 using EnvDTE;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Visual_Studio_Translator.Core.Utils
 {
     public class Output
     {
+        private const string OUTPUT_PANE_TITLE = "VsTranslate";
+        private static IVsOutputWindowPane _outputWindowPane;
+
+        private static IVsOutputWindowPane OutputWindowPane => _outputWindowPane ?? (_outputWindowPane = GetOutputPane());
+        
         public static void OutputString(string message)
         {
-            var w = (EnvDTE.Window)Global.Dte.Windows.Item(EnvDTE.Constants.vsWindowKindOutput);
-            if (!w.Visible)
+            if (OutputWindowPane is object)
             {
-                w.Visible = true;
+                string outputMessage = $"[{DateTime.Now.ToString("hh:mm:ss tt")}]{Environment.NewLine}{message}{Environment.NewLine}{Environment.NewLine}";
+                OutputWindowPane.Activate();
+                OutputWindowPane.OutputString(outputMessage);
             }
-            OutputWindow ow = (OutputWindow)w.Object;
-            OutputWindowPane owp;
-            try
+        }
+
+        private static IVsOutputWindowPane GetOutputPane()
+        {
+            IServiceProvider ServiceProvider = Global.Package;
+            if (ServiceProvider == null)
             {
-                owp = ow.OutputWindowPanes.Item("VsTranslate");
+                return null;
             }
-            catch (Exception exception)
-            {
-                owp = ow.OutputWindowPanes.Add("VsTranslate");
-            }
-            owp.Activate();
-            owp.OutputString($"{DateTime.Now:yyyy-MM-dd HH:mm:ss}\r\n{message}\r\n\r\n");
+            if (!(ServiceProvider.GetService(typeof(SVsOutputWindow)) is IVsOutputWindow outputWindow))
+                return null;
+            
+            Guid outputPaneGuid = new Guid(GuidList.OutputWindow);
+
+            outputWindow.CreatePane(ref outputPaneGuid, OUTPUT_PANE_TITLE, fInitVisible: 1, fClearWithSolution: 1);
+            outputWindow.GetPane(ref outputPaneGuid, out IVsOutputWindowPane windowPane);
+
+            return windowPane;
         }
     }
 }

@@ -15,15 +15,22 @@ namespace Visual_Studio_Translator.Adornment.TransResult
 
         private void TransRequest_OnAllTranslationComplete()
         {
-          
+
         }
 
         private void TransRequest_OnTranslationComplete(TranslateResult translationResult)
         {
             var lang = $"[{translationResult.Identity}]({translationResult.SourceLanguage} - {translationResult.TargetLanguage})";
-            Output.OutputString(translationResult.TranslationResultTypes == TranslationResultTypes.Successed
-                ? $"{lang}\r\n{translationResult.TargetText}"
-                : translationResult.FailedReason);
+            var message = translationResult.TranslationResultTypes == TranslationResultTypes.Successed
+              ? $"{lang}\r\n{translationResult.TargetText}"
+              : translationResult.FailedReason;
+            try
+            {
+                Output.OutputString(message);
+            }
+            catch (System.Exception e)
+            {
+            }
         }
     }
 }
