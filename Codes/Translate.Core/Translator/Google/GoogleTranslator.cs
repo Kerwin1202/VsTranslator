@@ -304,7 +304,7 @@ namespace Translate.Core.Translator.Google
                     result.TranslationResultTypes = TranslationResultTypes.Successed;
                     GoogleTransResult googleTransResult = TranslateByHttp(text, from, to);
                     result.SourceLanguage = googleTransResult.From;
-                    result.TargetText = googleTransResult.TargetText;
+                    result.TargetText = WebUtility.HtmlDecode(googleTransResult.TargetText);
                 }
                 catch (Exception exception)
                 {
