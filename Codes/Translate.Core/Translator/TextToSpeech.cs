@@ -19,15 +19,15 @@ namespace Translate.Core.Translator
         /// <returns></returns>
         public static byte[] Text2Speech(string text, string lang)
         {
-            //https://translate.google.cn/translate_tts?ie=UTF-8&q=hello%20world&tl=en&total=1&idx=0&textlen=11&tk=288080.147058&client=t&prev=input
+            //https://translate.google.com/translate_tts?ie=UTF-8&q=hello%20world&tl=en&total=1&idx=0&textlen=11&tk=288080.147058&client=t&prev=input
 
             text = text.Replace("\\", "");
             var tk = GetTk(text);
             var result = new HttpHelper().GetHtml(new HttpItem()
             {
                 Url =
-                     $"https://translate.google.cn/translate_tts?ie=UTF-8&q={HttpUtility.UrlEncode(text)}&tl={lang}&total=1&idx=0&textlen={text.Length}&tk={tk}&client=t&prev=input",
-                Referer = "https://translate.google.cn/",
+                     $"https://translate.google.com/translate_tts?ie=UTF-8&q={HttpUtility.UrlEncode(text)}&tl={lang}&total=1&idx=0&textlen={text.Length}&tk={tk}&client=t&prev=input",
+                Referer = "https://translate. google.com/",
                 UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
                 ResultType = ResultType.Byte
             });

@@ -124,7 +124,7 @@ namespace Translate.Core.Translator.Google
 
             var tk = GetTk(text);
 
-            var uri = $"https://translate.google.cn/translate_a/single?client=webapp&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}&q={HttpUtility.UrlEncode(text)}";
+            var uri = $"https://translate.google.com/translate_a/single?client=webapp&sl={from}&tl={to}&hl=zh-CN&dt=t&ie=UTF-8&oe=UTF-8&ssel=6&tsel=3&kc=0&tk={tk}&q={HttpUtility.UrlEncode(text)}";
             var html = string.Empty;
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
             using (var response = httpWebRequest.GetResponse())
@@ -192,7 +192,7 @@ namespace Translate.Core.Translator.Google
                     TargetText = "Only 5000 letters!"
                 };
             }
-            var url = $"https://translate.google.cn/m?sl={from}&tl={to}&hl={to}&q={HttpUtility.UrlEncode(text)}";
+            var url = $"https://translate.google.com/m?sl={from}&tl={to}&hl={to}&q={HttpUtility.UrlEncode(text)}";
             var html = string.Empty;
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.UserAgent = "Mozilla/5.0 (Linux; Android 10; GM1910) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.85 Mobile Safari/537.36";
@@ -243,11 +243,11 @@ namespace Translate.Core.Translator.Google
 
         public static string GetDescription()
         {
-            return "place the single request control within 5000 bytes in length (One Chinese Is a byte), you can on the website translation https://translate.google.cn/";
+            return "place the single request control within 5000 bytes in length (One Chinese Is a byte), you can on the website translation https://translate.google.com/";
         }
         public static string GetWebsite()
         {
-            return "https://translate.google.cn/";
+            return "https://translate.google.com/";
         }
 
         public List<TranslationLanguage> GetAllTargetLanguages()
