@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Translate.Settings;
 using Visual_Studio_Translator.Adornment.Translate;
 using Visual_Studio_Translator.Core.Utils;
 
@@ -69,6 +70,7 @@ namespace Visual_Studio_Translator
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 Global.Package = this;
+                Settings.CurrentUiLang = Microsoft.VisualStudio.PlatformUI.LanguageHelper.CurrentUICultureLanguage.IetfLanguageTag;
                 MenuCmd.Initialize(this);
                 StatusBarCmd.Initialize(this);
                 if (Application.Current.MainWindow != null) Application.Current.MainWindow.Loaded += MainWindow_Loaded;

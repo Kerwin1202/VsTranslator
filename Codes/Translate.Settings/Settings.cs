@@ -65,12 +65,15 @@ namespace Translate.Settings
         /// </summary>
         public bool TextToSpeechWhenTranslate { get; set; }
 
+        public static string CurrentUiLang { get; set; }
+
         /// <summary>
         /// Get a Settings's instance with some default setting
         /// </summary>
         /// <returns></returns>
         public static Settings Instance()
         {
+            var defaultChinese = CurrentUiLang.Contains("zh-");
             return new Settings()
             {
                 ServiceIndex = 1,
@@ -79,7 +82,7 @@ namespace Translate.Settings
                     AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
                     LastLanguageIndex = 2,
                     SourceLanguageIndex = 0,
-                    TargetLanguageIndex = 0
+                    TargetLanguageIndex = defaultChinese ? 0 : 2,
                 },
                 BingSettings = new TransSettings()
                 {
@@ -90,7 +93,7 @@ namespace Translate.Settings
                     },
                     LastLanguageIndex = 12,
                     SourceLanguageIndex = 0,
-                    TargetLanguageIndex = 5
+                    TargetLanguageIndex = defaultChinese ? 5 : 12,
                 }
                     ,
                 YoudaoSettings = new TransSettings()
@@ -98,13 +101,13 @@ namespace Translate.Settings
                     AppClient = new AppClient() { AppKey = "", ClientSecret = "" },
                     LastLanguageIndex = 1,
                     SourceLanguageIndex = 0,
-                    TargetLanguageIndex = 0
+                    TargetLanguageIndex = defaultChinese ? 0 : 1,
                 },
                 GoogleSettings = new TransSettings()
                 {
                     LastLanguageIndex = 12,
                     SourceLanguageIndex = 0,
-                    TargetLanguageIndex = 6
+                    TargetLanguageIndex = defaultChinese ? 6 : 12,
                 },
                 LetterSpliters = new List<Spliter>()
                 {
