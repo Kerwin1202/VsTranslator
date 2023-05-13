@@ -61,8 +61,6 @@
     <Compile Include="Translator\Bing\BingTranslator.cs" />
     <Compile Include="Translator\Bing\Entities\Api\AdmAccessToken.cs" />
     <Compile Include="Translator\Bing\Entities\Api\BingTransResult.cs" />
-    <Compile Include="Translator\Bing\Entities\Post\BingPostTransParams.cs" />
-    <Compile Include="Translator\Bing\Entities\Post\BingPostTransResult.cs" />
     <Compile Include="Translator\Ciba\CibaTranslator.cs" />
     <Compile Include="Translator\Ciba\Entities\CibaTransResult.cs" />
     <Compile Include="Translator\Entities\TranslationLanguage.cs" />

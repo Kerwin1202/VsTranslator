@@ -35,7 +35,7 @@ namespace Translate.Settings
         private void TranslationThread(object obj)
         {
             Trans trans = obj as Trans;
-            if (trans != null)
+            if (trans != null) 
             {
                 TranslationResult result = trans.Translator.Translate(_selectedText, trans.SourceLanguage, trans.TargetLanguage);
 

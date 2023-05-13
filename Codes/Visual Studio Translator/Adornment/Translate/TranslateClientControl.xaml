@@ -86,7 +86,7 @@
                         </Button>
                     </WrapPanel>
                 </WrapPanel>
-                <WrapPanel Grid.Column="1">
+                <WrapPanel Grid.ColumnSpan="3" Margin="293,0,121,0">
                     <Rectangle HorizontalAlignment="Stretch" Fill="DimGray" Height="32" Width="1"/>
                     <Button Name="btnSettings" Height="40" Margin="5,2" Click="btnSettings_OnClick">
                         <Button.Content>

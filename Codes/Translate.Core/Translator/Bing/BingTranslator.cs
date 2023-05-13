@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using Newtonsoft.Json;
-using Translate.Core.Translator.Bing.Entities;
 using Translate.Core.Translator.Bing.Entities.Api;
-using Translate.Core.Translator.Bing.Entities.Post;
 using Translate.Core.Translator.Entities;
 using Translate.Core.Translator.Enums;
 using Translate.Core.Translator.Utils;
@@ -29,7 +29,6 @@ namespace Translate.Core.Translator.Bing
 
         public BingTranslator()
         {
-            InitCookie();
         }
 
 
@@ -56,8 +55,8 @@ namespace Translate.Core.Translator.Bing
                 new TranslationLanguage("bs-Latn", "Bosnian (Latin) / 波斯尼亚 (拉丁语)"),
                 new TranslationLanguage("bg", "Bulgarian / 保加利亚语"),
                 new TranslationLanguage("ca", "Catalan / 加泰罗尼亚语"),
-                new TranslationLanguage("zh-CHS", "Chinese (Simplified) / 简体中文"),
-                new TranslationLanguage("zh-CHT", "Chinese (Traditional) / 繁体中文"),
+                new TranslationLanguage("zh-Hans", "Chinese (Simplified) / 简体中文"),
+                new TranslationLanguage("zh-Hant", "Chinese (Traditional) / 繁体中文"),
                 new TranslationLanguage("yue", "Cantonese (Traditional) / 粤语（繁体）"),
                 new TranslationLanguage("hr", "Croatian / 克罗地亚语"),
                 new TranslationLanguage("cs", "Czech / 捷克语"),
@@ -126,7 +125,7 @@ namespace Translate.Core.Translator.Bing
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private string TranslateByHttp(string text, string from = "en", string to = "zh-CHS")
+        private string TranslateByHttp(string text, string from = "en", string to = "zh-Hans")
         {
             try
             {
@@ -180,7 +179,7 @@ namespace Translate.Core.Translator.Bing
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        private BingTransResult TranslateByAjax(string text, string from = "en", string to = "zh-CHS")
+        private BingTransResult TranslateByAjax(string text, string from = "en", string to = "zh-Hans")
         {
             try
             {
@@ -243,109 +242,60 @@ namespace Translate.Core.Translator.Bing
         #endregion
 
         #region post
-        private BingPostTransResult TranslateByPost(string text, string from = "-", string to = "zh-CHS")
+        private (string from, string to, string target) TranslateByPost(string text, string from = "auto-detect", string to = "zh-Hans")
         {
-            var texts = text.Split(new[] { "\r\n" }, StringSplitOptions.None);
-            var transParams = texts.Select(t => new BingPostTransParams() { Text = t }).ToList();
-            return TranslateByPost(transParams, from, to);
-        }
-
-        private readonly Regex _mtstknRegex = new Regex("mtstkn=([^;]+);");
-
-        private readonly Regex _muidbRegex = new Regex("MUIDB=([^;]+);");
-
-        private string _mtstkn = string.Empty;
-        private string _muidb = string.Empty;
-        private void InitCookie()
-        {
-            var cookie = new HttpHelper().GetHtml(new HttpItem()
-            {
-                Url = "https://www.bing.com/translator/?mkt=zh-CN",
-                Timeout = 5000
-            }).Cookie;
-
-            _mtstkn = _mtstknRegex.Match(cookie).Groups[1].Value;
-            _muidb = _muidbRegex.Match(cookie).Groups[1].Value;
-        }
-
-        /// <summary>
-        /// Translate from bing website  https://www.bing.com/translator/?mkt=zh-CN
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <returns></returns>
-        private BingPostTransResult TranslateByPost(List<BingPostTransParams> text, string from = "-", string to = "zh-CHS")
-        {
-            //https://www.bing.com/translator/api/Translate/TranslateArray?from=-&to=zh-CHS
-
+            InitParams();
             if (string.IsNullOrWhiteSpace(from))
             {
-                from = "-";//auto
+                from = "auto-detect";//auto
             }
-            var maxTryCount = 3;
-            var tryCount = 0;
-            try
-            {
-                StartTrans: var uri = $"https://www.bing.com/translator/api/Translate/TranslateArray?from={from}&to={to}";
-                var formData = JsonConvert.SerializeObject(text.Where(t=>!string.IsNullOrWhiteSpace(t.Text)));
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, $"https://www.bing.com/ttranslatev3?isVertical=1&&IG={_ig}&IID={_iid}");
+            var collection = new List<KeyValuePair<string, string>>();
+            collection.Add(new KeyValuePair<string, string>("fromLang", from));
+            collection.Add(new KeyValuePair<string, string>("text", text));
+            collection.Add(new KeyValuePair<string, string>("to", to));
+            collection.Add(new KeyValuePair<string, string>("token", _token));
+            collection.Add(new KeyValuePair<string, string>("key", _key));
+            var content = new FormUrlEncodedContent(collection);
+            request.Content = content;
+            //request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            var response = client.SendAsync(request).Result;
+            response.EnsureSuccessStatusCode();
+            var json = response.Content.ReadAsStringAsync().Result;
+            var data = JsonConvert.DeserializeObject<dynamic>(json);
 
-                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-                httpWebRequest.ContentType = "application/json; charset=utf-8";
-                httpWebRequest.Method = "POST";
-                var cookie = new CookieContainer();
-                cookie.Add(new Cookie("mtstkn", _mtstkn, "/", ".bing.com"));
-                cookie.Add(new Cookie("MUIDB", _muidb, "/", ".bing.com"));
-                httpWebRequest.CookieContainer = cookie;
-                httpWebRequest.UserAgent = "PostmanRuntime/6.4.1";
-                httpWebRequest.Accept = "*/*";
-                httpWebRequest.Headers.Add("accept-encoding", "gzip, deflate");
-                httpWebRequest.Headers.Add("cache-control", "no-cache");
-                byte[] bytes = Encoding.UTF8.GetBytes(formData);
-                httpWebRequest.ContentLength = bytes.Length;
-                using (Stream outputStream = httpWebRequest.GetRequestStream())
-                {
-                    outputStream.Write(bytes, 0, bytes.Length);
-                }
-                WebResponse response = null;
-                try
-                {
-                    response = httpWebRequest.GetResponse();
-                    using (Stream stream = response.GetResponseStream())
-                    {
-                        if (stream == null)
-                        {
-                            return null;
-                        }
-                        DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BingPostTransResult));
-                        //Get deserialized object from JSON stream
-                        BingPostTransResult bingTransResult = (BingPostTransResult)serializer.ReadObject(stream);
-                        return bingTransResult;
-                    }
-                }
-                catch (Exception e)
-                {
-                    if (tryCount++ < maxTryCount)
-                    {
-                        InitCookie();
-                        goto StartTrans;
-                    }
-                    throw;
-                }
-                finally
-                {
-                    response?.Close();
-                }
-            }
-            catch (WebException e)
+            return (data[0].detectedLanguage.language,
+                 data[0].translations[0].to,
+                 data[0].translations[0].text);
+        }
+
+        private readonly Regex _igRegex = new Regex("IG:\"([^\"]+)\"");
+
+        private readonly Regex _iidRegex = new Regex("data-iid=\"([^\"]+)\"");
+        private readonly Regex _tokenRegex = new Regex(@"params_AbusePreventionHelper = \[([0-9]+),""([^,]+)"",[0-9]+\];");
+
+        private string _ig = string.Empty;
+        private string _iid = string.Empty;
+        private string _key = string.Empty;
+        private string _token = string.Empty;
+        private void InitParams()
+        {
+            if (!string.IsNullOrWhiteSpace(_key)
+                && DateTimeOffset.FromUnixTimeMilliseconds(Convert.ToInt64(_key)).AddMinutes(30) > DateTime.UtcNow)
             {
-                Utils.WebException.ProcessWebException(e);
+                return;
             }
-            catch (Exception ex)
+            var html = new HttpHelper().GetHtml(new HttpItem()
             {
-                Console.WriteLine(ex.Message);
-            }
-            return null;
+                Url = "https://cn.bing.com/translator",
+                Timeout = 5000
+            }).Html;
+
+            _ig = _igRegex.Match(html).Groups[1].Value;
+            _iid = _iidRegex.Match(html).Groups[1].Value;
+            _key = _tokenRegex.Match(html).Groups[1].Value;
+            _token = _tokenRegex.Match(html).Groups[2].Value;
         }
 
         #endregion
@@ -366,7 +316,7 @@ namespace Translate.Core.Translator.Bing
         }
         public static string GetChineseLanguage()
         {
-            return "zh-CHS";
+            return "zh-Hans";
         }
 
 
@@ -439,12 +389,8 @@ namespace Translate.Core.Translator.Bing
                     #region post
 
                     var bingTransResult = TranslateByPost(text, from, to);
-                    result.SourceLanguage = bingTransResult?.From;
-                    foreach (var item in bingTransResult?.Items ?? new List<BingPostTransResultItem>())
-                    {
-                        result.TargetText += item.Text + "\r\n";
-                    }
-                    result.TargetText = result.TargetText.TrimEnd();
+                    result.SourceLanguage = bingTransResult.from;
+                    result.TargetText = bingTransResult.target;
 
                     #endregion
                 }
