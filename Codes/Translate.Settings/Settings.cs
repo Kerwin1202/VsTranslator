@@ -73,7 +73,7 @@ namespace Translate.Settings
         /// <returns></returns>
         public static Settings Instance()
         {
-            var defaultChinese = CurrentUiLang.Contains("zh-");
+            var defaultChinese = (CurrentUiLang ?? string.Empty).Contains("zh-");
             return new Settings()
             {
                 ServiceIndex = 1,
